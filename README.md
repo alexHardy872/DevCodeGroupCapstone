@@ -4,7 +4,31 @@ Group capstone project for DevCodeCamp: (Gabriel Kunkle, Alex Hardy, Trevor Clem
 Group Capstone Project: 
 WeTeachToday (user stories)
 
+Your team must come up with a real-world business problem to solve.
+Your team must use ASP.NET MVCand integrate multiple APIs to solve the business problem. 
+Integrate being the key word here.
+*If applicable, your teamshouldwrite a REST API and integrate it with the application*
+Your team must write the project proposal in the form of user stories and get it approved by the instructors.
 
+(5points):As a developer, I want to get my team’s projectproposal, which mustbe in the form of user storiesapproved by an instructor, so that I know my team has a good project to work on.Technologies used to build the application will include ASP.NET MVC, multiple integrated APIs, and *our own built REST API*.
+
+(5 points)As a database designer, I want to create an entity relationship (ER) diagram to show the relationships amongst my tables in my normalized database.
+
+(5 points)As a project manager, I want to create a Trello board that has user stories broken down into tasks so that I can assign tasks to other team members as well as myself in order to efficiently reach the minimal viable product (MVP).
+
+(5 points):As a developer, I want to make good, consistent commits.
+
+(10points)As a developer, I want to use asynchronous actions for all I/O calls made in my application, with a specific emphasis on all API actions.
+
+(90points):As a developer, I want to complete all the features that were approvedby an instructor during the project approval phase, so that I can ensure the project is as good as it can be.
+
+*You will be presenting this project to the instructors and classmates on the day it isdue. The presentationis worth 20 points.
+
+*Create a free Trello accounthere:https://trello.com/* 
+
+The ER Diagram and link to Trello board must be turned in with project.
+
+WeTeachToday USER STORIES
 Theme: Sign Up
 
 (___ points) As a teacher or a potential student I can sign-up/sign-in for the service with Google OAuth or another means, easiest for the developers, such as email.
