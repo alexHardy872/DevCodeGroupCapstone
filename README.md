@@ -2,6 +2,8 @@
 #### by Gabriel Kunkel, Alex Hardy, Trevor Clements, Adam Neujahr
 (Actively Seeking Employment)
 
+Find this project's Trello board at: [https://trello.com/b/vK6u8aOV](https://trello.com/b/vK6u8aOV)
+
 ## Critical Tasks
 
 - [ ] Solve a real-world business problem.
@@ -18,19 +20,16 @@
 
 - [ ] (5 points) As a database designer, I want to create an entity relationship (ER) diagram to show the relationships amongst my tables in my normalized database.
 
-- [ ] (5 points)As a project manager, I want to create a Trello board that has user stories broken down into tasks so that I can assign tasks to other team members as well as myself in order to efficiently reach the minimal viable product (MVP).
+- [ ] (5 points) As a project manager, I want to create a Trello board that has user stories broken down into tasks so that I can assign tasks to other team members as well as myself in order to efficiently reach the minimal viable product (MVP).
 
 - [ ] (5 points): Make good, consistent commits.
 
 - [ ] (10 points): Use asynchronous actions for all I/O calls made in my application, with a specific emphasis on all API actions.
 
-- [ ] : Complete all the instructor-approved features during the project approval phase, so that I can ensure the project is as good as it can be. (90 points)
+- [ ] Complete all the instructor-approved features during the project approval phase, so that I can ensure the project is as good as it can be. (90 points)
 
 - [ ] Present to instructors and students. (20 points)
 
-*Create a free Trello accounthere:https://trello.com/* 
-
-The ER Diagram and link to Trello board must be turned in with project.
 
 ## User Stories
 
