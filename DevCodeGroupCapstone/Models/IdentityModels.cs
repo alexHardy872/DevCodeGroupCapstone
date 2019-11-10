@@ -20,6 +20,11 @@ namespace DevCodeGroupCapstone.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Person> People { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<TeacherAvail> TeacherAvailabilities { get; set; }
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<Lesson> Lessons { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
