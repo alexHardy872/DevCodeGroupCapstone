@@ -2,7 +2,7 @@
 #### by Gabriel Kunkel, Alex Hardy, Trevor Clements, Adam Neujahr
 (Actively Seeking Employment)
 
-Find this project's Trello board at: [https://trello.com/b/vK6u8aOV](https://trello.com/b/vK6u8aOV/weteachtoday)
+Find this project's Trello board at: [https://trello.com/b/vK6u8aOV/weteachtoday](https://trello.com/b/vK6u8aOV/weteachtoday)
 
 ## Critical Tasks
 
