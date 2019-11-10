@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using DevCodeGroupCapstone.Models;
+using DevCodeGroupCapstone.Private;
 
 namespace DevCodeGroupCapstone
 {
@@ -58,11 +59,11 @@ namespace DevCodeGroupCapstone
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = ApiKey.googleClientId,
+                ClientSecret = ApiKey.googleClientSecret
+            });
         }
     }
 }
