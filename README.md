@@ -1,6 +1,9 @@
 # DevCodeGroupCapstone
 Group capstone project for DevCodeCamp: (Gabriel Kunkle, Alex Hardy, Trevor Clements, Adam Neujahr)
 
+Trello Link:
+https://trello.com/b/vK6u8aOV/weteachtoday
+
 Group Capstone Project: 
 WeTeachToday (user stories)
 
