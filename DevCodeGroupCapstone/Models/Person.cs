@@ -16,8 +16,8 @@ namespace DevCodeGroupCapstone.Models
         public string subjects { get; set; }
 
         [ForeignKey("ApplicationUser")]//fk attr
-        
         public string ApplicationId { get; set; }
+
         [ForeignKey("Location")]
         public int LocationId { get; set; }
 

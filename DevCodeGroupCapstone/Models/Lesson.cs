@@ -11,13 +11,16 @@ namespace DevCodeGroupCapstone.Models
     {
         [Key]
         public int LessonId { get; set; }
-        [ForeignKey("Person")]//fk attr
-        [Column(Order =0)]
-        public string studentId { get; set; } //fk's spot at the table
 
-        [ForeignKey("Person")]//fk attr
+        [ForeignKey("Student")]//fk attr
+        [Column(Order =0)]
+        public string StudentId { get; set; } //fk's spot at the table
+        public Person Student { get; set; }
+
+        [ForeignKey("Teacher")]//fk attr
         [Column(Order =1)]
-        public string teacherId { get; set; } //fk's spot at the table
+        public string TeacherId { get; set; } //fk's spot at the table
+        public Person Teacher { get; set; }
 
         public string subject { get; set; }
         public double startTime { get; set; }
@@ -29,7 +32,6 @@ namespace DevCodeGroupCapstone.Models
         [Column(Order =2)]
         public int LocationId { get; set; } //fk's spot at the table
         public Location Location { get; set; }//the class the fk attr is referencing
-        public Person Person { get; set; }
 
     }
 }
