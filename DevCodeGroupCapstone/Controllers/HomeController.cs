@@ -10,8 +10,16 @@ namespace DevCodeGroupCapstone.Controllers
     [RequireHttps]
     public class HomeController : Controller
     {
+
         public ActionResult Index()
         {
+
+            // does applicaiton Id exist in customer table?
+            // if it does they go to perspn controller home
+            // if not they go to create person
+
+           
+
             return View();
         }
 

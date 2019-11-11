@@ -19,13 +19,12 @@ namespace DevCodeGroupCapstone.Models
         public bool teacherApproval { get; set; }
 
         [ForeignKey("Student")]
-        public string studentId { get; set; }
+        public int? studentId { get; set; }
         public Person Student { get; set; }
 
         [ForeignKey("Teacher")]
-        public string teacherId { get; set; }
+        public int? teacherId { get; set; }
         public Person Teacher { get; set; }
-
 
         [ForeignKey("Location")]//fk attr
         [Column(Order =2)]
