@@ -11,21 +11,24 @@ namespace DevCodeGroupCapstone.Models
     {
         [Key]
         public int availId { get; set; }
-        public DateTime sundayStart { get; set; }
-        public DateTime sundayStop { get; set; }
-        public DateTime mondayStart { get; set; }
-        public DateTime mondayStop { get; set; }
-        public DateTime tuesdayStart { get; set; }
-        public DateTime tuesdayStop { get; set; }
-        public DateTime wednesdayStart { get; set; }
-               
-        public DateTime wednesdayStop { get; set; }
-        public DateTime thursdayStart { get; set; }
-        public DateTime thursdayStop { get; set; }
-        public DateTime fridayStart { get; set; }
-        public DateTime fridayStop { get; set; }
-        public DateTime saturdayStart { get; set; }
-        public DateTime saturdayStop { get; set; }
+
+        
+        [Display(Name = "Day of Week")]
+        public DayOfWeek weekDay { get; set; }
+
+        [DataType(DataType.Time)]
+        public DateTime start { get; set; }
+
+        [DataType(DataType.Time)]
+        public DateTime end { get; set; }
+
+
+        [ForeignKey("TeacherId")]
+        public int PersonId { get; set; }
+        public Person TeacherId { get; set; }
+
+
+
 
 
 

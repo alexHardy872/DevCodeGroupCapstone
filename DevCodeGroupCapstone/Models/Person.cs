@@ -27,8 +27,6 @@ namespace DevCodeGroupCapstone.Models
         public int? LocationId { get; set; }
         public Location Location { get; set; }
 
-        [ForeignKey("TeacherAvail")]
-        public int? avail { get; set; }
-        public TeacherAvail TeacherAvail { get; set; }
+     
     }
 }
