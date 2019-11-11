@@ -24,11 +24,15 @@ textarea {
 }
 
 .gLogin {
-    height: 75px;
-    width: 250px;
-    background-color: blue;
-    background-image: url("Images/signin-button.png");
+    border: none;
+    height: 92px;
+    width: 382px;
+    background-color: transparent;
+    background-image: url("Images/signin-button1.png");
     background-repeat: no-repeat;
-    background-size: contain;
-
+    background-size: cover;
 }
+
+    .gLogin:hover {
+        background-image: url("Images/signin-button2.png");
+    }
