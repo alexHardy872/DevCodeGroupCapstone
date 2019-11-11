@@ -191,6 +191,7 @@
     <Compile Include="Controllers\LessonController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
+    <Compile Include="Controllers\ScheduleApiController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -212,6 +213,7 @@
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\StateList.cs" />
     <Compile Include="Models\TeacherAvail.cs" />
+    <Compile Include="Models\TeacherDetails.cs" />
     <Compile Include="Models\View Models\PersonAndLocationViewModel.cs" />
     <Compile Include="Private\ApiKey.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
