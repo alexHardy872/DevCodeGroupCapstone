@@ -7,16 +7,16 @@ namespace DevCodeGroupCapstone.Models.View_Models
 {
     public class PersonAndLocationViewModel
     {
-        public Person person;
+        public Person person { get; set; }
 
-        public Location location;
-
-      
+        public Location location { get; set; }
 
 
-        
 
 
-        
+
+
+
+
     }
 }

@@ -69,9 +69,8 @@ namespace DevCodeGroupCapstone.Controllers
         {
             try
             {
-                var person = context.People.Where(p => p.PersonId == info.person.PersonId).Single();
                 string userId = User.Identity.GetUserId();
-                person.ApplicationId = userId;
+                info.person.ApplicationId = userId;
 
                 context.People.Add(info.person);
 
