@@ -32,15 +32,18 @@ namespace DevCodeGroupCapstone.Controllers
             {
                 return RedirectToAction("Create");
             }
-            
-            // if not registered user go to creat
-            // else
-            // in index generate list of all teachers in the dB
-            // iterate through people where subject != null (teachers)
-            // display subject and availabiliy?
-            // have button to sign up with teach/ create lesson
+            List<PersonAndLocationViewModel> teachers = new List<PersonAndLocationViewModel>();
 
-            var teachers = context.People.ToList(); // temporary for view test
+            List<Person> eligibleTeachers = context.People.Where(s => s.subjects != null).ToList();
+
+            foreach(Person teacher in eligibleTeachers)
+            {
+                PersonAndLocationViewModel info = new PersonAndLocationViewModel();
+                info.person = teacher;
+                info.location = context.Locations.Where(l => l.LocationId == teacher.LocationId).Single();
+                teachers.Add(info);
+            }
+           
             return View(teachers);
         }
 
@@ -71,6 +74,8 @@ namespace DevCodeGroupCapstone.Controllers
             {
                 string userId = User.Identity.GetUserId();
                 info.person.ApplicationId = userId;
+                int nextLocationId = context.Database.ExecuteSqlCommand("SELECT IDENT_CURRENT('dbo.Locations')") + 1;
+                info.person.LocationId = nextLocationId;
 
                 context.People.Add(info.person);
 
@@ -78,7 +83,7 @@ namespace DevCodeGroupCapstone.Controllers
                 //info.location.lat = latLng[0];
                 //info.location.lng = latLng[1];
 
-                //context.Locations.Add(info.location);
+                context.Locations.Add(info.location);
                 await context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
