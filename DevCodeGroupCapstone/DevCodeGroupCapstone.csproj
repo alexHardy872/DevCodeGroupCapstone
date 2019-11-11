@@ -202,6 +202,10 @@
     <Compile Include="Migrations\201911111735010_Lesson Model Change.designer.cs">
       <DependentUpon>201911111735010_Lesson Model Change.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911111820024_LocationIdNullableOnLessonsTable.cs" />
+    <Compile Include="Migrations\201911111820024_LocationIdNullableOnLessonsTable.designer.cs">
+      <DependentUpon>201911111820024_LocationIdNullableOnLessonsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -311,10 +315,10 @@
     <Content Include="Views\Person\Create.cshtml" />
     <Content Include="Views\Person\Index.cshtml" />
     <Content Include="Views\Person\ViewTeachers.cshtml" />
+    <Content Include="Views\Lesson\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Lesson\" />
     <Folder Include="Views\Teacher\" />
   </ItemGroup>
   <ItemGroup>
@@ -334,6 +338,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911111735010_Lesson Model Change.resx">
       <DependentUpon>201911111735010_Lesson Model Change.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911111820024_LocationIdNullableOnLessonsTable.resx">
+      <DependentUpon>201911111820024_LocationIdNullableOnLessonsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

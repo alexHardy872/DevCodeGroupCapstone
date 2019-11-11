@@ -31,7 +31,8 @@ namespace DevCodeGroupCapstone.Controllers
         // GET: Lesson/Create
         public ActionResult Create()
         {
-            return View();
+            Lesson lesson = new Lesson();
+            return View(lesson);
         }
 
         // POST: Lesson/Create
@@ -40,12 +41,19 @@ namespace DevCodeGroupCapstone.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
-
+                string id = User.Identity.GetUserId();
+                Person user = context.People.FirstOrDefault(u => u.ApplicationId == id);
+                lesson.teacherId = user.PersonId;
+                decimal cost = lesson.Price / 60 * lesson.Length;
+                cost = Math.Round(cost, 2);
+                lesson.cost = cost;
+                context.Lessons.Add(lesson);
+                context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception e)
             {
+                Console.WriteLine(e);
                 return View();
             }
         }
