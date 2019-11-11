@@ -15,7 +15,7 @@ namespace DevCodeGroupCapstone.Models
         public string subject { get; set; }
         public double startTime { get; set; }
         public double endTime { get; set; }
-        public double cost { get; set; }
+        public decimal cost { get; set; }
         public bool teacherApproval { get; set; }
 
         [ForeignKey("Student")]
@@ -30,7 +30,9 @@ namespace DevCodeGroupCapstone.Models
         [Column(Order =2)]
         public int LocationId { get; set; } //fk's spot at the table
         public Location Location { get; set; }//the class the fk attr is referencing
-        
+
+        public int Length { get; set; }//in minutes
+        public decimal Price { get; set; }
 
     }
 }
