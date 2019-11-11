@@ -197,6 +197,10 @@
     <Compile Include="Migrations\201911102221355_initial.designer.cs">
       <DependentUpon>201911102221355_initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911110355502_LocationModelChanges.cs" />
+    <Compile Include="Migrations\201911110355502_LocationModelChanges.designer.cs">
+      <DependentUpon>201911110355502_LocationModelChanges.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -205,6 +209,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\StateList.cs" />
     <Compile Include="Models\TeacherAvail.cs" />
     <Compile Include="Models\View Models\PersonAndLocationViewModel.cs" />
     <Compile Include="Private\ApiKey.cs" />
@@ -302,6 +307,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Person\Create.cshtml" />
+    <Content Include="Views\Person\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -320,6 +326,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201911102221355_initial.resx">
       <DependentUpon>201911102221355_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911110355502_LocationModelChanges.resx">
+      <DependentUpon>201911110355502_LocationModelChanges.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

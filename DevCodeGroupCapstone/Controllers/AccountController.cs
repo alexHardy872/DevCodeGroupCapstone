@@ -360,7 +360,8 @@ namespace DevCodeGroupCapstone.Controllers
             if (User.Identity.IsAuthenticated)
             {
                  return RedirectToAction("Index", "Manage");
-               
+                 //return RedirectToAction("Create", "Person");
+
             }
 
             if (ModelState.IsValid)
@@ -379,7 +380,11 @@ namespace DevCodeGroupCapstone.Controllers
                     if (result.Succeeded)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                        // this is where to check if user has a user id?
+
                         return RedirectToLocal(returnUrl);
+                        //return RedirectToAction("Index", "Person");
                     }
                 }
                 AddErrors(result);
@@ -453,7 +458,7 @@ namespace DevCodeGroupCapstone.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Person");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

@@ -11,14 +11,16 @@ using System.Web;
 
 namespace DevCodeGroupCapstone.Service_Classes
 {
-    public class GeoCode
+    public static class GeoCode
     {
 
-        public async Task<string[]> GetLongLatFromApi(string address)
-        {          
+        // takes in a loacation
+        public static async Task<string[]> GetLatLongFromApi(Location locationIn)
+        {
+            string formattedAddress = FormatAddress(locationIn);
             string[] latLng = new string[2];
 
-            string requestUri = string.Format("https://maps.googleapis.com/maps/api/geocode/json?address={0}&key={1}", Uri.EscapeDataString(address), ApiKey.secretKey);
+            string requestUri = string.Format("https://maps.googleapis.com/maps/api/geocode/json?address={0}&key={1}", Uri.EscapeDataString(formattedAddress), ApiKey.secretKey);
 
             var httpClient = new HttpClient();
             var response = await httpClient.GetAsync(requestUri);
@@ -36,12 +38,11 @@ namespace DevCodeGroupCapstone.Service_Classes
             latLng[0] = lat;
             latLng[1] = lng;
 
-
             return latLng;
         }
 
 
-        public string FormatAddress(Location location)
+        public static string FormatAddress(Location location)
         {
             string address = location.address1 + " " + location.address2 + " " + location.city + " " + location.state + " " + location.zip;
             return address;
