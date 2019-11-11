@@ -71,14 +71,16 @@ namespace DevCodeGroupCapstone.Controllers
             {
                 string userId = User.Identity.GetUserId();
                 info.person.ApplicationId = userId;
+                int nextLocationId = context.Database.ExecuteSqlCommand("SELECT IDENT_CURRENT('dbo.Locations')") + 1;
+                info.person.LocationId = nextLocationId;
 
                 context.People.Add(info.person);
 
-                //string[] latLng = await GeoCode.GetLatLongFromApi(info.location);
-                //info.location.lat = latLng[0];
-                //info.location.lng = latLng[1];
+                string[] latLng = await GeoCode.GetLatLongFromApi(info.location);
+                info.location.lat = latLng[0];
+                info.location.lng = latLng[1];
 
-                //context.Locations.Add(info.location);
+                context.Locations.Add(info.location);
                 await context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
