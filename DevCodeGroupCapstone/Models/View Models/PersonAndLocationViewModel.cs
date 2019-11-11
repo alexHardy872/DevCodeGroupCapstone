@@ -11,6 +11,10 @@ namespace DevCodeGroupCapstone.Models.View_Models
 
         public Location location { get; set; }
 
+        public List<Lesson> lessons { get; set; }
+
+        public TeacherAvail avail { get; set; }
+
 
 
 
