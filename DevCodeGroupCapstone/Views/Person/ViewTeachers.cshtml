@@ -1,0 +1,45 @@
+﻿@model IEnumerable<DevCodeGroupCapstone.Models.View_Models.PersonAndLocationViewModel>
+
+@{
+    ViewBag.Title = "ViewTeachers";
+}
+
+<h2>ViewTeachers</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.person.firstName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.person.lastName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.person.subjects)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.location.city)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.location.state)
+    </td>
+
+
+
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+    </td>
+</tr>
+}
+
+</table>
