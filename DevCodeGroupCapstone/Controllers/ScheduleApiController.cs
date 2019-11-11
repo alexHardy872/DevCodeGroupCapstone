@@ -23,7 +23,7 @@ namespace DevCodeGroupCapstone.Controllers
         {
             try
             {
-                var availability = await Task.Run(() => )
+                //var availability = await Task.Run(() => )
             }
             catch (Exception e)
             {

@@ -31,19 +31,35 @@ namespace DevCodeGroupCapstone.Controllers
         // GET: TeacherPreference/Create
         public ActionResult Create()
         {
+            // if preferences exist send to edit
             string userId = User.Identity.GetUserId();
-            return View();
+            Person teacher = context.People.Where(p => p.ApplicationId == userId).Single();
+            int countOfPref = context.Preferences.Where(pref => pref.teacherId == teacher.PersonId).Count();
+            if (countOfPref != 0)
+            {
+                return RedirectToAction("Edit"); // make Edit for Preferences
+            }
+
+
+            TeacherPreference preferences = new TeacherPreference();
+
+            return View(preferences);
         }
 
         // POST: TeacherPreference/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(TeacherPreference preferences)
         {
             try
             {
-                // TODO: Add insert logic here
+                string userId = User.Identity.GetUserId();
+                Person teacher = context.People.Where(p => p.ApplicationId == userId).Single();
 
-                return RedirectToAction("Index");
+                preferences.teacherId = teacher.PersonId;
+                context.Preferences.Add(preferences);
+                context.SaveChanges();
+    
+                return RedirectToAction("Index", "Person");
             }
             catch
             {
