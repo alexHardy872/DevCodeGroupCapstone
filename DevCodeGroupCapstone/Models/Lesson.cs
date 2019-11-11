@@ -12,21 +12,20 @@ namespace DevCodeGroupCapstone.Models
         [Key]
         public int LessonId { get; set; }
 
-        [ForeignKey("Student")]//fk attr
-        [Column(Order =0)]
-        public string StudentId { get; set; } //fk's spot at the table
-        public Person Student { get; set; }
-
-        [ForeignKey("Teacher")]//fk attr
-        [Column(Order =1)]
-        public string TeacherId { get; set; } //fk's spot at the table
-        public Person Teacher { get; set; }
-
         public string subject { get; set; }
         public double startTime { get; set; }
         public double endTime { get; set; }
         public double cost { get; set; }
         public bool teacherApproval { get; set; }
+
+        [ForeignKey("Student")]
+        public string studentId { get; set; }
+        public Person Student { get; set; }
+
+        [ForeignKey("Teacher")]
+        public string teacherId { get; set; }
+        public Person Teacher { get; set; }
+
 
         [ForeignKey("Location")]//fk attr
         [Column(Order =2)]
