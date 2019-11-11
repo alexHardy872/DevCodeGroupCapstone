@@ -25,6 +25,10 @@ namespace DevCodeGroupCapstone.Models
         public DbSet<TeacherAvail> TeacherAvailabilities { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
+
+        public DbSet<TeacherPreference> Preferences { get; set; }
+
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

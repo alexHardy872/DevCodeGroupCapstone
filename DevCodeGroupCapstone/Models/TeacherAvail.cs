@@ -11,21 +11,21 @@ namespace DevCodeGroupCapstone.Models
     {
         [Key]
         public int availId { get; set; }
-        public string sundayStart { get; set; }
-        public string sundayStop { get; set; }
-        public string mondayStart { get; set; }
-        public string mondayStop { get; set; }
-        public string tuesdayStart { get; set; }
-        public string tuesdayStop { get; set; }
-        public string wednesdayStart { get; set; }
-
-        public string wednesdayStop { get; set; }
-        public string thursdayStart { get; set; }
-        public string thursdayStop { get; set; }
-        public string fridayStart { get; set; }
-        public string fridayStop { get; set; }
-        public string saturdayStart { get; set; }
-        public string saturdayStop { get; set; }
+        public DateTime sundayStart { get; set; }
+        public DateTime sundayStop { get; set; }
+        public DateTime mondayStart { get; set; }
+        public DateTime mondayStop { get; set; }
+        public DateTime tuesdayStart { get; set; }
+        public DateTime tuesdayStop { get; set; }
+        public DateTime wednesdayStart { get; set; }
+               
+        public DateTime wednesdayStop { get; set; }
+        public DateTime thursdayStart { get; set; }
+        public DateTime thursdayStop { get; set; }
+        public DateTime fridayStart { get; set; }
+        public DateTime fridayStop { get; set; }
+        public DateTime saturdayStart { get; set; }
+        public DateTime saturdayStop { get; set; }
 
 
 
