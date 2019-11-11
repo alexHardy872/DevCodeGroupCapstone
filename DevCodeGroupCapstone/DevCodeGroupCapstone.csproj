@@ -210,7 +210,6 @@
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\StateList.cs" />
     <Compile Include="Models\TeacherAvail.cs" />
-    <Compile Include="Models\TeacherDetails.cs" />
     <Compile Include="Models\TeacherPreference.cs" />
     <Compile Include="Models\View Models\PersonAndLocationViewModel.cs" />
     <Compile Include="Private\ApiKey.cs" />
