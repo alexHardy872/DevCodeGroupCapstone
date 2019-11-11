@@ -206,6 +206,10 @@
     <Compile Include="Migrations\201911111820024_LocationIdNullableOnLessonsTable.designer.cs">
       <DependentUpon>201911111820024_LocationIdNullableOnLessonsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911112011191_AddLessonTypeToLesson.cs" />
+    <Compile Include="Migrations\201911112011191_AddLessonTypeToLesson.designer.cs">
+      <DependentUpon>201911112011191_AddLessonTypeToLesson.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -342,6 +346,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911111820024_LocationIdNullableOnLessonsTable.resx">
       <DependentUpon>201911111820024_LocationIdNullableOnLessonsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911112011191_AddLessonTypeToLesson.resx">
+      <DependentUpon>201911112011191_AddLessonTypeToLesson.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

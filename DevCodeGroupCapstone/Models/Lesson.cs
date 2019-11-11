@@ -33,6 +33,7 @@ namespace DevCodeGroupCapstone.Models
 
         public int Length { get; set; }//in minutes
         public decimal Price { get; set; }
+        public string LessonType { get; set; }
 
     }
 }
