@@ -24,5 +24,11 @@ textarea {
 }
 
 .gLogin {
+    height: 75px;
+    width: 250px;
     background-color: blue;
+    background-image: url("Images/signin-button.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+
 }
