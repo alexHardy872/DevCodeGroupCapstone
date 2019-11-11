@@ -54,9 +54,14 @@ namespace DevCodeGroupCapstone.Controllers
                 string id = User.Identity.GetUserId();
                 Person user = context.People.FirstOrDefault(u => u.ApplicationId == id);
                 lesson.teacherId = user.PersonId;
-                decimal cost = lesson.Price / 60 * lesson.Length;
-                cost = Math.Round(cost, 2);
-                lesson.cost = cost;
+                if (lesson.LessonType == "In-Studio" || lesson.LessonType == "Online")
+                {
+                    var person = context.People.FirstOrDefault(p => p.ApplicationId == id);
+                    lesson.LocationId = person.LocationId;
+                    decimal cost = lesson.Price / 60 * lesson.Length;
+                    cost = Math.Round(cost, 2);
+                    lesson.cost = cost;
+                }
                 context.Lessons.Add(lesson);
                 context.SaveChanges();
                 return RedirectToAction("Index");
