@@ -10,7 +10,7 @@ namespace DevCodeGroupCapstone.Models
     public class Person
     {
         [Key]       
-        public string PersonId { get; set; }
+        public int PersonId { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string subjects { get; set; }

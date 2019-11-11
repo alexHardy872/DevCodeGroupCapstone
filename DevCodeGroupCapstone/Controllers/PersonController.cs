@@ -26,7 +26,7 @@ namespace DevCodeGroupCapstone.Controllers
         public ActionResult Index()
         {
             string userId = User.Identity.GetUserId();
-            var userFound = context.People.Where(p => p.PersonId == userId).Count();
+            var userFound = context.People.Where(p => p.ApplicationId == userId).Count();
 
             if (userFound == 0)
             {
@@ -82,8 +82,9 @@ namespace DevCodeGroupCapstone.Controllers
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception e)
             {
+                Console.WriteLine(e);
                 return View();
             }
         }

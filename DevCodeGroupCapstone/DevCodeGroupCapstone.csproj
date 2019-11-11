@@ -201,6 +201,10 @@
     <Compile Include="Migrations\201911110355502_LocationModelChanges.designer.cs">
       <DependentUpon>201911110355502_LocationModelChanges.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911111400078_adjustPersonIdToInt.cs" />
+    <Compile Include="Migrations\201911111400078_adjustPersonIdToInt.designer.cs">
+      <DependentUpon>201911111400078_adjustPersonIdToInt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -329,6 +333,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911110355502_LocationModelChanges.resx">
       <DependentUpon>201911110355502_LocationModelChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911111400078_adjustPersonIdToInt.resx">
+      <DependentUpon>201911111400078_adjustPersonIdToInt.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
