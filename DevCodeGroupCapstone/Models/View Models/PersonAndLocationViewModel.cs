@@ -13,7 +13,7 @@ namespace DevCodeGroupCapstone.Models.View_Models
 
         public List<Lesson> lessons { get; set; }
 
-        public TeacherAvail avail { get; set; }
+        public List<TeacherAvail> avails { get; set; }
 
 
 

@@ -1,13 +1,21 @@
-﻿using System;
+﻿using DevCodeGroupCapstone.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+
 
 namespace DevCodeGroupCapstone.Controllers
 {
     public class TeacherPreferenceController : Controller
     {
+        ApplicationDbContext context;
+        public TeacherPreferenceController()
+        {
+            context = new ApplicationDbContext();
+        }
         // GET: TeacherPreference
         public ActionResult Index()
         {
@@ -23,6 +31,7 @@ namespace DevCodeGroupCapstone.Controllers
         // GET: TeacherPreference/Create
         public ActionResult Create()
         {
+            string userId = User.Identity.GetUserId();
             return View();
         }
 

@@ -42,7 +42,7 @@ namespace DevCodeGroupCapstone.Controllers
                 info.person = teacher;
                 info.location = context.Locations.Where(l => l.LocationId == teacher.LocationId).Single();
                 info.lessons = context.Lessons.Where(lesson => lesson.teacherId == teacher.PersonId).ToList();
-                info.avail = context.TeacherAvailabilities.Where(a => a.availId == teacher.avail).Single();
+                info.avails = context.TeacherAvailabilities.Where(av => av.PersonId == teacher.PersonId).ToList();
 
                 teachers.Add(info);
             }

@@ -19,8 +19,10 @@ namespace DevCodeGroupCapstone.Models
 
         public int maxMinutes { get; set; }
 
+        [DataType(DataType.Currency)]
         public decimal incementalCostPerMile { get; set; }
 
+        [DataType(DataType.Currency)]
         public decimal incementalCostPerMinute { get; set; }
 
         [ForeignKey("Teacher")]
