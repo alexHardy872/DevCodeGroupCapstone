@@ -311,7 +311,6 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Person\Create.cshtml" />
     <Content Include="Views\Person\Index.cshtml" />
-    <Content Include="Views\Person\ViewTeachers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
