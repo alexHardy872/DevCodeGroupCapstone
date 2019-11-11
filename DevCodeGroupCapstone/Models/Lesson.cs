@@ -37,6 +37,7 @@ namespace DevCodeGroupCapstone.Models
 
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
+        public string LessonType { get; set; }
 
     }
 }

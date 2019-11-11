@@ -1,4 +1,4 @@
-﻿@model DevCodeGroupCapstone.Models.Person
+﻿@model DevCodeGroupCapstone.Models.View_Models.PersonAndLocationViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -7,52 +7,84 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Person</h4>
+    <h4>PersonAndLocationViewModel</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.firstName)
+            @Html.DisplayNameFor(model => model.person.firstName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.firstName)
+            @Html.DisplayFor(model => model.person.firstName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.lastName)
+            @Html.DisplayNameFor(model => model.person.lastName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.lastName)
+            @Html.DisplayFor(model => model.person.lastName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.subjects)
+            @Html.DisplayNameFor(model => model.person.subjects)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.subjects)
+            @Html.DisplayFor(model => model.person.subjects)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ApplicationId)
+            @Html.DisplayNameFor(model => model.person.ApplicationId)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ApplicationId)
+            @Html.DisplayFor(model => model.person.ApplicationId)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.LocationId)
+            @Html.DisplayNameFor(model => model.person.LocationId)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.LocationId)
+            @Html.DisplayFor(model => model.person.LocationId)
         </dd>
-
     </dl>
 </div>
+
+<div id="map" style="height: 400px; width: 400px;"></div>
+
+<script>
+    var map;
+
+    function initMap() {
+
+        var pinLocation = {lat: @Model.location.lat, lng: @Model.location.lng}
+
+        map = new google.maps.Map(document.getElementById('map'), {
+          //center: {lat: -34.397, lng: 150.644},
+            //center: {lat: @Model.location.lat, lng: @Model.location.lng},
+            zoom: 13,
+            center: pinLocation
+        });
+
+        var mapOptions = {
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        styles: [{ featureType: 'all', stylers: [{ saturation: -100 }, { brightness: 5 }] }],
+        scrollwheel: false
+        };
+
+    //this will set a marker to clearly indicate the trash
+     var marker = new google.maps.Marker({ position: pinLocation, map: map });
+     }
+</script>
+@{ var ApiKeyStr = DevCodeGroupCapstone.Private.ApiKey.secretKey;}
+<script src=@ApiKeyStr async defer>
+
+</script>
+
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.PersonId }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.person.PersonId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

@@ -46,15 +46,23 @@ namespace DevCodeGroupCapstone.Controllers
 
                 teachers.Add(info);
             }
-           
+
+            if (teachers == null)
+            {
+                return RedirectToAction("Index");
+            }
+            
             return View(teachers);
         }
 
         // GET: Person/Details/5
         public ActionResult Details(int id)
-        {
-            var personDetails = context.People.Where(p => p.PersonId == id).Single();
-            return View(personDetails);
+        {            
+            PersonAndLocationViewModel personLocationDetails = new PersonAndLocationViewModel();
+            personLocationDetails.person = context.People.Include("Location").Where(p => p.PersonId == id).Single();
+            personLocationDetails.location = context.Locations.Where(l => l.LocationId == personLocationDetails.person.LocationId).Single();
+
+            return View(personLocationDetails);
         }
 
         // GET: Person/Create
@@ -83,9 +91,9 @@ namespace DevCodeGroupCapstone.Controllers
 
                 context.People.Add(info.person);
 
-                //string[] latLng = await GeoCode.GetLatLongFromApi(info.location);
-                //info.location.lat = latLng[0];
-                //info.location.lng = latLng[1];
+                string[] latLng = await GeoCode.GetLatLongFromApi(info.location);
+                info.location.lat = latLng[0];
+                info.location.lng = latLng[1];
 
                 context.Locations.Add(info.location);
                 await context.SaveChangesAsync();
