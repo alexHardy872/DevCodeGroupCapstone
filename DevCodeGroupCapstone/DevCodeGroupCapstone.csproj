@@ -194,17 +194,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201911111530073_initial.cs" />
-    <Compile Include="Migrations\201911111530073_initial.designer.cs">
-      <DependentUpon>201911111530073_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911111735010_Lesson Model Change.cs" />
-    <Compile Include="Migrations\201911111735010_Lesson Model Change.designer.cs">
-      <DependentUpon>201911111735010_Lesson Model Change.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911111820024_LocationIdNullableOnLessonsTable.cs" />
-    <Compile Include="Migrations\201911111820024_LocationIdNullableOnLessonsTable.designer.cs">
-      <DependentUpon>201911111820024_LocationIdNullableOnLessonsTable.cs</DependentUpon>
+    <Compile Include="Migrations\201911112025521_ModelUpdatesXX.cs" />
+    <Compile Include="Migrations\201911112025521_ModelUpdatesXX.designer.cs">
+      <DependentUpon>201911112025521_ModelUpdatesXX.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -335,14 +327,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201911111530073_initial.resx">
-      <DependentUpon>201911111530073_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911111735010_Lesson Model Change.resx">
-      <DependentUpon>201911111735010_Lesson Model Change.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911111820024_LocationIdNullableOnLessonsTable.resx">
-      <DependentUpon>201911111820024_LocationIdNullableOnLessonsTable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201911112025521_ModelUpdatesXX.resx">
+      <DependentUpon>201911112025521_ModelUpdatesXX.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

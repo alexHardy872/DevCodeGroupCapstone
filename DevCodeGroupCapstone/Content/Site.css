@@ -34,5 +34,6 @@ textarea {
 }
 
     .gLogin:hover {
+        background-color: black;
         background-image: url("Images/signin-button2.png");
     }
