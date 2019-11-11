@@ -76,7 +76,7 @@ namespace DevCodeGroupCapstone.Controllers
 
                 string[] latLng = await GeoCode.GetLatLongFromApi(info.location);
                 info.location.lat = latLng[0];
-                info.location.lat = latLng[1];
+                info.location.lng = latLng[1];
 
                 context.Locations.Add(info.location);
                 context.SaveChanges();
