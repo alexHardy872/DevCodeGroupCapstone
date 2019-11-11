@@ -74,12 +74,12 @@ namespace DevCodeGroupCapstone.Controllers
 
                 context.People.Add(info.person);
 
-                string[] latLng = await GeoCode.GetLatLongFromApi(info.location);
-                info.location.lat = latLng[0];
-                info.location.lng = latLng[1];
+                //string[] latLng = await GeoCode.GetLatLongFromApi(info.location);
+                //info.location.lat = latLng[0];
+                //info.location.lng = latLng[1];
 
-                context.Locations.Add(info.location);
-                context.SaveChanges();
+                //context.Locations.Add(info.location);
+                await context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             catch (Exception e)

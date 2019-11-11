@@ -9,7 +9,8 @@ namespace DevCodeGroupCapstone.Models
 {
     public class Person
     {
-        [Key]       
+        [Key]
+        // [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PersonId { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
@@ -17,12 +18,10 @@ namespace DevCodeGroupCapstone.Models
 
         [ForeignKey("ApplicationUser")]//fk attr
         public string ApplicationId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }//the class the fk attr is referencing
 
         [ForeignKey("Location")]
-        public int LocationId { get; set; }
-
-        public ApplicationUser ApplicationUser { get; set; }//the class the fk attr is referencing
+        public int? LocationId { get; set; }
         public Location Location { get; set; }
-
     }
 }
