@@ -41,6 +41,9 @@ namespace DevCodeGroupCapstone.Controllers
                 PersonAndLocationViewModel info = new PersonAndLocationViewModel();
                 info.person = teacher;
                 info.location = context.Locations.Where(l => l.LocationId == teacher.LocationId).Single();
+                info.lessons = context.Lessons.Where(lesson => lesson.teacherId == teacher.PersonId).ToList();
+                info.avail = context.TeacherAvailabilities.Where(a => a.availId == teacher.avail).Single();
+
                 teachers.Add(info);
             }
            
@@ -50,7 +53,8 @@ namespace DevCodeGroupCapstone.Controllers
         // GET: Person/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var personDetails = context.People.Where(p => p.PersonId == id).Single();
+            return View(personDetails);
         }
 
         // GET: Person/Create

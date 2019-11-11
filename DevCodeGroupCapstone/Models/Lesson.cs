@@ -28,7 +28,7 @@ namespace DevCodeGroupCapstone.Models
 
         [ForeignKey("Location")]//fk attr
         [Column(Order =2)]
-        public int LocationId { get; set; } //fk's spot at the table
+        public int? LocationId { get; set; } //fk's spot at the table
         public Location Location { get; set; }//the class the fk attr is referencing
 
         public int Length { get; set; }//in minutes
