@@ -43,15 +43,23 @@ namespace DevCodeGroupCapstone.Controllers
                 info.location = context.Locations.Where(l => l.LocationId == teacher.LocationId).Single();
                 teachers.Add(info);
             }
-           
+
+            if (teachers == null)
+            {
+                return RedirectToAction("Index");
+            }
+            
             return View(teachers);
         }
 
         // GET: Person/Details/5
         public ActionResult Details(int id)
-        {
-            var personDetails = context.People.Where(p => p.PersonId == id).Single();
-            return View(personDetails);
+        {            
+            PersonAndLocationViewModel personLocationDetails = new PersonAndLocationViewModel();
+            personLocationDetails.person = context.People.Include("Location").Where(p => p.PersonId == id).Single();
+            personLocationDetails.location = context.Locations.Where(l => l.LocationId == personLocationDetails.person.LocationId).Single();
+
+            return View(personLocationDetails);
         }
 
         // GET: Person/Create
