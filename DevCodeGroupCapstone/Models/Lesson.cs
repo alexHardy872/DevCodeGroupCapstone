@@ -15,6 +15,8 @@ namespace DevCodeGroupCapstone.Models
         public string subject { get; set; }
         public double startTime { get; set; }
         public double endTime { get; set; }
+
+        [DataType(DataType.Currency)]
         public decimal cost { get; set; }
         public bool teacherApproval { get; set; }
 
@@ -32,6 +34,8 @@ namespace DevCodeGroupCapstone.Models
         public Location Location { get; set; }//the class the fk attr is referencing
 
         public int Length { get; set; }//in minutes
+
+        [DataType(DataType.Currency)]
         public decimal Price { get; set; }
         public string LessonType { get; set; }
 
