@@ -1,0 +1,45 @@
+﻿@model IEnumerable<DevCodeGroupCapstone.Models.TeacherAvail>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.start)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.end)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PersonId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.start)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.end)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PersonId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.availId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.availId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.availId })
+        </td>
+    </tr>
+}
+
+</table>
