@@ -432,6 +432,9 @@
     <Content Include="Views\TeacherAvailability\Edit.cshtml" />
     <Content Include="Views\TeacherAvailability\List.cshtml" />
     <Content Include="Views\TeacherAvailability\Delete.cshtml" />
+    <Content Include="Views\Lesson\Edit.cshtml" />
+    <Content Include="Views\Lesson\List.cshtml" />
+    <Content Include="Views\Lesson\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

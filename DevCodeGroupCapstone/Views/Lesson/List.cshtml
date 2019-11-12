@@ -1,0 +1,93 @@
+﻿@model IEnumerable<DevCodeGroupCapstone.Models.Lesson>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.subject)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.startTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.endTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.teacherApproval)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.studentId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.teacherId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LocationId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Length)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LessonType)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.subject)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.startTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.endTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cost)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.teacherApproval)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.studentId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.teacherId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LocationId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Length)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LessonType)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.LessonId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.LessonId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.LessonId })
+        </td>
+    </tr>
+}
+
+</table>
