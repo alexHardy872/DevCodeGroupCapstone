@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
 using DevCodeGroupCapstone.Models;
+using System.Reflection;
 
 namespace DevCodeGroupCapstone.Controllers
 {
@@ -34,10 +35,10 @@ namespace DevCodeGroupCapstone.Controllers
 
                 PropertyInfo[] properties = typeof(TeacherAvail).GetProperties();
 
-                foreach (var item in person)
-                {
+                //foreach (var item in person)
+                //{
 
-                }
+                //}
 
 
             }
