@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-
+using System.Threading.Tasks;
 
 namespace DevCodeGroupCapstone.Controllers
 {
@@ -48,7 +48,7 @@ namespace DevCodeGroupCapstone.Controllers
 
         // POST: TeacherPreference/Create
         [HttpPost]
-        public ActionResult Create(TeacherPreference preferences)
+        public async Task<ActionResult> Create(TeacherPreference preferences)
         {
             try
             {
@@ -56,32 +56,46 @@ namespace DevCodeGroupCapstone.Controllers
                 Person teacher = context.People.Where(p => p.ApplicationId == userId).Single();
 
                 preferences.teacherId = teacher.PersonId;
+
                 context.Preferences.Add(preferences);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
     
                 return RedirectToAction("Index", "Person");
             }
-            catch
+            catch (Exception e)
             {
+                Console.WriteLine(e);
                 return View();
             }
         }
 
         // GET: TeacherPreference/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit()
         {
-            return View();
+            string userId = User.Identity.GetUserId();
+            Person teacher = context.People.Where(p => p.ApplicationId == userId).Single();
+            TeacherPreference preference = context.Preferences.Where(pref => pref.teacherId == teacher.PersonId).Single();
+            return View(preference);
         }
 
         // POST: TeacherPreference/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(TeacherPreference preference)
         {
             try
             {
-                // TODO: Add update logic here
+                string userId = User.Identity.GetUserId();
+                Person teacher = context.People.Where(p => p.ApplicationId == userId).Single();
+                TeacherPreference preferenceDb = context.Preferences.Where(pref => pref.teacherId == teacher.PersonId).Single();
 
-                return RedirectToAction("Index");
+                preferenceDb.maxDistance = preference.maxDistance;
+                preferenceDb.incementalCost = preference.incementalCost;
+                preferenceDb.distanceType = preference.distanceType;
+                preferenceDb.defaultLessonLength = preference.defaultLessonLength;
+                
+
+                context.SaveChanges();
+                return RedirectToAction("Index","Person");
             }
             catch
             {

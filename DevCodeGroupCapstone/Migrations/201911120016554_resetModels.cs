@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class reseTables : DbMigration
+    public partial class resetModels : DbMigration
     {
         public override void Up()
         {
@@ -137,11 +137,10 @@
                 c => new
                     {
                         TeacherPreferenceId = c.Int(nullable: false, identity: true),
-                        defaultLessonLength = c.Time(nullable: false, precision: 7),
-                        maxMiles = c.Int(nullable: false),
-                        maxMinutes = c.Int(nullable: false),
-                        incementalCostPerMile = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        incementalCostPerMinute = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        defaultLessonLength = c.Int(nullable: false),
+                        distanceType = c.Int(nullable: false),
+                        maxDistance = c.Int(nullable: false),
+                        incementalCost = c.Decimal(nullable: false, precision: 18, scale: 2),
                         teacherId = c.Int(),
                     })
                 .PrimaryKey(t => t.TeacherPreferenceId)

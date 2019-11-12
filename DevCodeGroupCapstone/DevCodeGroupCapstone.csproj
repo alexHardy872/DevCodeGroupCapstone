@@ -196,9 +196,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201911112259069_reseTables.cs" />
-    <Compile Include="Migrations\201911112259069_reseTables.designer.cs">
-      <DependentUpon>201911112259069_reseTables.cs</DependentUpon>
+    <Compile Include="Migrations\201911120016554_resetModels.cs" />
+    <Compile Include="Migrations\201911120016554_resetModels.designer.cs">
+      <DependentUpon>201911120016554_resetModels.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -208,6 +208,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\RadiusOptions.cs" />
     <Compile Include="Models\StateList.cs" />
     <Compile Include="Models\TeacherAvail.cs" />
     <Compile Include="Models\TeacherPreference.cs" />
@@ -413,6 +414,7 @@
     <Content Include="Views\Lesson\Create.cshtml" />
     <Content Include="Views\Person\Details.cshtml" />
     <Content Include="Views\TeacherPreference\Create.cshtml" />
+    <Content Include="Views\TeacherPreference\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -430,8 +432,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201911112259069_reseTables.resx">
-      <DependentUpon>201911112259069_reseTables.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201911120016554_resetModels.resx">
+      <DependentUpon>201911120016554_resetModels.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
