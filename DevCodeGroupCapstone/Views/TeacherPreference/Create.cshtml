@@ -1,16 +1,16 @@
 ﻿@model DevCodeGroupCapstone.Models.TeacherPreference
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>TeacherPreference</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.defaultLessonLength, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Default Lesson Length", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.defaultLessonLength, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.defaultLessonLength, "", new { @class = "text-danger" })
@@ -18,7 +18,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.distanceType, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Charge for Travel", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EnumDropDownListFor(model => model.distanceType, new { htmlAttributes = new { @class = "form-control" } })
 
@@ -27,7 +27,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.maxDistance, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Radius of travel in miles or minutes", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.maxDistance, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.maxDistance, "", new { @class = "text-danger" })
@@ -35,10 +35,18 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.incementalCost, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Charge per unit of travel", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.incementalCost, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.incementalCost, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Hours before cancellation for refund or makeup", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TimeBeforeCancellation, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TimeBeforeCancellation, "", new { @class = "text-danger" })
             </div>
         </div>
 

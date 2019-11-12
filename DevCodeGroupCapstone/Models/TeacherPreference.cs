@@ -23,7 +23,9 @@ namespace DevCodeGroupCapstone.Models
         [DataType(DataType.Currency)]
         public decimal incementalCost { get; set; }
 
-    
+        public int TimeBeforeCancellation { get; set; }
+
+
 
         [ForeignKey("Teacher")]
         public int? teacherId { get; set; }
