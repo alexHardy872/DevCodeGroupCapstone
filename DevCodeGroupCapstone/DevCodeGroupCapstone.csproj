@@ -192,6 +192,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\ScheduleApiController.cs" />
+    <Compile Include="Controllers\TeacherAvailabilityController.cs" />
     <Compile Include="Controllers\TeacherPreferenceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -415,6 +416,10 @@
     <Content Include="Views\Person\Details.cshtml" />
     <Content Include="Views\TeacherPreference\Create.cshtml" />
     <Content Include="Views\TeacherPreference\Edit.cshtml" />
+    <Content Include="Views\TeacherAvailability\Create.cshtml" />
+    <Content Include="Views\TeacherAvailability\Edit.cshtml" />
+    <Content Include="Views\TeacherAvailability\List.cshtml" />
+    <Content Include="Views\TeacherAvailability\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
