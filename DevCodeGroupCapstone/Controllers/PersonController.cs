@@ -62,6 +62,10 @@ namespace DevCodeGroupCapstone.Controllers
             personLocationDetails.person = context.People.Include("Location").Where(p => p.PersonId == id).Single();
             personLocationDetails.location = context.Locations.Where(l => l.LocationId == personLocationDetails.person.LocationId).Single();
 
+            var tempTeacher = context.Preferences.Where(p => p.teacherId == personLocationDetails.person.PersonId).SingleOrDefault();//tlc
+            int teacherPreferenceRadius = tempTeacher.maxDistance;//tlc
+            ViewBag.radius = teacherPreferenceRadius;//tlc
+
             return View(personLocationDetails);
         }
 

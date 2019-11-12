@@ -33,7 +33,8 @@ namespace DevCodeGroupCapstone.Controllers
         {
             // if preferences exist send to edit
             string userId = User.Identity.GetUserId();
-            Person teacher = context.People.Where(p => p.ApplicationId == userId).Single();
+            //tlc Person teacher = context.People.Where(p => p.ApplicationId == userId).Single();
+            Person teacher = context.People.Include("Location").Where(p => p.ApplicationId == userId).Single(); //tlc
             int countOfPref = context.Preferences.Where(pref => pref.teacherId == teacher.PersonId).Count();
             if (countOfPref != 0)
             {
