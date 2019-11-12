@@ -32,12 +32,7 @@ namespace DevCodeGroupCapstone.Controllers
 
                 TeacherAvail teacherAvail = new TeacherAvail();
 
-                PropertyInfo[] properties = typeof(TeacherAvail).GetProperties();
-
-                foreach (var item in person)
-                {
-
-                }
+              
 
 
             }

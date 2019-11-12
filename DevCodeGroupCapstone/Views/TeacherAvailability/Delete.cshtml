@@ -8,9 +8,18 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
+
+
     <h4>TeacherAvail</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.weekDay)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.weekDay)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.start)
         </dt>
@@ -27,18 +36,19 @@
             @Html.DisplayFor(model => model.end)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PersonId)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.PersonId)
-        </dd>
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(model => model.availId)
+        @Html.HiddenFor(model => model.weekDay)
+        @Html.HiddenFor(model => model.start)
+        @Html.HiddenFor(model => model.end)
+        @Html.HiddenFor(model => model.PersonId)
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |

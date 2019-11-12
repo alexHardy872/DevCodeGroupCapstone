@@ -20,7 +20,8 @@ namespace DevCodeGroupCapstone.Controllers
         // GET: TeacherAvailability
         public ActionResult Index()
         {
-            return View();
+
+            return RedirectToAction("List");
         }
 
         // GET: TeacherAvailability/Details/5
@@ -56,6 +57,21 @@ namespace DevCodeGroupCapstone.Controllers
             }
         }
 
+
+        // GET: TeacherAvailability/Create
+        public ActionResult List()
+        {
+
+            string userId = User.Identity.GetUserId();
+            Person teacher = context.People.Where(p => p.ApplicationId == userId).Single();
+            List<TeacherAvail> avails = new List<TeacherAvail>();
+            avails = context.TeacherAvailabilities.Where(a => a.PersonId == teacher.PersonId).ToList();
+           
+            return View(avails);
+        }
+
+     
+
         // GET: TeacherAvailability/Edit/5
         public ActionResult Edit(int id)
         {
@@ -84,21 +100,25 @@ namespace DevCodeGroupCapstone.Controllers
         // GET: TeacherAvailability/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            TeacherAvail availToRemove = context.TeacherAvailabilities.Where(a => a.availId == id).FirstOrDefault();
+            return View(availToRemove);
         }
 
         // POST: TeacherAvailability/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(TeacherAvail avail)
         {
             try
             {
-                // TODO: Add delete logic here
+                var availDb = context.TeacherAvailabilities.Where(a => a.availId == avail.availId).FirstOrDefault();
+                context.TeacherAvailabilities.Remove(availDb);
 
+                context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception e)
             {
+                Console.WriteLine(e);
                 return View();
             }
         }
