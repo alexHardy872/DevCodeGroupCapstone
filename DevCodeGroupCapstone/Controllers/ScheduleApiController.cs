@@ -33,16 +33,7 @@ namespace DevCodeGroupCapstone.Controllers
 
                 TeacherAvail teacherAvail = new TeacherAvail();
 
-<<<<<<< HEAD
-              
-=======
-                PropertyInfo[] properties = typeof(TeacherAvail).GetProperties();
 
-                //foreach (var item in person)
-                //{
-
-                //}
->>>>>>> 0fb5dfbecd7e0dea0af0c34a417d6db967470123
 
 
             }
