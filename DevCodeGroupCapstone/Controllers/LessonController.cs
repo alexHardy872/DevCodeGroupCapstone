@@ -19,9 +19,12 @@ namespace DevCodeGroupCapstone.Controllers
             lessonLocation = new string[3] { "In-Studio", "In-Home", "Online" };
         }
         // GET: Lesson
-        public ActionResult Index()
+        public ActionResult List()
         {
-            return View();
+            var id = User.Identity.GetUserId();
+            var user = context.People.FirstOrDefault(p => p.ApplicationId == id);
+            List<Lesson> lessons = context.Lessons.Where(l => l.teacherId == user.PersonId).ToList();
+            return View(lessons);
         }
 
         // GET: Lesson/Details/5
@@ -64,7 +67,7 @@ namespace DevCodeGroupCapstone.Controllers
                 }
                 context.Lessons.Add(lesson);
                 context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("List");
             }
             catch (Exception e)
             {
@@ -76,18 +79,45 @@ namespace DevCodeGroupCapstone.Controllers
         // GET: Lesson/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            ViewBag.LessonType = new SelectList(lessonLocation);
+            Lesson lesson = context.Lessons.FirstOrDefault(l => l.LessonId == id);
+            return View(lesson);
         }
 
         // POST: Lesson/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, Lesson lesson)
         {
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                var lessonType = new SelectList(new[]
+{
+                    new {value = 1, text = "In-Studio"},
+                    new {value = 2, text = "In-Home"},
+                    new {value = 3, text = "Online"}
+                });
+                ViewBag.LessonType = lessonType;
+                Lesson lessonFromDb = context.Lessons.FirstOrDefault(l => l.LessonId == id);
+                lessonFromDb.subject = lesson.subject;
+                lessonFromDb.Length = lesson.Length;
+                lessonFromDb.Price = lesson.Price;
+                lessonFromDb.LessonType = lesson.LessonType;
+                if (lesson.LessonType == "In-Studio" || lesson.LessonType == "Online")
+                {
+                    var userId = User.Identity.GetUserId();
+                    var user = context.People.FirstOrDefault(p => p.ApplicationId == userId);
+                    decimal cost = lesson.Price / 60 * lesson.Length;
+                    cost = Math.Round(cost, 2);
+                    lessonFromDb.LocationId = user.LocationId;
+                    lessonFromDb.cost = cost;
+                    return RedirectToAction("List");
+                }
+                else
+                {
+                    lessonFromDb.LocationId = null;
+                    lessonFromDb.cost = 0;
+                    return RedirectToAction("List");
+                }   
             }
             catch
             {
@@ -98,18 +128,20 @@ namespace DevCodeGroupCapstone.Controllers
         // GET: Lesson/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Lesson lesson = context.Lessons.FirstOrDefault(l => l.LessonId == id);
+            return View(lesson);
         }
 
         // POST: Lesson/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, Lesson lesson)
         {
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                lesson = context.Lessons.FirstOrDefault(l => l.LessonId == id);
+                context.Lessons.Remove(lesson);
+                context.SaveChanges();
+                return RedirectToAction("List");
             }
             catch
             {

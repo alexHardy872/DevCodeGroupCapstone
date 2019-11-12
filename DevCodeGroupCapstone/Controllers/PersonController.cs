@@ -57,13 +57,14 @@ namespace DevCodeGroupCapstone.Controllers
 
         // GET: Person/Details/5
         public ActionResult Details(int id)
-        {            
+        {
+            double metersToMiles = 1609.34;
             PersonAndLocationViewModel personLocationDetails = new PersonAndLocationViewModel();
             personLocationDetails.person = context.People.Include("Location").Where(p => p.PersonId == id).Single();
             personLocationDetails.location = context.Locations.Where(l => l.LocationId == personLocationDetails.person.LocationId).Single();
 
             var tempTeacher = context.Preferences.Where(p => p.teacherId == personLocationDetails.person.PersonId).SingleOrDefault();//tlc
-            int teacherPreferenceRadius = tempTeacher.maxDistance;//tlc
+            double teacherPreferenceRadius = tempTeacher.maxDistance * metersToMiles;//tlc
             ViewBag.radius = teacherPreferenceRadius;//tlc
 
             return View(personLocationDetails);
