@@ -196,9 +196,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+<<<<<<< Updated upstream
     <Compile Include="Migrations\201911120016554_resetModels.cs" />
     <Compile Include="Migrations\201911120016554_resetModels.designer.cs">
       <DependentUpon>201911120016554_resetModels.cs</DependentUpon>
+=======
+    <Compile Include="Migrations\201911112236568_PostMerge.cs" />
+    <Compile Include="Migrations\201911112236568_PostMerge.designer.cs">
+      <DependentUpon>201911112236568_PostMerge.cs</DependentUpon>
+>>>>>>> Stashed changes
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -432,8 +438,13 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< Updated upstream
     <EmbeddedResource Include="Migrations\201911120016554_resetModels.resx">
       <DependentUpon>201911120016554_resetModels.cs</DependentUpon>
+=======
+    <EmbeddedResource Include="Migrations\201911112236568_PostMerge.resx">
+      <DependentUpon>201911112236568_PostMerge.cs</DependentUpon>
+>>>>>>> Stashed changes
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
