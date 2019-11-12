@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class ModelUpdatesXX : DbMigration
+    public partial class resetModels : DbMigration
     {
         public override void Up()
         {
@@ -22,6 +22,7 @@
                         teacherId = c.Int(),
                         Length = c.Int(nullable: false),
                         Price = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        LessonType = c.String(),
                     })
                 .PrimaryKey(t => t.LessonId)
                 .ForeignKey("dbo.Locations", t => t.LocationId)
@@ -55,17 +56,15 @@
                         firstName = c.String(),
                         lastName = c.String(),
                         subjects = c.String(),
+                        phoneNumber = c.String(),
                         ApplicationId = c.String(maxLength: 128),
                         LocationId = c.Int(),
-                        avail = c.Int(),
                     })
                 .PrimaryKey(t => t.PersonId)
                 .ForeignKey("dbo.AspNetUsers", t => t.ApplicationId)
                 .ForeignKey("dbo.Locations", t => t.LocationId)
-                .ForeignKey("dbo.TeacherAvails", t => t.avail)
                 .Index(t => t.ApplicationId)
-                .Index(t => t.LocationId)
-                .Index(t => t.avail);
+                .Index(t => t.LocationId);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -126,34 +125,27 @@
                 .Index(t => t.RoleId);
             
             CreateTable(
-                "dbo.TeacherAvails",
-                c => new
-                    {
-                        availId = c.Int(nullable: false, identity: true),
-                        sundayStart = c.String(),
-                        sundayStop = c.String(),
-                        mondayStart = c.String(),
-                        mondayStop = c.String(),
-                        tuesdayStart = c.String(),
-                        tuesdayStop = c.String(),
-                        wednesdayStart = c.String(),
-                        wednesdayStop = c.String(),
-                        thursdayStart = c.String(),
-                        thursdayStop = c.String(),
-                        fridayStart = c.String(),
-                        fridayStop = c.String(),
-                        saturdayStart = c.String(),
-                        saturdayStop = c.String(),
-                    })
-                .PrimaryKey(t => t.availId);
-            
-            CreateTable(
                 "dbo.Messages",
                 c => new
                     {
                         MessageId = c.Int(nullable: false, identity: true),
                     })
                 .PrimaryKey(t => t.MessageId);
+            
+            CreateTable(
+                "dbo.TeacherPreferences",
+                c => new
+                    {
+                        TeacherPreferenceId = c.Int(nullable: false, identity: true),
+                        defaultLessonLength = c.Int(nullable: false),
+                        distanceType = c.Int(nullable: false),
+                        maxDistance = c.Int(nullable: false),
+                        incementalCost = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        teacherId = c.Int(),
+                    })
+                .PrimaryKey(t => t.TeacherPreferenceId)
+                .ForeignKey("dbo.People", t => t.teacherId)
+                .Index(t => t.teacherId);
             
             CreateTable(
                 "dbo.AspNetRoles",
@@ -165,35 +157,52 @@
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.Name, unique: true, name: "RoleNameIndex");
             
+            CreateTable(
+                "dbo.TeacherAvails",
+                c => new
+                    {
+                        availId = c.Int(nullable: false, identity: true),
+                        weekDay = c.Int(nullable: false),
+                        start = c.DateTime(nullable: false),
+                        end = c.DateTime(nullable: false),
+                        PersonId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.availId)
+                .ForeignKey("dbo.People", t => t.PersonId, cascadeDelete: true)
+                .Index(t => t.PersonId);
+            
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.TeacherAvails", "PersonId", "dbo.People");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.TeacherPreferences", "teacherId", "dbo.People");
             DropForeignKey("dbo.Lessons", "teacherId", "dbo.People");
             DropForeignKey("dbo.Lessons", "studentId", "dbo.People");
-            DropForeignKey("dbo.People", "avail", "dbo.TeacherAvails");
             DropForeignKey("dbo.People", "LocationId", "dbo.Locations");
             DropForeignKey("dbo.People", "ApplicationId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Lessons", "LocationId", "dbo.Locations");
+            DropIndex("dbo.TeacherAvails", new[] { "PersonId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.TeacherPreferences", new[] { "teacherId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
-            DropIndex("dbo.People", new[] { "avail" });
             DropIndex("dbo.People", new[] { "LocationId" });
             DropIndex("dbo.People", new[] { "ApplicationId" });
             DropIndex("dbo.Lessons", new[] { "teacherId" });
             DropIndex("dbo.Lessons", new[] { "studentId" });
             DropIndex("dbo.Lessons", new[] { "LocationId" });
-            DropTable("dbo.AspNetRoles");
-            DropTable("dbo.Messages");
             DropTable("dbo.TeacherAvails");
+            DropTable("dbo.AspNetRoles");
+            DropTable("dbo.TeacherPreferences");
+            DropTable("dbo.Messages");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");

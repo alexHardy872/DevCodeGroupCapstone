@@ -192,12 +192,13 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\ScheduleApiController.cs" />
+    <Compile Include="Controllers\TeacherPreferenceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201911112025521_ModelUpdatesXX.cs" />
-    <Compile Include="Migrations\201911112025521_ModelUpdatesXX.designer.cs">
-      <DependentUpon>201911112025521_ModelUpdatesXX.cs</DependentUpon>
+    <Compile Include="Migrations\201911120016554_resetModels.cs" />
+    <Compile Include="Migrations\201911120016554_resetModels.designer.cs">
+      <DependentUpon>201911120016554_resetModels.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -207,8 +208,10 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\RadiusOptions.cs" />
     <Compile Include="Models\StateList.cs" />
     <Compile Include="Models\TeacherAvail.cs" />
+    <Compile Include="Models\TeacherPreference.cs" />
     <Compile Include="Models\View Models\PersonAndLocationViewModel.cs" />
     <Compile Include="Private\ApiKey.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -410,6 +413,8 @@
     <Content Include="Views\Person\ViewTeachers.cshtml" />
     <Content Include="Views\Lesson\Create.cshtml" />
     <Content Include="Views\Person\Details.cshtml" />
+    <Content Include="Views\TeacherPreference\Create.cshtml" />
+    <Content Include="Views\TeacherPreference\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -427,8 +432,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201911112025521_ModelUpdatesXX.resx">
-      <DependentUpon>201911112025521_ModelUpdatesXX.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201911120016554_resetModels.resx">
+      <DependentUpon>201911120016554_resetModels.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

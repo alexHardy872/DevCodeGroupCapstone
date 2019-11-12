@@ -7,13 +7,13 @@ namespace DevCodeGroupCapstone.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.0-preview2-19525-03")]
-    public sealed partial class ModelUpdatesXX : IMigrationMetadata
+    public sealed partial class resetModels : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ModelUpdatesXX));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(resetModels));
         
         string IMigrationMetadata.Id
         {
-            get { return "201911112025521_ModelUpdatesXX"; }
+            get { return "201911120016554_resetModels"; }
         }
         
         string IMigrationMetadata.Source
