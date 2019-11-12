@@ -23,7 +23,23 @@ namespace DevCodeGroupCapstone.Controllers
         {
             try
             {
-                //var availability = await Task.Run(() => )
+                // todo: Index grab of events for Calendar
+                var person = await Task.Run(() => context.People
+                    .Include("avail")
+                    .Where(p => p.ApplicationId == Id)
+                    .SingleOrDefault()
+                    );
+
+                TeacherAvail teacherAvail = new TeacherAvail();
+
+                PropertyInfo[] properties = typeof(TeacherAvail).GetProperties();
+
+                foreach (var item in person)
+                {
+
+                }
+
+
             }
             catch (Exception e)
             {
