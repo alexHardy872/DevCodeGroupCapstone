@@ -1,18 +1,9 @@
-﻿using System;
+﻿using DevCodeGroupCapstone.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using DevCodeGroupCapstone.Models;
-using System.Reflection;
 
 
 namespace DevCodeGroupCapstone.Controllers
@@ -56,7 +47,7 @@ namespace DevCodeGroupCapstone.Controllers
 
                 foreach (var availableTimeSpan in availabilities)
                 {
-                    DayOfWeek dayOfWeek = availableTimeSpan.weekDay; 
+                    DayOfWeek dayOfWeek = availableTimeSpan.weekDay;
                     DateTime workingDate = GetNextDayOfWeekForDateTime(dayOfWeek, beginningCalendarDateTime);
                     DateTime workingStartTime = availableTimeSpan.start;
                     DateTime finishedTime = workingStartTime + timeSpanOfLesson;
@@ -68,6 +59,8 @@ namespace DevCodeGroupCapstone.Controllers
                         Event currentEvent = new Event();
                         currentEvent.start = CombineDateAndTime(workingDate, workingStartTime);
                         currentEvent.end = CombineDateAndTime(workingDate, workingStartTime + timeSpanOfLesson);
+                        currentEvent.backgroundColor = "#eaf0ce";
+                        currentEvent.title = "Available";
                         eventList.Add(currentEvent);
 
                         workingStartTime = currentEvent.end;
@@ -81,7 +74,8 @@ namespace DevCodeGroupCapstone.Controllers
             {
                 return InternalServerError(e);
             }
-;        }
+;
+        }
 
         private DateTime GetNextDayOfWeekForDateTime(DayOfWeek dayOfWeek, DateTime dateTime)
         {

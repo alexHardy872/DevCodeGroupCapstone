@@ -3,7 +3,6 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace DevCodeGroupCapstone.Controllers
@@ -57,6 +56,7 @@ namespace DevCodeGroupCapstone.Controllers
                 string id = User.Identity.GetUserId();
                 Person user = context.People.FirstOrDefault(u => u.ApplicationId == id);
                 lesson.teacherId = user.PersonId;
+
                 if (lesson.LessonType == "In-Studio" || lesson.LessonType == "Online")
                 {
                     var person = context.People.FirstOrDefault(p => p.ApplicationId == id);
@@ -65,6 +65,7 @@ namespace DevCodeGroupCapstone.Controllers
                     cost = Math.Round(cost, 2);
                     lesson.cost = cost;
                 }
+
                 context.Lessons.Add(lesson);
                 context.SaveChanges();
                 return RedirectToAction("List");
@@ -117,7 +118,7 @@ namespace DevCodeGroupCapstone.Controllers
                     lessonFromDb.LocationId = null;
                     lessonFromDb.cost = 0;
                     return RedirectToAction("List");
-                }   
+                }
             }
             catch
             {
