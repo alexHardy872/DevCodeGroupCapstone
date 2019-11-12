@@ -37,3 +37,9 @@ textarea {
         background-color: black;
         background-image: url("Images/signin-button2.png");
     }
+
+    .greenBar{
+        background-color: rgb(56, 119, 128);
+        
+
+    }

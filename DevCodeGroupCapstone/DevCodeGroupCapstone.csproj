@@ -199,6 +199,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\ScheduleApiController.cs" />
+    <Compile Include="Controllers\TeacherAvailabilityController.cs" />
     <Compile Include="Controllers\TeacherPreferenceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -206,6 +207,10 @@
     <Compile Include="Migrations\201911120016554_resetModels.cs" />
     <Compile Include="Migrations\201911120016554_resetModels.designer.cs">
       <DependentUpon>201911120016554_resetModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911121725101_AddTimeBeforeCancellationToTeacherPreferences.cs" />
+    <Compile Include="Migrations\201911121725101_AddTimeBeforeCancellationToTeacherPreferences.designer.cs">
+      <DependentUpon>201911121725101_AddTimeBeforeCancellationToTeacherPreferences.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -423,6 +428,10 @@
     <Content Include="Views\Person\Details.cshtml" />
     <Content Include="Views\TeacherPreference\Create.cshtml" />
     <Content Include="Views\TeacherPreference\Edit.cshtml" />
+    <Content Include="Views\TeacherAvailability\Create.cshtml" />
+    <Content Include="Views\TeacherAvailability\Edit.cshtml" />
+    <Content Include="Views\TeacherAvailability\List.cshtml" />
+    <Content Include="Views\TeacherAvailability\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -442,6 +451,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201911120016554_resetModels.resx">
       <DependentUpon>201911120016554_resetModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911121725101_AddTimeBeforeCancellationToTeacherPreferences.resx">
+      <DependentUpon>201911121725101_AddTimeBeforeCancellationToTeacherPreferences.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
