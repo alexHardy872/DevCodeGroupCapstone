@@ -231,6 +231,10 @@
     <Compile Include="Migrations\201911121725101_AddTimeBeforeCancellationToTeacherPreferences.designer.cs">
       <DependentUpon>201911121725101_AddTimeBeforeCancellationToTeacherPreferences.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911131606219_AddTravelDuration.cs" />
+    <Compile Include="Migrations\201911131606219_AddTravelDuration.designer.cs">
+      <DependentUpon>201911131606219_AddTravelDuration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201911130031237_UpdateLessonToDateTimes.cs" />
     <Compile Include="Migrations\201911130031237_UpdateLessonToDateTimes.designer.cs">
       <DependentUpon>201911130031237_UpdateLessonToDateTimes.cs</DependentUpon>
@@ -252,6 +256,7 @@
     <Compile Include="Models\View Models\PersonAndLocationViewModel.cs" />
     <Compile Include="Private\ApiKey.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service Classes\DistanceMatrix.cs" />
     <Compile Include="Service Classes\GeoCode.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -484,6 +489,9 @@
     <EmbeddedResource Include="Migrations\201911121725101_AddTimeBeforeCancellationToTeacherPreferences.resx">
       <DependentUpon>201911121725101_AddTimeBeforeCancellationToTeacherPreferences.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911131606219_AddTravelDuration.resx">
+      <DependentUpon>201911131606219_AddTravelDuration.cs</DependentUpon>
+      </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911130031237_UpdateLessonToDateTimes.resx">
       <DependentUpon>201911130031237_UpdateLessonToDateTimes.cs</DependentUpon>
     </EmbeddedResource>
