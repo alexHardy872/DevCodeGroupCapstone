@@ -58,7 +58,8 @@ namespace DevCodeGroupCapstone.Controllers
                 string id = User.Identity.GetUserId();
                 Person user = context.People.FirstOrDefault(u => u.ApplicationId == id);
                 lesson.teacherId = user.PersonId;
-
+                var preferences = context.Preferences.FirstOrDefault(p => p.teacherId == user.PersonId);
+                lesson.Length = preferences.defaultLessonLength;
                 if (lesson.LessonType == "In-Studio" || lesson.LessonType == "Online")
                 {
                     var person = context.People.FirstOrDefault(p => p.ApplicationId == id);
@@ -102,7 +103,6 @@ namespace DevCodeGroupCapstone.Controllers
                 ViewBag.LessonType = lessonType;
                 Lesson lessonFromDb = context.Lessons.FirstOrDefault(l => l.LessonId == id);
                 lessonFromDb.subject = lesson.subject;
-                lessonFromDb.Length = lesson.Length;
                 lessonFromDb.Price = lesson.Price;
                 lessonFromDb.LessonType = lesson.LessonType;
                 if (lesson.LessonType == "In-Studio" || lesson.LessonType == "Online")
