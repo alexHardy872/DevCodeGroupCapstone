@@ -51,10 +51,7 @@ namespace DevCodeGroupCapstone.Controllers
                 return RedirectToAction("Index");
             }
 
-<<<<<<< HEAD
-            
-=======
->>>>>>> 6208d4cc3333659bcbb89008b6a66e2a50f0c33d
+
             return View(teachers);
         }
 
