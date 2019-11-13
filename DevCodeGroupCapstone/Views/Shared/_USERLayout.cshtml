@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - User Layout</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    "
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />"
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top greenBar">
+        <div class="container">
+            <div class="navbar-header greenBar">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("weTeachToday", "Index", "Person", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse" id="greenBar">
+                <ul class="nav navbar-nav">
+                    @*<li>@Html.ActionLink("H", "Index", "Home")</li>
+                        <li>@Html.ActionLink("A", "About", "Home")</li>
+                        <li>@Html.ActionLink("C", "Contact", "Home")</li>*@
+
+                </ul>
+                <button class="headBtn" type="button" style="height: 60px; width: 200px; background-color: rgb(56, 119, 128); color: black;" id="viewChange">STUDENT</button>
+                <button class="headBtn" type="button" style="height: 60px; width: 200px; background-color: rgb(56, 119, 128); color: black;" id="viewChange2">TEACHER</button>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        
+                (function ($) {
+
+                    
+                      // var color = $( this ).css( "background-color" );
+                    
+
+                    $(".headBtn").mouseenter(function () {
+                        $(this).css("background-color", "rgb(25, 50, 60)");
+                        $(this).css("color", "white");
+                    })
+
+                    //"rgb(56, 119, 128);"
+                     $(".headBtn").mouseleave(function () {
+                         $(this).css("background-color", "rgb(56, 119, 128)");
+                         $(this).css("color", "black");
+                     })
+
+                       $( "#viewChange" ).click(function() {
+                        console.log("Handler for .click() called.");
+                           $("#teacherView").hide();
+                            $("#introView").hide();
+                           $("#studentView").show();
+                           $(this).css("font-weight", "bold");
+                           $('#viewChange2').css("font-weight", "normal");
+                    });
+
+                       $( "#viewChange2" ).click(function() {
+                        console.log("Handler for .click() called.");
+                           $("#teacherView").show();
+                           $("#introView").hide();
+                           $("#studentView").hide();
+                           $(this).css("font-weight", "bold");
+                           $('#viewChange').css("font-weight", "normal");
+
+                        });
+
+                     
+
+                   
+
+                    // page display JQueery Logic
+
+                   
+
+                    //$( "#viewChange" ).click(function() {
+                    //    console.log("Handler for .click() called.");
+                    //    $("#teacherView").hide();
+                    //    $("#studentView").show();
+                    //});
+
+                    //   $( "#viewChange2" ).click(function() {
+                    //    console.log("Handler for .click() called.");
+                    //       $("#teacherView").show();
+                    //       $("#studentView").hide();
+                    //    });
+                    // end page
+
+                })(jQuery);
+
+        });
+    </script>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/fullcalendar")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

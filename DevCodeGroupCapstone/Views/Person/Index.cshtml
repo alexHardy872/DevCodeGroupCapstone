@@ -4,10 +4,17 @@
     ViewBag.Title = "Index";
 }
 
-<button type="button" id="viewChange"> Student </button>
-<button type="button" id="viewChange2"> Teacher </button>
+@*<button type="button" id="viewChange"> Student </button>
+<button type="button" id="viewChange2"> Teacher </button>*@
 
-<div id="studentView">
+    <div id="introView">
+        <h1> Welcome to weTeachToday! </h1>
+        <p>if you are a student click the <strong>"STUDENT"</strong> tab to browse availabile lessons and your appointments</p>
+        <br />
+        <p>if you are a teacher click the <strong>"TEACHER"</strong> tab to view your dashboard!</p>
+
+    </div>
+<div id="studentView" style="display: none;">
     <h2> Student DashBoard </h2>
     <table class="table" id="teacherList">
         <tr>
@@ -81,7 +88,7 @@
     <td>  @Html.DisplayFor(modelItem => lesson.start) - @Html.DisplayFor(modelItem => lesson.end) </td>
     <td>  @Html.DisplayFor(modelItem => lesson.LessonType)  </td>
     <td>  @Html.DisplayFor(modelItem => lesson.Teacher.firstName) @Html.DisplayFor(modelItem => lesson.Teacher.lastName) </td>
-    <td>  @Html.DisplayFor(modelItem => lesson.Location.address1)  </td>
+    <td>  @Html.DisplayFor(modelItem => lesson.Location.address1) @Html.DisplayFor(modelItem => lesson.Location.city) @Html.DisplayFor(modelItem => lesson.Location.state) </td>
     <td>  @Html.DisplayFor(modelItem => lesson.Price)  </td>
 
 
@@ -95,7 +102,7 @@
     
 </div>
 
-<div id="teacherView">
+<div id="teacherView" style="display: none;">
     <h2> Teacher DashBoard </h2>
 
     <ul>
@@ -151,21 +158,7 @@
                         }
                     });
 
-                    // page display JQueery Logic 
-
-
-                    $( "#viewChange" ).click(function() {
-                        console.log("Handler for .click() called.");
-                        $("#teacherView").hide();
-                        $("#studentView").show();
-                    });
-
-                       $( "#viewChange2" ).click(function() {
-                        console.log("Handler for .click() called.");
-                           $("#teacherView").show();
-                           $("#studentView").hide();
-                        });
-                    // end page
+            
 
                 })(jQuery);
 

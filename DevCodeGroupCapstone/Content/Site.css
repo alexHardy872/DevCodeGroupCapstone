@@ -43,3 +43,19 @@ textarea {
         
 
     }
+
+.headBtn{
+    background-color: white;
+
+}
+
+#viewChange {
+    background-color: white;
+    font-weight: bold;
+}
+
+.headBtn:hover {
+    background-color:aquamarine;
+    font-weight: bold;
+    height: 100%;
+}

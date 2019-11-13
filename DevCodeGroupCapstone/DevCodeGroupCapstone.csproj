@@ -223,21 +223,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201911120016554_resetModels.cs" />
-    <Compile Include="Migrations\201911120016554_resetModels.designer.cs">
-      <DependentUpon>201911120016554_resetModels.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911121725101_AddTimeBeforeCancellationToTeacherPreferences.cs" />
-    <Compile Include="Migrations\201911121725101_AddTimeBeforeCancellationToTeacherPreferences.designer.cs">
-      <DependentUpon>201911121725101_AddTimeBeforeCancellationToTeacherPreferences.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911131606219_AddTravelDuration.cs" />
-    <Compile Include="Migrations\201911131606219_AddTravelDuration.designer.cs">
-      <DependentUpon>201911131606219_AddTravelDuration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911130031237_UpdateLessonToDateTimes.cs" />
-    <Compile Include="Migrations\201911130031237_UpdateLessonToDateTimes.designer.cs">
-      <DependentUpon>201911130031237_UpdateLessonToDateTimes.cs</DependentUpon>
+    <Compile Include="Migrations\201911131930372_restart.cs" />
+    <Compile Include="Migrations\201911131930372_restart.designer.cs">
+      <DependentUpon>201911131930372_restart.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -465,6 +453,7 @@
     <Content Include="Views\Lesson\Edit.cshtml" />
     <Content Include="Views\Lesson\List.cshtml" />
     <Content Include="Views\Lesson\Delete.cshtml" />
+    <Content Include="Views\Shared\_USERLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -483,17 +472,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201911120016554_resetModels.resx">
-      <DependentUpon>201911120016554_resetModels.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911121725101_AddTimeBeforeCancellationToTeacherPreferences.resx">
-      <DependentUpon>201911121725101_AddTimeBeforeCancellationToTeacherPreferences.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911131606219_AddTravelDuration.resx">
-      <DependentUpon>201911131606219_AddTravelDuration.cs</DependentUpon>
-      </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911130031237_UpdateLessonToDateTimes.resx">
-      <DependentUpon>201911130031237_UpdateLessonToDateTimes.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201911131930372_restart.resx">
+      <DependentUpon>201911131930372_restart.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
