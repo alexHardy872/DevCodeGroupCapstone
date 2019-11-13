@@ -54,12 +54,8 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.0-preview2-19525-03\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-
-   
-
     <Reference Include="IdentityModel, Version=4.1.0.0, Culture=neutral, PublicKeyToken=e7877f4675df049f, processorArchitecture=MSIL">
       <HintPath>..\packages\IdentityModel.4.1.0\lib\net472\IdentityModel.dll</HintPath>
-
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
@@ -104,17 +100,13 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-
     <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.1.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.5.1.2\lib\net451\System.IdentityModel.Tokens.Jwt.dll</HintPath>
     </Reference>
     <Reference Include="System.Net" />
-
-   
     <Reference Include="System.Text.Encodings.Web, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encodings.Web.4.5.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
-
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -239,6 +231,10 @@
     <Compile Include="Migrations\201911121725101_AddTimeBeforeCancellationToTeacherPreferences.designer.cs">
       <DependentUpon>201911121725101_AddTimeBeforeCancellationToTeacherPreferences.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911131606219_AddTravelDuration.cs" />
+    <Compile Include="Migrations\201911131606219_AddTravelDuration.designer.cs">
+      <DependentUpon>201911131606219_AddTravelDuration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Event.cs" />
@@ -255,6 +251,7 @@
     <Compile Include="Models\View Models\PersonAndLocationViewModel.cs" />
     <Compile Include="Private\ApiKey.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service Classes\DistanceMatrix.cs" />
     <Compile Include="Service Classes\GeoCode.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -459,13 +456,10 @@
     <Content Include="Views\TeacherAvailability\Edit.cshtml" />
     <Content Include="Views\TeacherAvailability\List.cshtml" />
     <Content Include="Views\TeacherAvailability\Delete.cshtml" />
-
     <Content Include="Views\Person\Edit.cshtml" />
-
     <Content Include="Views\Lesson\Edit.cshtml" />
     <Content Include="Views\Lesson\List.cshtml" />
     <Content Include="Views\Lesson\Delete.cshtml" />
-
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -489,6 +483,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911121725101_AddTimeBeforeCancellationToTeacherPreferences.resx">
       <DependentUpon>201911121725101_AddTimeBeforeCancellationToTeacherPreferences.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911131606219_AddTravelDuration.resx">
+      <DependentUpon>201911131606219_AddTravelDuration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

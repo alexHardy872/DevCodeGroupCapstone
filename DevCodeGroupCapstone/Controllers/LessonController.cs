@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;//tlc
 using System.Web;
 using System.Web.Mvc;
 
@@ -43,7 +44,7 @@ namespace DevCodeGroupCapstone.Controllers
 
         // POST: Lesson/Create
         [HttpPost]
-        public ActionResult Create(Lesson lesson)
+        public async Task<ActionResult> Create(Lesson lesson) //public ActionResult Create(Lesson lesson)
         {
             try
             {
@@ -64,6 +65,21 @@ namespace DevCodeGroupCapstone.Controllers
                     decimal cost = lesson.Price / 60 * lesson.Length;
                     cost = Math.Round(cost, 2);
                     lesson.cost = cost;
+                }
+                else //tlc "In-Home"
+                {
+                    //calculate travel duration
+                    if (lesson.teacherId != null && lesson.studentId != null && lesson.LocationId != null)
+                    {
+                        var teacher = context.People.Include("Location").Where(t => t.PersonId == lesson.teacherId).SingleOrDefault();
+                        var location = context.Locations.Where(l => l.LocationId == lesson.LocationId).SingleOrDefault();
+
+                        lesson.travelDuration = await Service_Classes.DistanceMatrix.GetTravelDuration(teacher.Location.lat, teacher.Location.lng, location.lat, location.lng);
+                        
+                        //TLC CALL ALERT ROUTINE FROM HERE IF DURATION > PREFERENCE
+                    }
+
+
                 }
                 context.Lessons.Add(lesson);
                 context.SaveChanges();
@@ -86,7 +102,7 @@ namespace DevCodeGroupCapstone.Controllers
 
         // POST: Lesson/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, Lesson lesson)
+        public async Task<ActionResult> Edit(int id, Lesson lesson)//tlc made async
         {
             try
             {
@@ -109,20 +125,35 @@ namespace DevCodeGroupCapstone.Controllers
                     decimal cost = lesson.Price / 60 * lesson.Length;
                     cost = Math.Round(cost, 2);
                     lessonFromDb.LocationId = user.LocationId;
-                    lessonFromDb.cost = cost;
-                    return RedirectToAction("List");
+                    lessonFromDb.cost = cost;                    
+
+                    //return RedirectToAction("List");
                 }
-                else
+                else //"In-Home"
                 {
-                    lessonFromDb.LocationId = null;
-                    lessonFromDb.cost = 0;
-                    return RedirectToAction("List");
+                    //lessonFromDb.LocationId = null;
+                    //lessonFromDb.cost = 0;
+                    if (lessonFromDb.travelDuration < 1)
+                    {
+                        var teacher = context.People.Include("Location").Where(p => p.PersonId == lessonFromDb.teacherId).SingleOrDefault();
+                        var tempLessonLocation = context.Locations.Where(l => l.LocationId == lessonFromDb.LocationId).SingleOrDefault();
+
+                        lessonFromDb.travelDuration = await Service_Classes.DistanceMatrix.GetTravelDuration(teacher.Location.lat, teacher.Location.lng, tempLessonLocation.lat, tempLessonLocation.lng);
+
+                        //TLC CALL ALERT ROUTINE FROM HERE IF DURATION > PREFERENCE
+                    }
+
+                    //return RedirectToAction("List");
                 }   
             }
             catch
             {
-                return View();
+                //return View();
+                return RedirectToAction("List");
             }
+
+            context.SaveChanges();
+            return RedirectToAction("Details", "Lesson", new { id = id });//tlc
         }
 
         // GET: Lesson/Delete/5
