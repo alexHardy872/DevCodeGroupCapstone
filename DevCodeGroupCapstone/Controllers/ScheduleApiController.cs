@@ -39,7 +39,8 @@ namespace DevCodeGroupCapstone.Controllers
                     .ToList()
                     );
 
-                eventList.AddRange(GenerateEventsFromLessons(lessons));
+
+                eventList = GenerateEventsFromLessons(lessons);
 
                 var availabilities = await Task.Run(() => context.TeacherAvailabilities
                     .Where(a => a.PersonId == teacherIdInt)
@@ -100,7 +101,7 @@ namespace DevCodeGroupCapstone.Controllers
             {
                 StringBuilder titleBuild = new StringBuilder();
                 titleBuild.Append(lesson.Student.firstName);
-                titleBuild.Append(" @ ");
+                titleBuild.Append(" at ");
                 titleBuild.Append(lesson.Location.address1);
                 titleBuild.Append(", ");
                 titleBuild.Append(lesson.Location.zip);
@@ -125,10 +126,14 @@ namespace DevCodeGroupCapstone.Controllers
 
             foreach (Lesson lesson in lessons)
             {
-                if ((lesson.start <= newEvent.start && lesson.end <= newEvent.end) || (lesson.start >= newEvent.start && lesson.end >= newEvent.end))
+                if (lesson.start >= newEvent.end || lesson.end <= newEvent.start)
                 {
                     IsTimeAvailable = true;
                 }
+                //if ((lesson.start > newEvent.start && lesson.end >= newEvent.end) || (lesson.start <= newEvent.start && lesson.end < newEvent.end))
+                //{
+                //    IsTimeAvailable = true;
+                //}
                 else
                 {
                     return false;
