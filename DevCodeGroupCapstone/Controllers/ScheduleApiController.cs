@@ -41,12 +41,14 @@ namespace DevCodeGroupCapstone.Controllers
                 TeacherAvail teacherAvail = new TeacherAvail();
 
 
+
                 eventList.AddRange(GenerateEventsFromLessons(lessons));
 
                 var availabilities = await Task.Run(() => context.TeacherAvailabilities
                     .Where(a => a.PersonId == teacherIdInt)
                     .ToList()
                     );
+
                 var preferences = await Task.Run(() => context.Preferences
                     .Where(p => p.teacherId == teacherIdInt)
                     .SingleOrDefault()
@@ -63,6 +65,7 @@ namespace DevCodeGroupCapstone.Controllers
                     DateTime finishedTime = workingStartTime + timeSpanOfLesson;
                     TimeSpan endTimeOfLastEvent = finishedTime.TimeOfDay;
                     TimeSpan endTimeOfFinalAvailableTimeSlot = availableTimeSpan.end.TimeOfDay;
+
 
                     while (endTimeOfLastEvent <= endTimeOfFinalAvailableTimeSlot)
                     {
