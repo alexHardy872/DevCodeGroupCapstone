@@ -101,7 +101,6 @@ namespace DevCodeGroupCapstone.Controllers
                 ViewBag.LessonType = lessonType;
                 Lesson lessonFromDb = context.Lessons.FirstOrDefault(l => l.LessonId == id);
                 lessonFromDb.subject = lesson.subject;
-                lessonFromDb.Length = lesson.Length;
                 lessonFromDb.Price = lesson.Price;
                 lessonFromDb.LessonType = lesson.LessonType;
                 if (lesson.LessonType == "In-Studio" || lesson.LessonType == "Online")
