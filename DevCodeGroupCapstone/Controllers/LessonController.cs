@@ -57,6 +57,8 @@ namespace DevCodeGroupCapstone.Controllers
                 string id = User.Identity.GetUserId();
                 Person user = context.People.FirstOrDefault(u => u.ApplicationId == id);
                 lesson.teacherId = user.PersonId;
+                var preferences = context.Preferences.FirstOrDefault(p => p.teacherId == user.PersonId);
+                lesson.Length = preferences.defaultLessonLength;
                 if (lesson.LessonType == "In-Studio" || lesson.LessonType == "Online")
                 {
                     var person = context.People.FirstOrDefault(p => p.ApplicationId == id);
