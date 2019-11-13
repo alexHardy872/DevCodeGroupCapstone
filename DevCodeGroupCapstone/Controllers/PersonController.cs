@@ -25,15 +25,16 @@ namespace DevCodeGroupCapstone.Controllers
         public ActionResult Index()
         {
             string userId = User.Identity.GetUserId();
-            var userFound = context.People.Where(p => p.ApplicationId == userId).Count();
+            var userFound = context.People.Where(p => p.ApplicationId == userId).FirstOrDefault();
 
-            if (userFound == 0)
+
+            if (userFound == null)
             {
                 return RedirectToAction("Create");
             }
             List<PersonAndLocationViewModel> teachers = new List<PersonAndLocationViewModel>();
 
-            List<Person> eligibleTeachers = context.People.Where(s => s.subjects != null).ToList();
+            List<Person> eligibleTeachers = context.People.Where(s => s.subjects != null && s.PersonId != userFound.PersonId).ToList();
 
             foreach (Person teacher in eligibleTeachers)
             {
@@ -46,16 +47,24 @@ namespace DevCodeGroupCapstone.Controllers
                 teachers.Add(info);
             }
 
+
+            List<Lesson> studentLessons = context.Lessons
+                    .Include("Teacher")
+                    .Include("Location")
+                    .Where(lesson => lesson.studentId == userFound.PersonId).ToList();
+
             if (teachers == null)
             {
                 return RedirectToAction("Index");
             }
 
-<<<<<<< HEAD
-            
-=======
->>>>>>> 6208d4cc3333659bcbb89008b6a66e2a50f0c33d
-            return View(teachers);
+            BigIndexViewModel bigModel = new BigIndexViewModel();
+            bigModel.teachersComp = teachers;
+            bigModel.studentLessons = studentLessons;
+       
+
+
+            return View(bigModel);
         }
 
         // GET: Person/Details/5

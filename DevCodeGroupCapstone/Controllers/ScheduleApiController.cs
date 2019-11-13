@@ -39,9 +39,7 @@ namespace DevCodeGroupCapstone.Controllers
                     .ToList()
                     );
 
-<<<<<<< HEAD
 
-=======
                 eventList.AddRange(GenerateEventsFromLessons(lessons));
 
                 var availabilities = await Task.Run(() => context.TeacherAvailabilities
@@ -49,7 +47,7 @@ namespace DevCodeGroupCapstone.Controllers
                     .ToList()
                     );
 
->>>>>>> 6208d4cc3333659bcbb89008b6a66e2a50f0c33d
+
                 var preferences = await Task.Run(() => context.Preferences
                     .Where(p => p.teacherId == teacherIdInt)
                     .SingleOrDefault()
@@ -66,10 +64,7 @@ namespace DevCodeGroupCapstone.Controllers
                     DateTime finishedTime = workingStartTime + timeSpanOfLesson;
                     TimeSpan endTimeOfLastEvent = finishedTime.TimeOfDay;
                     TimeSpan endTimeOfFinalAvailableTimeSlot = availableTimeSpan.end.TimeOfDay;
-<<<<<<< HEAD
 
-=======
->>>>>>> 6208d4cc3333659bcbb89008b6a66e2a50f0c33d
 
                     while (endTimeOfLastEvent <= endTimeOfFinalAvailableTimeSlot)
                     {
