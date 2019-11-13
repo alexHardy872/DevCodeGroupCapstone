@@ -1,54 +1,111 @@
-﻿@model IEnumerable<DevCodeGroupCapstone.Models.View_Models.PersonAndLocationViewModel>
+﻿@model DevCodeGroupCapstone.Models.View_Models.BigIndexViewModel
 
 @{
     ViewBag.Title = "Index";
 }
 
+<button type="button" id="viewChange"> Student </button>
+<button type="button" id="viewChange2"> Teacher </button>
+
+<div id="studentView">
+    <h2> Student DashBoard </h2>
+    <table class="table" id="teacherList">
+        <tr>
+            <th></th>
+        </tr>
+
+        <h1>test</h1>
+
+        @{ 
+            var teacherList = Model.teachersComp;
+            var lessonList = Model.studentLessons;
+        }
+
+        @foreach (var item in teacherList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.person.firstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.person.lastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.person.subjects)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.location.city)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.location.state)
+                </td>
+
+
+
+                <td>
+
+                    @Html.ActionLink("Details", "Details", new { id = item.person.PersonId }) |
+
+                </td>
+            </tr>
+        }
+
+
+    </table>
+
+
+<h2> LESSONS</h2>
+   
 <table class="table">
     <tr>
+        <th> Lesson Date / Time </th>
+
+        <th> Lesson Subject </th>
+
+        <th> Instructor </th>
+
+        <th> Location </th>
+
+        <th> Price </th>
+
         <th></th>
+
     </tr>
 
-    <h1>test</h1>
-
-    @foreach (var item in Model)
+    @foreach(var lesson in lessonList)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.person.firstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.person.lastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.person.subjects)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.location.city)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.location.state)
-            </td>
 
 
+<tr>
 
-            <td>
-                
-                @Html.ActionLink("Details", "Details", new { id = item.person.PersonId }) |
-              
-            </td>
-        </tr>
+    <td>  @Html.DisplayFor(modelItem => lesson.start) - @Html.DisplayFor(modelItem => lesson.end) </td>
+    <td>  @Html.DisplayFor(modelItem => lesson.LessonType)  </td>
+    <td>  @Html.DisplayFor(modelItem => lesson.Teacher.firstName) @Html.DisplayFor(modelItem => lesson.Teacher.lastName) </td>
+    <td>  @Html.DisplayFor(modelItem => lesson.Location.address1)  </td>
+    <td>  @Html.DisplayFor(modelItem => lesson.Price)  </td>
+
+
+    <th><button type="button" id="btnCancel">CANCEL LESSON</button></th>
+    <td></td>
+</tr>
     }
 
-</table>
+    </table>
+    
+    
+</div>
 
-<ul>
-    <li>@Html.ActionLink("Teacher Preferences", "Create", "TeacherPreference")</li>
-    <li>@Html.ActionLink("Teacher Availability", "List", "TeacherAvailability")</li>
-  
-</ul>
+<div id="teacherView">
+    <h2> Teacher DashBoard </h2>
 
-<div id="calendar"></div>
+    <ul>
+        <li>@Html.ActionLink("Teacher Preferences", "Create", "TeacherPreference")</li>
+        <li>@Html.ActionLink("Teacher Availability", "List", "TeacherAvailability")</li>
+
+    </ul>
+
+    <div id="calendar"></div>
+</div>
 
 <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/core/main.min.css">
 <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/timegrid/main.min.css">
@@ -93,6 +150,23 @@
                             console.log(errorThrown);
                         }
                     });
+
+                    // page display JQueery Logic 
+
+
+                    $( "#viewChange" ).click(function() {
+                        console.log("Handler for .click() called.");
+                        $("#teacherView").hide();
+                        $("#studentView").show();
+                    });
+
+                       $( "#viewChange2" ).click(function() {
+                        console.log("Handler for .click() called.");
+                           $("#teacherView").show();
+                           $("#studentView").hide();
+                        });
+                    // end page
+
                 })(jQuery);
 
         });

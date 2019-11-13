@@ -61,6 +61,9 @@
 
         //pin to represent the teacher's location
         var pinLocation = { lat: @Model.location.lat, lng: @Model.location.lng};
+        //var pinLocation = { lat: 43.784‬‬, lng: -87.911};
+
+
 
         //add a map
         map = new google.maps.Map(document.getElementById('map'), {
@@ -77,6 +80,7 @@
 
         //add a marker
         var marker = new google.maps.Marker({ position: pinLocation, map: map });
+        //var markerTest = new google.maps.Marker({ position: pinLocation2, map: map });
 
         //add a radius for max range
         var teacherRadius = new google.maps.Circle({

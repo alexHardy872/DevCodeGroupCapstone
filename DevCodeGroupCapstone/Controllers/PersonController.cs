@@ -25,15 +25,16 @@ namespace DevCodeGroupCapstone.Controllers
         public ActionResult Index()
         {
             string userId = User.Identity.GetUserId();
-            var userFound = context.People.Where(p => p.ApplicationId == userId).Count();
+            var userFound = context.People.Where(p => p.ApplicationId == userId).FirstOrDefault();
 
-            if (userFound == 0)
+
+            if (userFound == null)
             {
                 return RedirectToAction("Create");
             }
             List<PersonAndLocationViewModel> teachers = new List<PersonAndLocationViewModel>();
 
-            List<Person> eligibleTeachers = context.People.Where(s => s.subjects != null).ToList();
+            List<Person> eligibleTeachers = context.People.Where(s => s.subjects != null && s.PersonId != userFound.PersonId).ToList();
 
             foreach (Person teacher in eligibleTeachers)
             {
@@ -46,13 +47,29 @@ namespace DevCodeGroupCapstone.Controllers
                 teachers.Add(info);
             }
 
+
+            List<Lesson> studentLessons = context.Lessons
+                    .Include("Teacher")
+                    .Include("Location")
+                    .Where(lesson => lesson.studentId == userFound.PersonId).ToList();
+
             if (teachers == null)
             {
                 return RedirectToAction("Index");
             }
 
+<<<<<<< HEAD
 
             return View(teachers);
+=======
+            BigIndexViewModel bigModel = new BigIndexViewModel();
+            bigModel.teachersComp = teachers;
+            bigModel.studentLessons = studentLessons;
+       
+
+
+            return View(bigModel);
+>>>>>>> 28ad301ed9306e355913148bac59b02b51062c7b
         }
 
         // GET: Person/Details/5
@@ -64,8 +81,12 @@ namespace DevCodeGroupCapstone.Controllers
             personLocationDetails.location = context.Locations.Where(l => l.LocationId == personLocationDetails.person.LocationId).Single();
 
             var tempTeacher = context.Preferences.Where(p => p.teacherId == personLocationDetails.person.PersonId).SingleOrDefault();//tlc
-            double teacherPreferenceRadius = tempTeacher.maxDistance * metersToMiles;//tlc
-            ViewBag.radius = teacherPreferenceRadius;//tlc
+            if (tempTeacher != null)
+            {
+                double teacherPreferenceRadius = tempTeacher.maxDistance * metersToMiles;//tlc
+                ViewBag.radius = teacherPreferenceRadius;//tlc
+            }
+            
 
             return View(personLocationDetails);
         }
