@@ -58,6 +58,10 @@ namespace DevCodeGroupCapstone.Controllers
                 return RedirectToAction("Index");
             }
 
+<<<<<<< HEAD
+
+            return View(teachers);
+=======
             BigIndexViewModel bigModel = new BigIndexViewModel();
             bigModel.teachersComp = teachers;
             bigModel.studentLessons = studentLessons;
@@ -65,6 +69,7 @@ namespace DevCodeGroupCapstone.Controllers
 
 
             return View(bigModel);
+>>>>>>> 28ad301ed9306e355913148bac59b02b51062c7b
         }
 
         // GET: Person/Details/5
