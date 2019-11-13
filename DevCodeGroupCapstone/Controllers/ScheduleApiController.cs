@@ -24,7 +24,6 @@ namespace DevCodeGroupCapstone.Controllers
             // todo: these are intended to be query strings, but putting them as parameters didn't work
             string TeacherId = "1";
             string beginningCalendarDate = "2019-11-12T21:13:52.460Z";
-            //////////////////////
 
             DateTime beginningCalendarDateTime = DateTime.Parse(beginningCalendarDate); // use this for the date
             int teacherIdInt = int.Parse(TeacherId);
@@ -47,11 +46,6 @@ namespace DevCodeGroupCapstone.Controllers
                     .ToList()
                     );
 
-<<<<<<< HEAD
-                TeacherAvail teacherAvail = new TeacherAvail();
-
-
-=======
                 var preferences = await Task.Run(() => context.Preferences
                     .Where(p => p.teacherId == teacherIdInt)
                     .SingleOrDefault()
@@ -68,7 +62,6 @@ namespace DevCodeGroupCapstone.Controllers
                     DateTime finishedTime = workingStartTime + timeSpanOfLesson;
                     TimeSpan endTimeOfLastEvent = finishedTime.TimeOfDay;
                     TimeSpan endTimeOfFinalAvailableTimeSlot = availableTimeSpan.end.TimeOfDay;
->>>>>>> 587f88016603a65f471851054f53582dde95db75
 
                     while (endTimeOfLastEvent <= endTimeOfFinalAvailableTimeSlot)
                     {
