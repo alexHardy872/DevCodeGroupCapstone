@@ -10,5 +10,7 @@ namespace DevCodeGroupCapstone.Models
         public string title { get; set; }
 
         public string backgroundColor { get; set; }
+
+        public string textColor { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DevCodeGroupCapstone.Models
@@ -9,8 +10,14 @@ namespace DevCodeGroupCapstone.Models
         public int LessonId { get; set; }
 
         public string subject { get; set; }
-        public double startTime { get; set; }
-        public double endTime { get; set; }
+
+        [DataType(DataType.DateTime)]
+        [Display(Name = "Start Time and Date")]
+        public DateTime start { get; set; }
+
+        [DataType(DataType.DateTime)]
+        [Display(Name = "End Time and Date")]
+        public DateTime end { get; set; }
 
         [DataType(DataType.Currency)]
         public decimal cost { get; set; }

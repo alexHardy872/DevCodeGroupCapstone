@@ -32,6 +32,11 @@ namespace DevCodeGroupCapstone.Controllers
 
             try
             {
+                var lessons = await Task.Run(() => context.Lessons
+                    .Where(lesson => lesson.teacherId == teacherIdInt)
+                    .ToList()
+                    );
+
                 var availabilities = await Task.Run(() => context.TeacherAvailabilities
                     .Where(a => a.PersonId == teacherIdInt)
                     .ToList()
@@ -60,6 +65,7 @@ namespace DevCodeGroupCapstone.Controllers
                         currentEvent.start = CombineDateAndTime(workingDate, workingStartTime);
                         currentEvent.end = CombineDateAndTime(workingDate, workingStartTime + timeSpanOfLesson);
                         currentEvent.backgroundColor = "#eaf0ce";
+                        currentEvent.textColor = "#000000";
                         currentEvent.title = "Available";
                         eventList.Add(currentEvent);
 
@@ -91,6 +97,13 @@ namespace DevCodeGroupCapstone.Controllers
         {
             return date + time.TimeOfDay;
         }
+
+        private bool IsTimeTaken(List<Lesson> lessons, DateTime event)
+        {
+            return true;
+        }
+
+        // private DateTime AdjustStartTime
 
         private int GetNumberOfDaysForView(string view)
         {

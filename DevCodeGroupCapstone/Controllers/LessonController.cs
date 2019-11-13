@@ -37,6 +37,8 @@ namespace DevCodeGroupCapstone.Controllers
         {
             ViewBag.LessonType = new SelectList(lessonLocation);
             Lesson lesson = new Lesson();
+            lesson.start = DateTime.Now;
+            lesson.end = DateTime.Now;
             return View(lesson);
         }
 
