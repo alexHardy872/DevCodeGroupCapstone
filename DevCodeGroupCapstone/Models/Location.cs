@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DevCodeGroupCapstone.Models
 {
@@ -29,7 +24,7 @@ namespace DevCodeGroupCapstone.Models
         [DataType(DataType.PostalCode)]
         [Display(Name = "ZIP code")]
         public string zip { get; set; }
-        
+
         public string description { get; set; }
     }
 }

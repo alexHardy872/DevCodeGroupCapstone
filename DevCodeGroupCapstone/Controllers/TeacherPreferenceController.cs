@@ -1,11 +1,9 @@
 ﻿using DevCodeGroupCapstone.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace DevCodeGroupCapstone.Controllers
 {
@@ -60,7 +58,7 @@ namespace DevCodeGroupCapstone.Controllers
 
                 context.Preferences.Add(preferences);
                 await context.SaveChangesAsync();
-    
+
                 return RedirectToAction("Index", "Person");
             }
             catch (Exception e)
@@ -93,10 +91,10 @@ namespace DevCodeGroupCapstone.Controllers
                 preferenceDb.incementalCost = preference.incementalCost;
                 preferenceDb.distanceType = preference.distanceType;
                 preferenceDb.defaultLessonLength = preference.defaultLessonLength;
-                
+
 
                 context.SaveChanges();
-                return RedirectToAction("Index","Person");
+                return RedirectToAction("Index", "Person");
             }
             catch
             {

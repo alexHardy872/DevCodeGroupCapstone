@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace DevCodeGroupCapstone.Models
 {
@@ -27,6 +23,6 @@ namespace DevCodeGroupCapstone.Models
         public int? LocationId { get; set; }
         public Location Location { get; set; }
 
-     
+
     }
 }

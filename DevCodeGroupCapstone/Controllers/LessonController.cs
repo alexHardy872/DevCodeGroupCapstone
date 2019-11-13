@@ -3,7 +3,6 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace DevCodeGroupCapstone.Controllers
@@ -38,6 +37,8 @@ namespace DevCodeGroupCapstone.Controllers
         {
             ViewBag.LessonType = new SelectList(lessonLocation);
             Lesson lesson = new Lesson();
+            lesson.start = DateTime.Now;
+            lesson.end = DateTime.Now;
             return View(lesson);
         }
 
@@ -67,6 +68,7 @@ namespace DevCodeGroupCapstone.Controllers
                     cost = Math.Round(cost, 2);
                     lesson.cost = cost;
                 }
+
                 context.Lessons.Add(lesson);
                 context.SaveChanges();
                 return RedirectToAction("List");
@@ -118,7 +120,7 @@ namespace DevCodeGroupCapstone.Controllers
                     lessonFromDb.LocationId = null;
                     lessonFromDb.cost = 0;
                     return RedirectToAction("List");
-                }   
+                }
             }
             catch
             {
