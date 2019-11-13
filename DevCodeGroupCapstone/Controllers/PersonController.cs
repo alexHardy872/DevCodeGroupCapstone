@@ -1,13 +1,12 @@
 ﻿using DevCodeGroupCapstone.Models;
+using DevCodeGroupCapstone.Models.View_Models;
+using DevCodeGroupCapstone.Service_Classes;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using DevCodeGroupCapstone.Models.View_Models;
-using DevCodeGroupCapstone.Service_Classes;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace DevCodeGroupCapstone.Controllers
 {
@@ -36,7 +35,7 @@ namespace DevCodeGroupCapstone.Controllers
 
             List<Person> eligibleTeachers = context.People.Where(s => s.subjects != null).ToList();
 
-            foreach(Person teacher in eligibleTeachers)
+            foreach (Person teacher in eligibleTeachers)
             {
                 PersonAndLocationViewModel info = new PersonAndLocationViewModel();
                 info.person = teacher;
@@ -52,7 +51,10 @@ namespace DevCodeGroupCapstone.Controllers
                 return RedirectToAction("Index");
             }
 
+<<<<<<< HEAD
             
+=======
+>>>>>>> 6208d4cc3333659bcbb89008b6a66e2a50f0c33d
             return View(teachers);
         }
 
