@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace DevCodeGroupCapstone.Models
 {
@@ -10,7 +7,10 @@ namespace DevCodeGroupCapstone.Models
         public DateTime start { get; set; }
 
         public DateTime end { get; set; }
+        public string title { get; set; }
 
+        public string backgroundColor { get; set; }
 
+        public string textColor { get; set; }
     }
 }

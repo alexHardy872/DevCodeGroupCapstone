@@ -231,9 +231,15 @@
     <Compile Include="Migrations\201911121725101_AddTimeBeforeCancellationToTeacherPreferences.designer.cs">
       <DependentUpon>201911121725101_AddTimeBeforeCancellationToTeacherPreferences.cs</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="Migrations\201911131606219_AddTravelDuration.cs" />
     <Compile Include="Migrations\201911131606219_AddTravelDuration.designer.cs">
       <DependentUpon>201911131606219_AddTravelDuration.cs</DependentUpon>
+=======
+    <Compile Include="Migrations\201911130031237_UpdateLessonToDateTimes.cs" />
+    <Compile Include="Migrations\201911130031237_UpdateLessonToDateTimes.designer.cs">
+      <DependentUpon>201911130031237_UpdateLessonToDateTimes.cs</DependentUpon>
+>>>>>>> cb1ef9cc0d529c8b6aa712b560e4ddb3be15d913
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -486,6 +492,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911131606219_AddTravelDuration.resx">
       <DependentUpon>201911131606219_AddTravelDuration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201911130031237_UpdateLessonToDateTimes.resx">
+      <DependentUpon>201911130031237_UpdateLessonToDateTimes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

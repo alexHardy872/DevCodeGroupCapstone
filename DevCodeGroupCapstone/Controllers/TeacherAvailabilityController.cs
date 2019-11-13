@@ -1,11 +1,9 @@
 ﻿using DevCodeGroupCapstone.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using System.Threading.Tasks;
 
 namespace DevCodeGroupCapstone.Controllers
 {
@@ -66,11 +64,11 @@ namespace DevCodeGroupCapstone.Controllers
             Person teacher = context.People.Where(p => p.ApplicationId == userId).Single();
             List<TeacherAvail> avails = new List<TeacherAvail>();
             avails = context.TeacherAvailabilities.Where(a => a.PersonId == teacher.PersonId).ToList();
-           
+
             return View(avails);
         }
 
-     
+
 
         // GET: TeacherAvailability/Edit/5
         public ActionResult Edit(int id)

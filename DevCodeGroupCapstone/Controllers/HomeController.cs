@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace DevCodeGroupCapstone.Controllers
 {
@@ -18,7 +14,7 @@ namespace DevCodeGroupCapstone.Controllers
             // if it does they go to perspn controller home
             // if not they go to create person
 
-           
+
 
             return View();
         }
