@@ -5,13 +5,76 @@
 <h2><strong>@Model.currentUser.firstName  @Model.currentUser.lastName</strong> Instructor Dashboard </h2>
 
 <div id="teacherView">
-   
-    <ul>
-        <li>@Html.ActionLink("Teacher Preferences", "Create", "TeacherPreference")</li>
-        <li>@Html.ActionLink("Teacher Availability", "List", "TeacherAvailability")</li>
-    </ul>
+    <div class="container">
+        <div class="row" ">
+            <div class="col-md-4 optionsHeader">
+                @Html.ActionLink("Teacher Preferences", "Create", "TeacherPreference")
+            </div>
+            <div class="col-md-4 optionsHeader">
+                @Html.ActionLink("Teacher Availability", "List", "TeacherAvailability")
 
-    <div id="calendar"></div>
+            </div>
+            <div class="col-md-4 optionsHeader">
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 optionsHeader">
+                <button type="button" id="viewLessons">LESSONS</button>
+            </div>
+            <div class="col-md-4 optionsHeader">
+                <button type="button" id="viewCalendar">SCHEDULE</button>
+
+            </div>
+            <div class="col-md-4 optionsHeader">
+
+            </div>
+        </div>
+    </div>
+   
+    
+        <
+    
+
+    <div id="lessons" style="display: none;">
+        <h2> LESSONS</h2>
+
+        <table class="table">
+            <tr>
+                <th> Lesson Date / Time </th>
+                <th> Lesson Subject </th>
+                <th> Student </th>
+                <th> Location </th>
+                <th> Price </th>
+                <th></th>
+            </tr>
+
+            @{ 
+                var lessonList = Model.teacherLessons;
+            }
+            @foreach (var lesson in lessonList)
+            {
+                <tr>
+                    <td>  @Html.DisplayFor(modelItem => lesson.start) - @Html.DisplayFor(modelItem => lesson.end) </td>
+                    <td>  @Html.DisplayFor(modelItem => lesson.LessonType)  </td>
+                    <td>  @Html.DisplayFor(modelItem => lesson.Student.firstName) @Html.DisplayFor(modelItem => lesson.Student.lastName) </td>
+                    <td>  @Html.DisplayFor(modelItem => lesson.Location.address1) @Html.DisplayFor(modelItem => lesson.Location.city) @Html.DisplayFor(modelItem => lesson.Location.state) </td>
+                    <td>  @Html.DisplayFor(modelItem => lesson.Price)  </td>
+
+                    <td>
+                        @Html.ActionLink("CANCEL", "../SMS/SendSMSToStudent", new { id = lesson.LessonId, alert = "cancel" })
+                    </td>
+                    <td>
+                        @Html.ActionLink("DEATILS", "../Lesson/Details", new { id = lesson.LessonId })
+
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+
+    <div id="calendar" ></div>
 </div>
 
 <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/core/main.min.css">
@@ -58,6 +121,22 @@
                 }
             });
 
+
+
+
+
+            
+
+              $( "#viewLessons" ).click(function() {
+                        console.log("Handler for .click() called.");                         
+                            $("#calendar").hide();
+                           $("#lessons").show();            
+              });
+            $( "#viewCalendar" ).click(function() {
+                        console.log("Handler for .click() called.");                       
+                            $("#calendar").show();
+                           $("#lessons").hide();                                              
+                    });
 
 
         })(jQuery);

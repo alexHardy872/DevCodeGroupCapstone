@@ -51,41 +51,40 @@
 
     </table>
 
-
     <h2> LESSONS</h2>
 
     <table class="table">
         <tr>
             <th> Lesson Date / Time </th>
-
             <th> Lesson Subject </th>
-
             <th> Instructor </th>
-
             <th> Location </th>
-
             <th> Price </th>
-
             <th></th>
-
         </tr>
 
         @foreach (var lesson in lessonList)
         {
 
 
-            <tr>
+    <tr>
 
-                <td>  @Html.DisplayFor(modelItem => lesson.start) - @Html.DisplayFor(modelItem => lesson.end) </td>
-                <td>  @Html.DisplayFor(modelItem => lesson.LessonType)  </td>
-                <td>  @Html.DisplayFor(modelItem => lesson.Teacher.firstName) @Html.DisplayFor(modelItem => lesson.Teacher.lastName) </td>
-                <td>  @Html.DisplayFor(modelItem => lesson.Location.address1) @Html.DisplayFor(modelItem => lesson.Location.city) @Html.DisplayFor(modelItem => lesson.Location.state) </td>
-                <td>  @Html.DisplayFor(modelItem => lesson.Price)  </td>
+        <td>  @Html.DisplayFor(modelItem => lesson.start) - @Html.DisplayFor(modelItem => lesson.end) </td>
+        <td>  @Html.DisplayFor(modelItem => lesson.LessonType)  </td>
+        <td>  @Html.DisplayFor(modelItem => lesson.Teacher.firstName) @Html.DisplayFor(modelItem => lesson.Teacher.lastName) </td>
+        <td>  @Html.DisplayFor(modelItem => lesson.Location.address1) @Html.DisplayFor(modelItem => lesson.Location.city) @Html.DisplayFor(modelItem => lesson.Location.state) </td>
+        <td>  @Html.DisplayFor(modelItem => lesson.Price)  </td>
 
 
-                <th><button type="button" id="btnCancel">CANCEL LESSON</button></th>
-                <td></td>
-            </tr>
+        
+        <td>
+            @Html.ActionLink("CANCEL", "../SMS/SendSMSToTeacher", new { id = lesson.LessonId })
+        </td>
+        <td>
+            @Html.ActionLink("DEATILS", "../Lesson/Details", new { id = lesson.LessonId })
+
+        </td>
+    </tr>
         }
 
     </table>

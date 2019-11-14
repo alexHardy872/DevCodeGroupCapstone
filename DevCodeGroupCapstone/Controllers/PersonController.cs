@@ -100,28 +100,14 @@ namespace DevCodeGroupCapstone.Controllers
             {
                 return RedirectToAction("Create");
             }
-            List<PersonAndLocationViewModel> teachers = new List<PersonAndLocationViewModel>();
-            List<Person> eligibleTeachers = context.People.Where(s => s.subjects != null && s.PersonId != userFound.PersonId).ToList();
-            foreach (Person teacher in eligibleTeachers)
-            {
-                PersonAndLocationViewModel info = new PersonAndLocationViewModel();
-                info.person = teacher;
-                info.location = context.Locations.Where(l => l.LocationId == teacher.LocationId).Single();
-                info.lessons = context.Lessons.Where(lesson => lesson.teacherId == teacher.PersonId).ToList();
-                info.avails = context.TeacherAvailabilities.Where(av => av.PersonId == teacher.PersonId).ToList();
-                teachers.Add(info);
-            }
-            List<Lesson> studentLessons = context.Lessons
-                    .Include("Teacher")
+            
+            List<Lesson> teacherLessons = context.Lessons
+                    .Include("Student")
                     .Include("Location")
-                    .Where(lesson => lesson.studentId == userFound.PersonId).ToList();
-            if (teachers == null)
-            {
-                return RedirectToAction("Index");
-            }
-            BigIndexViewModel bigModel = new BigIndexViewModel();
-            bigModel.teachersComp = teachers;
-            bigModel.studentLessons = studentLessons;
+                    .Where(lesson => lesson.teacherId == userFound.PersonId).ToList();
+            
+            BigIndexViewModel bigModel = new BigIndexViewModel();        
+            bigModel.teacherLessons = teacherLessons;
             bigModel.currentUser = userFound;
             return View(bigModel);
         }
@@ -253,5 +239,7 @@ namespace DevCodeGroupCapstone.Controllers
                 return View();
             }
         }
+
+        
     }
 }

@@ -223,16 +223,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-<<<<<<< HEAD
-    <Compile Include="Migrations\201911141807321_resetModels.cs" />
-    <Compile Include="Migrations\201911141807321_resetModels.designer.cs">
-      <DependentUpon>201911141807321_resetModels.cs</DependentUpon>
-=======
-    <Compile Include="Migrations\201911141757139_Init.cs" />
-    <Compile Include="Migrations\201911141757139_Init.designer.cs">
-      <DependentUpon>201911141757139_Init.cs</DependentUpon>
->>>>>>> 0b5fcc19cb515c18fd19d984170abfb7de8a23de
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Event.cs" />
@@ -447,7 +437,6 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Person\Create.cshtml" />
     <Content Include="Views\Person\Index.cshtml" />
-    <Content Include="Views\Person\ViewTeachers.cshtml" />
     <Content Include="Views\Lesson\Create.cshtml" />
     <Content Include="Views\Person\Details.cshtml" />
     <Content Include="Views\TeacherPreference\Create.cshtml" />
@@ -480,16 +469,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
-  </ItemGroup>
-  <ItemGroup>
-<<<<<<< HEAD
-    <EmbeddedResource Include="Migrations\201911141807321_resetModels.resx">
-      <DependentUpon>201911141807321_resetModels.cs</DependentUpon>
-=======
-    <EmbeddedResource Include="Migrations\201911141757139_Init.resx">
-      <DependentUpon>201911141757139_Init.cs</DependentUpon>
->>>>>>> 0b5fcc19cb515c18fd19d984170abfb7de8a23de
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
