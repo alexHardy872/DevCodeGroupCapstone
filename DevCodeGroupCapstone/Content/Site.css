@@ -25,12 +25,12 @@ textarea {
 
 .gLogin {
     border: none;
-    height: 92px;
-    width: 382px;
+    height: 85px;
+    width: 100%;
     background-color: transparent;
     background-image: url("Images/signin-button1.png");
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
 }
 
     .gLogin:hover {
@@ -44,18 +44,25 @@ textarea {
 
     }
 
-.headBtn{
-    background-color: white;
 
+
+#registerBtn:hover{
+    border: 2px solid black;
+    background-color: darkseagreen;
 }
 
-#viewChange {
-    background-color: white;
-    font-weight: bold;
+#registerBtn {
+    font-size: 30pt;
+    background-color: orange;
 }
 
-.headBtn:hover {
-    background-color:aquamarine;
-    font-weight: bold;
-    height: 100%;
+.logBox{
+    border: 2pt solid black;
 }
+
+.hoverGreen:hover{
+    background-color: green;
+}
+
+/*replace bootstrap here content out*/
+

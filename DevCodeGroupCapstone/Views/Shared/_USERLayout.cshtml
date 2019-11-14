@@ -6,8 +6,8 @@
     <title>@ViewBag.Title - User Layout</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    "
-    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />"
+    
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
 
 </head>
 <body>
@@ -23,9 +23,7 @@
             </div>
             <div class="navbar-collapse collapse" id="greenBar">
                 <ul class="nav navbar-nav">
-                    @*<li>@Html.ActionLink("H", "Index", "Home")</li>
-                        <li>@Html.ActionLink("A", "About", "Home")</li>
-                        <li>@Html.ActionLink("C", "Contact", "Home")</li>*@
+                   
 
                 </ul>
                 <button class="headBtn" type="button" style="height: 60px; width: 200px; background-color: rgb(56, 119, 128); color: black;" id="viewChange">STUDENT</button>
@@ -38,7 +36,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            
         </footer>
     </div>
 
@@ -85,22 +83,7 @@
 
                    
 
-                    // page display JQueery Logic
-
-                   
-
-                    //$( "#viewChange" ).click(function() {
-                    //    console.log("Handler for .click() called.");
-                    //    $("#teacherView").hide();
-                    //    $("#studentView").show();
-                    //});
-
-                    //   $( "#viewChange2" ).click(function() {
-                    //    console.log("Handler for .click() called.");
-                    //       $("#teacherView").show();
-                    //       $("#studentView").hide();
-                    //    });
-                    // end page
+                  
 
                 })(jQuery);
 
