@@ -13,8 +13,8 @@
         
         public override void Down()
         {
-            AddColumn("dbo.TeacherPreferences", "incrementalCost", c => c.Decimal(nullable: false, precision: 18, scale: 2));
-            DropColumn("dbo.TeacherPreferences", "incrementalCost");
+            AddColumn("dbo.TeacherPreferences", "incementalCost", c => c.Decimal(nullable: false, precision: 18, scale: 2));
+            DropColumn("dbo.TeacherPreferences", "incementalCost");
         }
     }
 }
