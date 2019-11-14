@@ -7,13 +7,13 @@ namespace DevCodeGroupCapstone.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.0-preview2-19525-03")]
-    public sealed partial class NotSureWhyThisIsNecessary : IMigrationMetadata
+    public sealed partial class Init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(NotSureWhyThisIsNecessary));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Init));
         
         string IMigrationMetadata.Id
         {
-            get { return "201911131930301_NotSureWhyThisIsNecessary"; }
+            get { return "201911141757139_Init"; }
         }
         
         string IMigrationMetadata.Source

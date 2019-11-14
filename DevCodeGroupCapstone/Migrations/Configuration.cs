@@ -2,6 +2,7 @@
 {
     using DevCodeGroupCapstone.Models;
     using Microsoft.AspNet.Identity;
+    using System;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
