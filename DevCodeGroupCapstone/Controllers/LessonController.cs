@@ -34,10 +34,13 @@ namespace DevCodeGroupCapstone.Controllers
             ViewBag.outOfRange = false;
             var lesson = context.Lessons.Where(l => l.LessonId == id).SingleOrDefault();
 
+            SetLessonDetailsMapCoordinates(lesson);
+
             if (lesson != null && lesson.LessonType == "In-Home")
             {
                 ViewBag.outOfRange = TravelDurationIsGreaterThanMaxDistance(lesson);
             }
+            
             return View(lesson);
         }
 
@@ -201,12 +204,32 @@ namespace DevCodeGroupCapstone.Controllers
             var teacherPreference = context.Preferences.Where(p => p.teacherId == lesson.teacherId).SingleOrDefault();
             var location = context.Locations.Where(l => l.LocationId == lesson.LocationId).SingleOrDefault();
 
-            if (teacherPreference != null && location != null)
+            if (teacherPreference != null && location != null && teacherPreference.distanceType == RadiusOptions.Miles)
             {
                 result = (lesson.travelDuration > teacherPreference.maxDistance);          
             }
 
             return result;
+        }
+
+        public void SetLessonDetailsMapCoordinates(Lesson lesson)
+        {
+            var teacher = context.People.Include("Location").Where(p => p.PersonId == lesson.teacherId).SingleOrDefault();
+            var teacherPreference = context.Preferences.Where(p => p.teacherId == teacher.PersonId).FirstOrDefault();
+            var lessonLocation = context.Locations.Where(l => l.LocationId == lesson.LocationId).SingleOrDefault();
+
+            ViewBag.lessonLat = lessonLocation.lat;
+            ViewBag.lessonLng = lessonLocation.lng;
+            ViewBag.teacherLat = teacher.Location.lat;
+            ViewBag.teacherLng = teacher.Location.lng;
+            if (teacherPreference.distanceType == RadiusOptions.Miles)
+            {
+                ViewBag.radius = teacherPreference.maxDistance * Service_Classes.DistanceMatrix.metersToMiles;
+            }
+            else
+            {
+                ViewBag.radius = teacherPreference.maxDistance;
+            }
         }
     }
 }

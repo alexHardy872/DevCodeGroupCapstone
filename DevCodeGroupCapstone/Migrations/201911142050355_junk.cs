@@ -1,10 +1,9 @@
-
-namespace DevCodeGroupCapstone.Migrations
+﻿namespace DevCodeGroupCapstone.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Init : DbMigration
+    public partial class junk : DbMigration
     {
         public override void Up()
         {

@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using DevCodeGroupCapstone.Models;
+using DevCodeGroupCapstone.Private;
 using System.Web.Mvc;
-
-using System.Configuration;
 using Twilio;
+using Twilio.AspNet.Mvc;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
 using Twilio.TwiML;
 using Twilio.AspNet.Mvc;
 using DevCodeGroupCapstone.Private;
 using DevCodeGroupCapstone.Models;
-using DevCodeGroupCapstone.Models.View_Models;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Text;
+using System;
 
 namespace DevCodeGroupCapstone.Controllers
 {

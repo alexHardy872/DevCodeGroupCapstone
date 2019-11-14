@@ -12,10 +12,10 @@ namespace DevCodeGroupCapstone.Service_Classes
 {
     public static class DistanceMatrix
     {
+        public static double metersToMiles = 1609.34;
+
         public static async Task<Lesson> GetTravelInfo(Lesson lesson)
         {
-            double metersToMiles = 1609.34;
-
             HttpClient client = new HttpClient();
             ApplicationDbContext context = new ApplicationDbContext();
 
