@@ -4,9 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - User Layout</title>
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap" rel="stylesheet">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    
+
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
 
 </head>
@@ -20,10 +21,6 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                @*@Html.ActionLink("weTeachToday", "Index", "Person", new { area = "" }, new { @class = "navbar-brand" })*@
-                @*<a href="@Html.Action("Index", "Home")"><img scr="Images/WeTeachTodayLogo1.png" /></a>*@
-
-                @*<img src="~/Content/Images/WeTeachTodayLogo1.png" style="height: 60px;" href='@Html.ActionLink("weTeachToday", "Index", "Person", new { area = "" }, new { @class = "navbar-brand" })' alt="logo" />*@
             <div class="logo">
                 <a href="@Url.Action("Index", "Person")">
                     <img src="~/Content/Images/WeTeachTodayLogoTransparent.png" style="height: 60px;" alt="logo" />
@@ -31,11 +28,9 @@
             </div>
             </div>
             <div class="navbar-collapse collapse" id="greenBar">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav route">
                     @Html.ActionLink("Student", "StudentIndex", "Person", new { area = "" }, new { @class = "navbar-brand" })
                     @Html.ActionLink("Teacher", "TeacherIndex", "Person", new { area = "" }, new { @class = "navbar-brand" })
-
-
                 </ul>
                
                 @Html.Partial("_LoginPartial")
