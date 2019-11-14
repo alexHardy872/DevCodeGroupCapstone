@@ -31,7 +31,14 @@ namespace DevCodeGroupCapstone.Controllers
         // GET: Lesson/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            ViewBag.outOfRange = false;
+            var lesson = context.Lessons.Where(l => l.LessonId == id).SingleOrDefault();
+
+            if (lesson != null && lesson.LessonType == "In-Home")
+            {
+                ViewBag.outOfRange = TravelDurationIsGreaterThanMaxDistance(lesson);
+            }
+            return View(lesson);
         }
 
         // GET: Lesson/Create
@@ -78,12 +85,18 @@ namespace DevCodeGroupCapstone.Controllers
                         var teacher = context.People.Include("Location").Where(t => t.PersonId == lesson.teacherId).SingleOrDefault();
                         var location = context.Locations.Where(l => l.LocationId == lesson.LocationId).SingleOrDefault();
 
-                        lesson.travelDuration = await Service_Classes.DistanceMatrix.GetTravelDuration(teacher.Location.lat, teacher.Location.lng, location.lat, location.lng);
-                        
-                        //TLC CALL ALERT ROUTINE FROM HERE IF DURATION > PREFERENCE
+                        lesson = await Service_Classes.DistanceMatrix.GetTravelInfo(lesson);
+
+                        try
+                        {
+                            ViewBag.outOfRange = TravelDurationIsGreaterThanMaxDistance(lesson);
+                        }
+                        catch(Exception e)
+                        {
+                            ViewBag.outOfRange = false;
+                            Console.WriteLine(e.Message);
+                        }
                     }
-
-
                 }
                 context.Lessons.Add(lesson);
                 context.SaveChanges();
@@ -127,27 +140,26 @@ namespace DevCodeGroupCapstone.Controllers
                     var user = context.People.FirstOrDefault(p => p.ApplicationId == userId);
                     decimal cost = lesson.Price / 60 * lesson.Length;
                     cost = Math.Round(cost, 2);
-                    lessonFromDb.LocationId = user.LocationId;
-                    lessonFromDb.cost = cost;                    
-
+                    //tlc lessonFromDb.LocationId = user.LocationId;
+                    lesson.LocationId = user.LocationId;
+                    //lessonFromDb.cost = cost;
+                    lesson.cost = cost;
+                    lesson.travelDuration = 0;//tlc
                     //return RedirectToAction("List");
                 }
                 else //"In-Home"
                 {
                     //lessonFromDb.LocationId = null;
                     //lessonFromDb.cost = 0;
-                    if (lessonFromDb.travelDuration < 1)
+                    if (lesson.travelDuration < 1)
                     {
-                        var teacher = context.People.Include("Location").Where(p => p.PersonId == lessonFromDb.teacherId).SingleOrDefault();
-                        var tempLessonLocation = context.Locations.Where(l => l.LocationId == lessonFromDb.LocationId).SingleOrDefault();
-
-                        lessonFromDb.travelDuration = await Service_Classes.DistanceMatrix.GetTravelDuration(teacher.Location.lat, teacher.Location.lng, tempLessonLocation.lat, tempLessonLocation.lng);
-
-                        //TLC CALL ALERT ROUTINE FROM HERE IF DURATION > PREFERENCE
+                        var tempTeacher = context.Preferences.Where(p => p.teacherId == lessonFromDb.teacherId).SingleOrDefault();
+                        if (tempTeacher != null)
+                        {
+                            lessonFromDb = await Service_Classes.DistanceMatrix.GetTravelInfo(lessonFromDb);
+                        }
                     }
-
-                    //return RedirectToAction("List");
-                }   
+                }
             }
             catch
             {
@@ -181,6 +193,20 @@ namespace DevCodeGroupCapstone.Controllers
             {
                 return View();
             }
+        }
+
+        public Boolean TravelDurationIsGreaterThanMaxDistance(Lesson lesson) //tlc
+        {
+            bool result = false;
+            var teacherPreference = context.Preferences.Where(p => p.teacherId == lesson.teacherId).SingleOrDefault();
+            var location = context.Locations.Where(l => l.LocationId == lesson.LocationId).SingleOrDefault();
+
+            if (teacherPreference != null && location != null)
+            {
+                result = (lesson.travelDuration > teacherPreference.maxDistance);          
+            }
+
+            return result;
         }
     }
 }

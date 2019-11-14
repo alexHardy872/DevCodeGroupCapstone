@@ -88,7 +88,7 @@ namespace DevCodeGroupCapstone.Controllers
                 TeacherPreference preferenceDb = context.Preferences.Where(pref => pref.teacherId == teacher.PersonId).Single();
 
                 preferenceDb.maxDistance = preference.maxDistance;
-                preferenceDb.incementalCost = preference.incementalCost;
+                preferenceDb.incrementalCost = preference.incrementalCost;
                 preferenceDb.distanceType = preference.distanceType;
                 preferenceDb.defaultLessonLength = preference.defaultLessonLength;
 
