@@ -141,7 +141,7 @@
                         defaultLessonLength = c.Int(nullable: false),
                         distanceType = c.Int(nullable: false),
                         maxDistance = c.Int(nullable: false),
-                        incementalCost = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        incrementalCost = c.Decimal(nullable: false, precision: 18, scale: 2),
                         TimeBeforeCancellation = c.Int(nullable: false),
                         teacherId = c.Int(),
                     })

@@ -231,6 +231,10 @@
     <Compile Include="Migrations\201911131930301_NotSureWhyThisIsNecessary.designer.cs">
       <DependentUpon>201911131930301_NotSureWhyThisIsNecessary.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911141420172_FixedTypoInTeacherPreferenceModel.cs" />
+    <Compile Include="Migrations\201911141420172_FixedTypoInTeacherPreferenceModel.designer.cs">
+      <DependentUpon>201911141420172_FixedTypoInTeacherPreferenceModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Event.cs" />
@@ -480,20 +484,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201911131930372_restart.resx">
       <DependentUpon>201911131930372_restart.cs</DependentUpon>
-    <EmbeddedResource Include="Migrations\201911120016554_resetModels.resx">
-      <DependentUpon>201911120016554_resetModels.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911121725101_AddTimeBeforeCancellationToTeacherPreferences.resx">
-      <DependentUpon>201911121725101_AddTimeBeforeCancellationToTeacherPreferences.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911131606219_AddTravelDuration.resx">
-      <DependentUpon>201911131606219_AddTravelDuration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911130031237_UpdateLessonToDateTimes.resx">
-      <DependentUpon>201911130031237_UpdateLessonToDateTimes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911131930301_NotSureWhyThisIsNecessary.resx">
       <DependentUpon>201911131930301_NotSureWhyThisIsNecessary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911141420172_FixedTypoInTeacherPreferenceModel.resx">
+      <DependentUpon>201911141420172_FixedTypoInTeacherPreferenceModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
