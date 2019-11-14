@@ -227,6 +227,10 @@
     <Compile Include="Migrations\201911131930372_restart.designer.cs">
       <DependentUpon>201911131930372_restart.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911131930301_NotSureWhyThisIsNecessary.cs" />
+    <Compile Include="Migrations\201911131930301_NotSureWhyThisIsNecessary.designer.cs">
+      <DependentUpon>201911131930301_NotSureWhyThisIsNecessary.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Event.cs" />
@@ -455,6 +459,7 @@
     <Content Include="Views\Lesson\List.cshtml" />
     <Content Include="Views\Lesson\Delete.cshtml" />
     <Content Include="Views\Shared\_USERLayout.cshtml" />
+    <Content Include="Views\Lesson\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -475,6 +480,20 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201911131930372_restart.resx">
       <DependentUpon>201911131930372_restart.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201911120016554_resetModels.resx">
+      <DependentUpon>201911120016554_resetModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911121725101_AddTimeBeforeCancellationToTeacherPreferences.resx">
+      <DependentUpon>201911121725101_AddTimeBeforeCancellationToTeacherPreferences.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911131606219_AddTravelDuration.resx">
+      <DependentUpon>201911131606219_AddTravelDuration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911130031237_UpdateLessonToDateTimes.resx">
+      <DependentUpon>201911130031237_UpdateLessonToDateTimes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911131930301_NotSureWhyThisIsNecessary.resx">
+      <DependentUpon>201911131930301_NotSureWhyThisIsNecessary.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

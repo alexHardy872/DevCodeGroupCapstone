@@ -72,7 +72,7 @@ namespace DevCodeGroupCapstone.Controllers
         // GET: Person/Details/5
         public ActionResult Details(int id)
         {
-            double metersToMiles = 1609.34;
+            //tlc double metersToMiles = 1609.34;
             PersonAndLocationViewModel personLocationDetails = new PersonAndLocationViewModel();
             personLocationDetails.person = context.People.Include("Location").Where(p => p.PersonId == id).Single();
             personLocationDetails.location = context.Locations.Where(l => l.LocationId == personLocationDetails.person.LocationId).Single();
@@ -80,7 +80,8 @@ namespace DevCodeGroupCapstone.Controllers
             var tempTeacher = context.Preferences.Where(p => p.teacherId == personLocationDetails.person.PersonId).SingleOrDefault();//tlc
             if (tempTeacher != null)
             {
-                double teacherPreferenceRadius = tempTeacher.maxDistance * metersToMiles;//tlc
+                //double teacherPreferenceRadius = tempTeacher.maxDistance * metersToMiles;//tlc
+                double teacherPreferenceRadius = tempTeacher.maxDistance;//tlc
                 ViewBag.radius = teacherPreferenceRadius;//tlc
             }
             
@@ -132,23 +133,46 @@ namespace DevCodeGroupCapstone.Controllers
         // GET: Person/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            try//tlc
+            {
+                var tempPerson = context.People.Where(p => p.PersonId == id).SingleOrDefault();//tlc
+                return View(tempPerson);
+            }
+            catch(Exception)
+            {
+                return RedirectToAction("Index");
+            }
+            
+            //tlc return View();
+            
         }
 
         // POST: Person/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, Person personToEdit)
         {
+            var personFromDb = context.People.Where(p=>p.PersonId == id).SingleOrDefault();
             try
             {
                 // TODO: Add update logic here
+                if (personFromDb != null)
+                {
+                    personFromDb = personToEdit;
+                    personFromDb.firstName = personToEdit.firstName;
+                    personFromDb.lastName = personToEdit.lastName;
+                    personFromDb.subjects = personToEdit.subjects;
+                    personFromDb.phoneNumber = personToEdit.phoneNumber;
 
-                return RedirectToAction("Index");
+                }
+
+                context.SaveChanges();
             }
             catch
             {
                 return View();
             }
+
+            return RedirectToAction("Details", new { id = personFromDb.PersonId });
         }
 
         // GET: Person/Delete/5

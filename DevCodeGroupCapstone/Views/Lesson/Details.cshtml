@@ -1,0 +1,115 @@
+﻿@model DevCodeGroupCapstone.Models.Lesson
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Lesson</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.subject)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.subject)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.start)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.start)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.end)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.end)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.teacherApproval)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.teacherApproval)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.studentId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.studentId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.teacherId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.teacherId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocationId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Length)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Length)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LessonType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LessonType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.travelDuration)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.travelDuration)
+            <span id="outOfRange" hidden=@(ViewBag.outOfRange == false) style="color: red; font-weight:bold;">*THIS LESSON IS ONLY AVAILABLE ON-LINE OR IN-STUDIO</span>
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.LessonId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
