@@ -160,6 +160,7 @@ namespace DevCodeGroupCapstone.Controllers
                 var preferences = await Task.Run(() => context.Preferences
                     .Where(p => p.teacherId == teacherIdInt)
                     .SingleOrDefault()
+                    //.FirstOrDefault()
                 );
 
                 double convertedLessonLength = Convert.ToDouble(preferences.defaultLessonLength);
