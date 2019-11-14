@@ -1,0 +1,67 @@
+﻿@model DevCodeGroupCapstone.Models.View_Models.BigIndexViewModel
+
+
+
+<h2><strong>@Model.currentUser.firstName  @Model.currentUser.lastName</strong> Instructor Dashboard </h2>
+
+<div id="teacherView">
+   
+    <ul>
+        <li>@Html.ActionLink("Teacher Preferences", "Create", "TeacherPreference")</li>
+        <li>@Html.ActionLink("Teacher Availability", "List", "TeacherAvailability")</li>
+    </ul>
+
+    <div id="calendar"></div>
+</div>
+
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/core/main.min.css">
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/timegrid/main.min.css">
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/list/main.min.css">
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/daygrid/main.min.css">
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" type="text/javascript"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/core/main.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/daygrid/main.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/interaction/main.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/timegrid/main.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('calendar');
+
+
+        (function ($) {
+
+            $.ajax({
+                url: 'https://localhost:44326/api/ScheduleApi/',
+                type: 'GET',
+                success: function (result) {
+
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        plugins: ['interaction', 'dayGrid', 'timeGrid'],
+                        defaultView: 'timeGridWeek',
+                        defaultDate: '2019-11-12',
+                        header: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                        },
+                        events: result
+                    });
+
+                    calendar.render();
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+
+
+
+        })(jQuery);
+
+    });
+</script>
+

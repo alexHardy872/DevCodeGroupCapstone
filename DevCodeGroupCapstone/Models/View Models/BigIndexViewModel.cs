@@ -11,6 +11,8 @@ namespace DevCodeGroupCapstone.Models.View_Models
 
         public List<Lesson> studentLessons;
 
+        public Person currentUser;
+
       
     }
 }

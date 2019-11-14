@@ -32,11 +32,12 @@
             </div>
             <div class="navbar-collapse collapse" id="greenBar">
                 <ul class="nav navbar-nav">
-                   
+                    @Html.ActionLink("Student", "StudentIndex", "Person", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Teacher", "TeacherIndex", "Person", new { area = "" }, new { @class = "navbar-brand" })
+
 
                 </ul>
-                <button class="headBtn" type="button" style="height: 60px; width: 200px; background-color: rgb(56, 119, 128); color: black;" id="viewChange">STUDENT</button>
-                <button class="headBtn" type="button" style="height: 60px; width: 200px; background-color: rgb(56, 119, 128); color: black;" id="viewChange2">TEACHER</button>
+               
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
