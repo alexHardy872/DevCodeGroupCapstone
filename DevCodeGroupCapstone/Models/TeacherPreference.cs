@@ -21,7 +21,7 @@ namespace DevCodeGroupCapstone.Models
 
         public int TimeBeforeCancellation { get; set; }
 
-
+        public int? NumberOfProximalLessons { get; set; }
 
         [ForeignKey("Teacher")]
         public int? teacherId { get; set; }

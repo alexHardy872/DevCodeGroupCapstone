@@ -18,27 +18,133 @@ namespace DevCodeGroupCapstone.Controllers
             context = ApplicationDbContext.Create();
         }
 
-        [System.Web.Http.HttpGet]
-        public async Task<IHttpActionResult> Index()
+        [HttpGet]
+        public async Task<IHttpActionResult> Index(string generateForView, int teacherIdInt)
         {
-            // todo: these are intended to be query strings, but putting them as parameters didn't work
-            string TeacherId = "1";
-            string beginningCalendarDate = "2019-11-12T21:13:52.460Z";
+            // todo: intended to be query strings, but putting them as parameters didn't work
+            string beginningCalendarDate = "2019-11-12T21:13:52.460Z"; // this should be set to the beginning of the month and adjust evry month change
 
-            DateTime beginningCalendarDateTime = DateTime.Parse(beginningCalendarDate); // use this for the date
-            int teacherIdInt = int.Parse(TeacherId);
+            DateTime beginningCalendarDateTime = DateTime.Parse(beginningCalendarDate);
 
-            List<Event> eventList = new List<Event>();
+            switch (generateForView)
+            {
+                case "teacherSchedule":
+                    return await ReturnTeacherScheduleForView(teacherIdInt, beginningCalendarDateTime);
+                case "lessonOptions":
+                    return await ReturnStudentLessonOptionsForView(teacherIdInt, beginningCalendarDateTime);
+            }
+
+            return await Task.Run(() => Ok());
+        }
+
+        private async Task<IHttpActionResult> ReturnTeacherScheduleForView(int teacherIdInt, DateTime beginningCalendarDateTime)
+        {
 
             try
             {
+                List<Event> eventList = await GenerateTeacherCalendarView(teacherIdInt, beginningCalendarDateTime);
+                return Ok(eventList);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
+
+        private async Task<IHttpActionResult> ReturnStudentLessonOptionsForView(int teacherIdInt, DateTime beginningCalendarDateTime)
+        {
+
+            try
+            {
+                List<Event> eventList = await GenerateAvailableSlotsForStudents(teacherIdInt, beginningCalendarDateTime);
+                return Ok(eventList);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
+
+        private async Task<List<Event>> GenerateAvailableSlotsForStudents(int teacherIdInt, DateTime beginningCalendarDateTime)
+        {
+            List<Event> eventList = await GenerateTeacherCalendarView(teacherIdInt, beginningCalendarDateTime);
+            List<Event> lessons = eventList.Where(evnt => evnt.groupId == "Lesson").ToList();
+            List<Event> availabilities = eventList.Where(evnt => evnt.groupId == "Availability").ToList();
+            List<Event> availabilitiesToReturnToStudent = new List<Event>();
+
+            var preferences = await Task.Run(() => context.Preferences
+                .Where(p => p.teacherId == teacherIdInt)
+                .SingleOrDefault()
+            );
+
+            if(preferences.NumberOfProximalLessons == null || (1440 > preferences.NumberOfProximalLessons * preferences.defaultLessonLength))
+            {
+                return availabilities;
+            }
+
+            foreach (Event availability in availabilities)
+            {
+                if(IsEventBeforeOrAfterALessonWithInProximalTolerance(availability, lessons, preferences))
+                {
+                    availabilitiesToReturnToStudent.Add(availability);
+                }
+
+            }
+
+            return availabilitiesToReturnToStudent;
+        }
+
+        private bool IsEventBeforeOrAfterALessonWithInProximalTolerance(Event evnt, List<Event> lessons, TeacherPreference preferences)
+        {
+            bool IsIt = true;
+
+            foreach (Event lesson in lessons)
+            {
+                DateTime beforeLessonStart = GetBeforeTimeForProximalLessons(lesson, preferences);
+                DateTime afterLessonEnd = GetAfterTimeForProximalLessons(lesson, preferences);
+
+                if ((evnt.start >= beforeLessonStart && evnt.end <= lesson.start) || (evnt.start >= lesson.start && evnt.end <= afterLessonEnd))
+                {
+                    IsIt = true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            return IsIt;
+        }
+
+        private DateTime GetAfterTimeForProximalLessons(Event lesson, TeacherPreference preferences)
+        {
+            DateTime timeBeforeProximalLessons = lesson.end + GetTimeSpanAroundALesson(lesson, preferences);
+            return timeBeforeProximalLessons;
+        }
+
+        private DateTime GetBeforeTimeForProximalLessons(Event lesson, TeacherPreference preferences)
+        {
+            DateTime timeBeforeProximalLessons = lesson.start - GetTimeSpanAroundALesson(lesson, preferences);
+            return timeBeforeProximalLessons;
+        }
+
+        private TimeSpan GetTimeSpanAroundALesson(Event lesson, TeacherPreference preferences)
+        {
+            int numberOfProximalLessons = preferences.NumberOfProximalLessons ?? 0;
+            double lengthOfTimeToCoverProximalLessonsInMinutes = preferences.defaultLessonLength * numberOfProximalLessons;
+            return TimeSpan.FromMinutes(lengthOfTimeToCoverProximalLessonsInMinutes);
+        }
+
+        private async Task<List<Event>> GenerateTeacherCalendarView(int teacherIdInt, DateTime beginningCalendarDateTime)
+        {
+            List<Event> eventList = new List<Event>();
+
                 var lessons = await Task.Run(() => context.Lessons
                     .Include("Student")
                     .Include("Location")
                     .Where(lesson => lesson.teacherId == teacherIdInt)
                     .ToList()
                     );
-
 
                 eventList = GenerateEventsFromLessons(lessons);
 
@@ -72,6 +178,7 @@ namespace DevCodeGroupCapstone.Controllers
                         currentEvent.backgroundColor = "#dbd4d3";
                         currentEvent.textColor = "#000000";
                         currentEvent.title = "Available";
+                        currentEvent.groupId = "Availability";
 
                         if (IsTimeAvailable(lessons, currentEvent))
                         {
@@ -83,16 +190,10 @@ namespace DevCodeGroupCapstone.Controllers
                         endTimeOfLastEvent = finishedTime.TimeOfDay;
                     }
                 }
-                return Ok(eventList);
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
-;
+                return eventList;
         }
-
         
+
         private List<Event> GenerateEventsFromLessons(List<Lesson> lessons)
         {
             List<Event> events = new List<Event>();
@@ -101,7 +202,7 @@ namespace DevCodeGroupCapstone.Controllers
             {
                 StringBuilder titleBuild = new StringBuilder();
                 titleBuild.Append(lesson.Student.firstName);
-                titleBuild.Append(" at ");
+                titleBuild.Append(" @ ");
                 titleBuild.Append(lesson.Location.address1);
                 titleBuild.Append(", ");
                 titleBuild.Append(lesson.Location.zip);
@@ -113,6 +214,7 @@ namespace DevCodeGroupCapstone.Controllers
                 currentEvent.backgroundColor = "#f7a072";
                 currentEvent.textColor = "#000000";
                 currentEvent.title = title;
+                currentEvent.groupId = "Lesson";
 
                 events.Add(currentEvent);
             }
@@ -120,20 +222,16 @@ namespace DevCodeGroupCapstone.Controllers
             return events;
         }
 
-        private bool IsTimeAvailable(List<Lesson> lessons, Event newEvent) // newEvent is available timeslot
+        private bool IsTimeAvailable(List<Lesson> lessons, Event availableTimeSlotEvent)
         {
             bool IsTimeAvailable = false;
 
             foreach (Lesson lesson in lessons)
             {
-                if (lesson.start >= newEvent.end || lesson.end <= newEvent.start)
+                if (lesson.start >= availableTimeSlotEvent.end || lesson.end <= availableTimeSlotEvent.start)
                 {
                     IsTimeAvailable = true;
                 }
-                //if ((lesson.start > newEvent.start && lesson.end >= newEvent.end) || (lesson.start <= newEvent.start && lesson.end < newEvent.end))
-                //{
-                //    IsTimeAvailable = true;
-                //}
                 else
                 {
                     return false;
@@ -142,8 +240,6 @@ namespace DevCodeGroupCapstone.Controllers
 
             return IsTimeAvailable;
         }
-
-        // private DateTime AdjustStartTime
 
         private DateTime GetNextDayOfWeekForDateTime(DayOfWeek dayOfWeek, DateTime dateTime)
         {

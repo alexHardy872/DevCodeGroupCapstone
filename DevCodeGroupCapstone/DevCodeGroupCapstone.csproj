@@ -439,6 +439,10 @@
     <Compile Include="Migrations\201911130031237_UpdateLessonToDateTimes.designer.cs">
       <DependentUpon>201911130031237_UpdateLessonToDateTimes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911131649487_numberProximalLessonsOnSchedule.cs" />
+    <Compile Include="Migrations\201911131649487_numberProximalLessonsOnSchedule.designer.cs">
+      <DependentUpon>201911131649487_numberProximalLessonsOnSchedule.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Event.cs" />
@@ -689,6 +693,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911130031237_UpdateLessonToDateTimes.resx">
       <DependentUpon>201911130031237_UpdateLessonToDateTimes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911131649487_numberProximalLessonsOnSchedule.resx">
+      <DependentUpon>201911131649487_numberProximalLessonsOnSchedule.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

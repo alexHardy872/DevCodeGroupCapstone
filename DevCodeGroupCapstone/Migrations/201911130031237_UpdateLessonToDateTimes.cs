@@ -1,8 +1,7 @@
 ﻿namespace DevCodeGroupCapstone.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class UpdateLessonToDateTimes : DbMigration
     {
         public override void Up()
@@ -12,7 +11,7 @@
             DropColumn("dbo.Lessons", "startTime");
             DropColumn("dbo.Lessons", "endTime");
         }
-        
+
         public override void Down()
         {
             AddColumn("dbo.Lessons", "endTime", c => c.Double(nullable: false));
