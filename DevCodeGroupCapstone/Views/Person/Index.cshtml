@@ -7,13 +7,29 @@
 @*<button type="button" id="viewChange"> Student </button>
 <button type="button" id="viewChange2"> Teacher </button>*@
 
-    <div id="introView">
-        <h1> Welcome to weTeachToday! </h1>
-        <p>if you are a student click the <strong>"STUDENT"</strong> tab to browse availabile lessons and your appointments</p>
-        <br />
-        <p>if you are a teacher click the <strong>"TEACHER"</strong> tab to view your dashboard!</p>
+    <div class="container welcome" id="introView">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1> Welcome to weTeachToday! </h1>
+                <img id="infoDispLogo" style="height: 100px;" src="~/Content/Images/WeTeachTodayLogo1.png" alt="logo1" />
 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="dBox">
+                    <p>if you are a student click the <strong>"STUDENT"</strong> tab to browse availabile lessons and your appointments</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="dBox">
+                    <p>if you are a teacher click the <strong>"TEACHER"</strong> tab to view your dashboard!</p>
+                </div>
+                </div>
+            </div>
     </div>
+
+
 <div id="studentView" style="display: none;">
     <h2> Student DashBoard </h2>
     <table class="table" id="teacherList">

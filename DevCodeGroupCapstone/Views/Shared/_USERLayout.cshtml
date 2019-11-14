@@ -20,6 +20,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("weTeachToday", "Index", "Person", new { area = "" }, new { @class = "navbar-brand" })
+
+                
+                    <img src="~/Content/Images/WeTeachTodayLogo1.png" style="height: 60px;" href='@Html.ActionLink("weTeachToday", "Index", "Person", new { area = "" }, new { @class = "navbar-brand" })' alt="logo" />
+                
             </div>
             <div class="navbar-collapse collapse" id="greenBar">
                 <ul class="nav navbar-nav">
@@ -50,7 +54,7 @@
                     
 
                     $(".headBtn").mouseenter(function () {
-                        $(this).css("background-color", "rgb(25, 50, 60)");
+                        $(this).css("background-color", "rgb(153, 234, 158)");
                         $(this).css("color", "white");
                     })
 

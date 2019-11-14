@@ -23,6 +23,12 @@ textarea {
     max-width: 280px;
 }
 
+.welcome{
+    text-align: center;
+}
+
+
+
 .gLogin {
     border: none;
     height: 85px;
@@ -34,8 +40,9 @@ textarea {
 }
 
     .gLogin:hover {
-        background-color: black;
+        
         background-image: url("Images/signin-button2.png");
+       
     }
 
     .greenBar{
@@ -45,23 +52,36 @@ textarea {
     }
 
 
-
-#registerBtn:hover{
-    border: 2px solid black;
-    background-color: darkseagreen;
+.dBox {
+    height: 290px;
+    width: 100%;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5%;
+    border: 1pt solid;
+    border-color: silver;
+    background-color: white;
 }
 
-#registerBtn {
-    font-size: 30pt;
-    background-color: orange;
-}
+
+
+
 
 .logBox{
-    border: 2pt solid black;
+    height: 290px;
+    width: 100%;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5%;
+    border: 1pt solid;
+    border-color: silver;
+    background-color: white;
+    
 }
 
 .hoverGreen:hover{
-    background-color: green;
+    background-color: rgb(153, 234, 158);
+
 }
 
 /*replace bootstrap here content out*/
