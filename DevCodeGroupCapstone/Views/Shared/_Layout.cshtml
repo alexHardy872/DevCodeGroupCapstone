@@ -21,8 +21,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <img scr="Images/WeTeachTodayLogo1.png" />
-                @Html.ActionLink("weTeachToday", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <div class="logo">
+                    <a href="@Url.Action("Index", "Home")">
+                        <img src="~/Content/Images/WeTeachTodayLogo1.png" style="height: 60px;" alt="logo" />
+                    </a>
+                </div>
             </div>
             <div class="navbar-collapse collapse" id="greenBar">
                
