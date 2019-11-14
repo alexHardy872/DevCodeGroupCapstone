@@ -1,31 +1,35 @@
 			//SEED USERS
 
-			var passwordHash = new PasswordHasher();
+            var passwordHash = new PasswordHasher();
             string password = passwordHash.HashPassword("Test!123");
             context.Users.AddOrUpdate(u => u.UserName,
                 new ApplicationUser
                 {
                     UserName = "test1@noreply.com",
                     PasswordHash = password,
-                    Email = "test1@noreply.com"
+                    Email = "test1@noreply.com",
+                    SecurityStamp = "00ac752f-7a46-48c1-a7fc-bdca784dea5d"
                 },
                 new ApplicationUser
                 {
                     UserName = "test2@noreply.com",
                     PasswordHash = password,
-                    Email = "test2@noreply.com"
+                    Email = "test2@noreply.com",
+                    SecurityStamp = "4a448de1-b350-4321-a9d0-a45ca1a9cbf2"
                 },
                 new ApplicationUser
                 {
                     UserName = "test3@noreply.com",
                     PasswordHash = password,
-                    Email = "test3@noreply.com"
+                    Email = "test3@noreply.com",
+                    SecurityStamp = "d98dc094-cda8-4697-8fbe-09f98f6e76de"
                 },
                 new ApplicationUser
                 {
                     UserName = "test4@noreply.com",
                     PasswordHash = password,
-                    Email = "test4@noreply.com"
+                    Email = "test4@noreply.com",
+                    SecurityStamp = "3cdafc2a-6d0f-4474-85bc-965c32730a72"
                 }
                 );
 
@@ -73,7 +77,11 @@
 
             //SEED PEOPLE
 
-			var trevorLocation = context.Locations.FirstOrDefault(l => l.address1 == "313 N Plankinton Ave");
+            var trevor = context.Users.FirstOrDefault(u => u.Email == "test1@noreply.com");
+            var gabe = context.Users.FirstOrDefault(u => u.Email == "test2@noreply.com");
+            var alex = context.Users.FirstOrDefault(u => u.Email == "test3@noreply.com");
+            var adam = context.Users.FirstOrDefault(u => u.Email == "test4@noreply.com");
+            var trevorLocation = context.Locations.FirstOrDefault(l => l.address1 == "313 N Plankinton Ave");
             var gabeLocation = context.Locations.FirstOrDefault(l => l.address1 == "5222 W Hassel Ln");
             var alexLocation = context.Locations.FirstOrDefault(l => l.address1 == "9627 W National Ave");
             var adamLocation = context.Locations.FirstOrDefault(l => l.address1 == "1024 Lakefield Rd");
@@ -84,7 +92,8 @@
                     lastName = "Clements",
                     subjects = "awesomeness",
                     phoneNumber = "5419138650",
-                    LocationId = trevorLocation.LocationId
+                    LocationId = trevorLocation.LocationId,
+                    ApplicationId = trevor.Id
                 },
                 new Person
                 {
@@ -92,7 +101,8 @@
                     lastName = "Kunkel",
                     subjects = "javascript",
                     phoneNumber = "4145079038",
-                    LocationId = gabeLocation.LocationId
+                    LocationId = gabeLocation.LocationId,
+                    ApplicationId = gabe.Id
                 },
                 new Person
                 {
@@ -100,7 +110,8 @@
                     lastName = "Hardy",
                     subjects = "bass",
                     phoneNumber = "7472068258",
-                    LocationId = alexLocation.LocationId
+                    LocationId = alexLocation.LocationId,
+                    ApplicationId = alex.Id
                 },
                 new Person
                 {
@@ -108,15 +119,272 @@
                     lastName = "Neujahr",
                     subjects = "guitar",
                     phoneNumber = "3093176370",
-                    LocationId = adamLocation.LocationId
+                    LocationId = adamLocation.LocationId,
+                    ApplicationId = adam.Id
                 }
                 );
 
+            //SEED PREFERENCES
+            var trevor = context.People.FirstOrDefault(p => p.firstName == "Trevor");
+            var gabe = context.People.FirstOrDefault(p => p.firstName == "Gabe");
+            var alex = context.People.FirstOrDefault(p => p.firstName == "Alex");
+            var adam = context.People.FirstOrDefault(p => p.firstName == "Adam");
+            decimal cost = Convert.ToDecimal(0.25);
+            context.Preferences.AddOrUpdate(
+                new TeacherPreference
+                {
+                    teacherId = trevor.PersonId,
+                    TimeBeforeCancellation = 24,
+                    incementalCost = cost,
+                    maxDistance = 5,
+                    distanceType = RadiusOptions.Miles,
+                    defaultLessonLength = 60
+                },
+                new TeacherPreference
+                {
+                    teacherId = gabe.PersonId,
+                    TimeBeforeCancellation = 24,
+                    incementalCost = cost,
+                    maxDistance = 5,
+                    distanceType = RadiusOptions.Miles,
+                    defaultLessonLength = 60
+                },
+                new TeacherPreference
+                {
+                    teacherId = alex.PersonId,
+                    TimeBeforeCancellation = 24,
+                    incementalCost = cost,
+                    maxDistance = 5,
+                    distanceType = RadiusOptions.Miles,
+                    defaultLessonLength = 60
+                },
+                new TeacherPreference
+                {
+                    teacherId = adam.PersonId,
+                    TimeBeforeCancellation = 24,
+                    incementalCost = cost,
+                    maxDistance = 5,
+                    distanceType = RadiusOptions.Miles,
+                    defaultLessonLength = 60
+                }
+                );
+
+            //SEED AVAILABILITIES
+            var trevor = context.People.FirstOrDefault(p => p.firstName == "Trevor");
+            var gabe = context.People.FirstOrDefault(p => p.firstName == "Gabe");
+            var alex = context.People.FirstOrDefault(p => p.firstName == "Alex");
+            var adam = context.People.FirstOrDefault(p => p.firstName == "Adam");
+            DateTime start = new DateTime(2019, 11, 15, 8, 0, 0);
+            DateTime end = new DateTime(2019, 11, 15, 17, 0, 0);
+            context.TeacherAvailabilities.AddOrUpdate(
+                new TeacherAvail
+                {
+                    PersonId = trevor.PersonId,
+                    weekDay = DayOfWeek.Sunday,
+                    start = start,
+                    end = end
+                },
+                new TeacherAvail
+                {
+                    PersonId = trevor.PersonId,
+                    weekDay = DayOfWeek.Monday,
+                    start = start,
+                    end = end
+                },
+                new TeacherAvail
+                {
+                    PersonId = trevor.PersonId,
+                    weekDay = DayOfWeek.Tuesday,
+                    start = start,
+                    end = end
+                },
+                new TeacherAvail
+                {
+                    PersonId = trevor.PersonId,
+                    weekDay = DayOfWeek.Wednesday,
+                    start = start,
+                    end = end
+                },
+                new TeacherAvail
+                {
+                    PersonId = trevor.PersonId,
+                    weekDay = DayOfWeek.Thursday,
+                    start = start,
+                    end = end
+                },
+                new TeacherAvail
+                {
+                    PersonId = trevor.PersonId,
+                    weekDay = DayOfWeek.Friday,
+                    start = start,
+                    end = end
+                },
+                new TeacherAvail
+                {
+                    PersonId = trevor.PersonId,
+                    weekDay = DayOfWeek.Saturday,
+                    start = start,
+                    end = end
+                },
+
+                new TeacherAvail
+                {
+                    PersonId = gabe.PersonId,
+                    weekDay = DayOfWeek.Sunday,
+                    start = start,
+                    end = end
+                },
+                new TeacherAvail
+                {
+                    PersonId = gabe.PersonId,
+                    weekDay = DayOfWeek.Monday,
+                    start = start,
+                    end = end
+                },
+                new TeacherAvail
+                {
+                    PersonId = gabe.PersonId,
+                    weekDay = DayOfWeek.Tuesday,
+                    start = start,
+                    end = end
+                },
+                new TeacherAvail
+                {
+                    PersonId = gabe.PersonId,
+                    weekDay = DayOfWeek.Wednesday,
+                    start = start,
+                    end = end
+                },
+                new TeacherAvail
+                {
+                    PersonId = gabe.PersonId,
+                    weekDay = DayOfWeek.Thursday,
+                    start = start,
+                    end = end
+                },
+                new TeacherAvail
+                {
+                    PersonId = gabe.PersonId,
+                    weekDay = DayOfWeek.Friday,
+                    start = start,
+                    end = end
+                },
+                new TeacherAvail
+                {
+                    PersonId = gabe.PersonId,
+                    weekDay = DayOfWeek.Saturday,
+                    start = start,
+                    end = end
+                },
+
+                new TeacherAvail
+                {
+                    PersonId = alex.PersonId,
+                    weekDay = DayOfWeek.Sunday,
+                    start = start,
+                    end = end
+                },
+                new TeacherAvail
+                {
+                    PersonId = alex.PersonId,
+                    weekDay = DayOfWeek.Monday,
+                    start = start,
+                    end = end
+                },
+                new TeacherAvail
+                {
+                    PersonId = alex.PersonId,
+                    weekDay = DayOfWeek.Tuesday,
+                    start = start,
+                    end = end
+                },
+                new TeacherAvail
+                {
+                    PersonId = alex.PersonId,
+                    weekDay = DayOfWeek.Wednesday,
+                    start = start,
+                    end = end
+                },
+                new TeacherAvail
+                {
+                    PersonId = alex.PersonId,
+                    weekDay = DayOfWeek.Thursday,
+                    start = start,
+                    end = end
+                },
+                new TeacherAvail
+                {
+                    PersonId = alex.PersonId,
+                    weekDay = DayOfWeek.Friday,
+                    start = start,
+                    end = end
+                },
+                new TeacherAvail
+                {
+                    PersonId = alex.PersonId,
+                    weekDay = DayOfWeek.Saturday,
+                    start = start,
+                    end = end
+                },
+
+                new TeacherAvail
+                {
+                    PersonId = adam.PersonId,
+                    weekDay = DayOfWeek.Sunday,
+                    start = start,
+                    end = end
+                },
+                new TeacherAvail
+                {
+                    PersonId = adam.PersonId,
+                    weekDay = DayOfWeek.Monday,
+                    start = start,
+                    end = end
+                },
+                new TeacherAvail
+                {
+                    PersonId = adam.PersonId,
+                    weekDay = DayOfWeek.Tuesday,
+                    start = start,
+                    end = end
+                },
+                new TeacherAvail
+                {
+                    PersonId = adam.PersonId,
+                    weekDay = DayOfWeek.Wednesday,
+                    start = start,
+                    end = end
+                },
+                new TeacherAvail
+                {
+                    PersonId = adam.PersonId,
+                    weekDay = DayOfWeek.Thursday,
+                    start = start,
+                    end = end
+                },
+                new TeacherAvail
+                {
+                    PersonId = adam.PersonId,
+                    weekDay = DayOfWeek.Friday,
+                    start = start,
+                    end = end
+                },
+                new TeacherAvail
+                {
+                    PersonId = adam.PersonId,
+                    weekDay = DayOfWeek.Saturday,
+                    start = start,
+                    end = end
+                }
+
+                );
 
             //SEED LESSONS
             var trevor = context.People.FirstOrDefault(p => p.firstName == "Trevor");
             var gabe = context.People.FirstOrDefault(p => p.firstName == "Gabe");
             var alex = context.People.FirstOrDefault(p => p.firstName == "Alex");
+            DateTime startTime = new DateTime(2019, 11, 5, 13, 0, 0);
+            DateTime endTime = new DateTime(2019, 11, 5, 14, 0, 0);
             context.Lessons.AddOrUpdate(
                 new Lesson
                 {
@@ -127,7 +395,10 @@
                     studentId = gabe.PersonId,
                     LessonType = "In-Studio",
                     LocationId = trevor.LocationId,
-                    cost = 20
+                    cost = 20,
+                    start = startTime,
+                    end = endTime
+
                 },
                 new Lesson
                 {
@@ -138,7 +409,9 @@
                     studentId = alex.PersonId,
                     LessonType = "Online",
                     LocationId = gabe.LocationId,
-                    cost = 25
+                    cost = 25,
+                    start = startTime,
+                    end = endTime
                 },
                 new Lesson
                 {
@@ -147,8 +420,10 @@
                     Price = 30,
                     teacherId = alex.PersonId,
                     studentId = trevor.PersonId,
-                    LessonType = "In-Home",
+                    LessonType = "In-Studio",
                     LocationId = trevor.LocationId,
-                    cost = 30
+                    cost = 30,
+                    start = startTime,
+                    end = endTime
                 }
                 );
