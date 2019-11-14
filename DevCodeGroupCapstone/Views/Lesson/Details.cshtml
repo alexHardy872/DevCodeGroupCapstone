@@ -109,6 +109,58 @@
 
     </dl>
 </div>
+
+<div id="map" style="height: 400px; width: 400px;"></div>
+
+<script>
+    var map;
+
+    function initMap() {
+
+        //pin to represent the teacher's location
+        var lessonLocation = { lat: @ViewBag.lessonLat, lng: @ViewBag.lessonLng};
+        var teacherLocation = { lat: @ViewBag.teacherLat, lng: @ViewBag.teacherLng};
+
+        //add a map
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 11,
+            center: lessonLocation
+        });
+
+        //roadmap style
+        var mapOptions = {
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            styles: [{ featureType: 'all', stylers: [{ saturation: -100 }, { brightness: 5 }] }],
+            scrollwheel: false
+        };
+
+        //add a marker
+        var marker = new google.maps.Marker({ position: lessonLocation, title: "Lesson location", map: map });
+        var markerTest = new google.maps.Marker({ position: teacherLocation, title: "Teacher location", map: map });
+
+        //add a radius for max range
+        var teacherRadius = new google.maps.Circle({
+          strokeColor: '#FF0000',
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: '#FF0000',
+          fillOpacity: 0.35,
+          map: map,
+          center: teacherLocation,
+          //center: lessonLocation,
+          radius: @ViewBag.radius
+        });
+     }
+</script>
+
+@{
+    var ApiUrlStr = DevCodeGroupCapstone.Private.ApiKey.googleMapsApiUrl;
+    var ApiKeyStr = DevCodeGroupCapstone.Private.ApiKey.googleMapsApiKey;
+    var ApiKeyCbk = DevCodeGroupCapstone.Private.ApiKey.googleMapsCallback;
+    string googleMapsRequest = ApiUrlStr + ApiKeyStr + ApiKeyCbk;}
+
+<script src=@googleMapsRequest async defer></script>
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.LessonId }) |
     @Html.ActionLink("Back to List", "Index")

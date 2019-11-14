@@ -129,19 +129,23 @@ namespace DevCodeGroupCapstone.Controllers
         // GET: Person/Details/5
         public ActionResult Details(int id)
         {
-            //tlc double metersToMiles = 1609.34;
             PersonAndLocationViewModel personLocationDetails = new PersonAndLocationViewModel();
             personLocationDetails.person = context.People.Include("Location").Where(p => p.PersonId == id).Single();
             personLocationDetails.location = context.Locations.Where(l => l.LocationId == personLocationDetails.person.LocationId).Single();
 
             var tempTeacher = context.Preferences.Where(p => p.teacherId == personLocationDetails.person.PersonId).SingleOrDefault();//tlc
-            if (tempTeacher != null)
+            if (tempTeacher != null)                
             {
-                //double teacherPreferenceRadius = tempTeacher.maxDistance * metersToMiles;//tlc
-                double teacherPreferenceRadius = tempTeacher.maxDistance;//tlc
-                ViewBag.radius = teacherPreferenceRadius;//tlc
-            }
-            
+                if (tempTeacher.distanceType == RadiusOptions.Miles)
+                {
+                    double teacherPreferenceRadius = tempTeacher.maxDistance;//tlc
+                    ViewBag.radius = teacherPreferenceRadius * Service_Classes.DistanceMatrix.metersToMiles;//tlc
+                }
+                else if (tempTeacher.distanceType == RadiusOptions.Miles)
+                {
+                    ViewBag.radius = tempTeacher.maxDistance;
+                }
+            }            
 
             return View(personLocationDetails);
         }
