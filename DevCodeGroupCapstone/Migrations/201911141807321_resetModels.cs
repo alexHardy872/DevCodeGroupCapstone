@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class restart : DbMigration
+    public partial class resetModels : DbMigration
     {
         public override void Up()
         {

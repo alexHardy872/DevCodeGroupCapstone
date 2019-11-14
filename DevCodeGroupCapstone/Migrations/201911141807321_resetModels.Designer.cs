@@ -7,13 +7,13 @@ namespace DevCodeGroupCapstone.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.0-preview2-19525-03")]
-    public sealed partial class restart : IMigrationMetadata
+    public sealed partial class resetModels : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(restart));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(resetModels));
         
         string IMigrationMetadata.Id
         {
-            get { return "201911131930372_restart"; }
+            get { return "201911141807321_resetModels"; }
         }
         
         string IMigrationMetadata.Source

@@ -26,16 +26,12 @@ namespace DevCodeGroupCapstone.Controllers
         {
             string userId = User.Identity.GetUserId();
             var userFound = context.People.Where(p => p.ApplicationId == userId).FirstOrDefault();
-
-
             if (userFound == null)
             {
                 return RedirectToAction("Create");
             }
             List<PersonAndLocationViewModel> teachers = new List<PersonAndLocationViewModel>();
-
             List<Person> eligibleTeachers = context.People.Where(s => s.subjects != null && s.PersonId != userFound.PersonId).ToList();
-
             foreach (Person teacher in eligibleTeachers)
             {
                 PersonAndLocationViewModel info = new PersonAndLocationViewModel();
@@ -43,30 +39,91 @@ namespace DevCodeGroupCapstone.Controllers
                 info.location = context.Locations.Where(l => l.LocationId == teacher.LocationId).Single();
                 info.lessons = context.Lessons.Where(lesson => lesson.teacherId == teacher.PersonId).ToList();
                 info.avails = context.TeacherAvailabilities.Where(av => av.PersonId == teacher.PersonId).ToList();
-
                 teachers.Add(info);
             }
-
-
             List<Lesson> studentLessons = context.Lessons
                     .Include("Teacher")
                     .Include("Location")
                     .Where(lesson => lesson.studentId == userFound.PersonId).ToList();
-
             if (teachers == null)
             {
                 return RedirectToAction("Index");
             }
-
-
             BigIndexViewModel bigModel = new BigIndexViewModel();
             bigModel.teachersComp = teachers;
             bigModel.studentLessons = studentLessons;
-       
-
-
+            bigModel.currentUser = userFound;
+   
             return View(bigModel);
+        }
 
+        public ActionResult StudentIndex()
+        {
+            string userId = User.Identity.GetUserId();
+            var userFound = context.People.Where(p => p.ApplicationId == userId).FirstOrDefault();
+
+            if (userFound == null)
+            {
+                return RedirectToAction("Create");
+            }
+            List<PersonAndLocationViewModel> teachers = new List<PersonAndLocationViewModel>();
+            List<Person> eligibleTeachers = context.People.Where(s => s.subjects != null && s.PersonId != userFound.PersonId).ToList();
+            foreach (Person teacher in eligibleTeachers)
+            {
+                PersonAndLocationViewModel info = new PersonAndLocationViewModel();
+                info.person = teacher;
+                info.location = context.Locations.Where(l => l.LocationId == teacher.LocationId).Single();
+                info.lessons = context.Lessons.Where(lesson => lesson.teacherId == teacher.PersonId).ToList();
+                info.avails = context.TeacherAvailabilities.Where(av => av.PersonId == teacher.PersonId).ToList();
+                teachers.Add(info);
+            }
+            List<Lesson> studentLessons = context.Lessons
+                    .Include("Teacher")
+                    .Include("Location")
+                    .Where(lesson => lesson.studentId == userFound.PersonId).ToList();
+            if (teachers == null)
+            {
+                return RedirectToAction("Index");
+            }
+            BigIndexViewModel bigModel = new BigIndexViewModel();
+            bigModel.teachersComp = teachers;
+            bigModel.studentLessons = studentLessons;
+            bigModel.currentUser = userFound;
+            return View(bigModel);
+        }
+
+        public ActionResult TeacherIndex()
+        {
+            string userId = User.Identity.GetUserId();
+            var userFound = context.People.Where(p => p.ApplicationId == userId).FirstOrDefault();
+            if (userFound == null)
+            {
+                return RedirectToAction("Create");
+            }
+            List<PersonAndLocationViewModel> teachers = new List<PersonAndLocationViewModel>();
+            List<Person> eligibleTeachers = context.People.Where(s => s.subjects != null && s.PersonId != userFound.PersonId).ToList();
+            foreach (Person teacher in eligibleTeachers)
+            {
+                PersonAndLocationViewModel info = new PersonAndLocationViewModel();
+                info.person = teacher;
+                info.location = context.Locations.Where(l => l.LocationId == teacher.LocationId).Single();
+                info.lessons = context.Lessons.Where(lesson => lesson.teacherId == teacher.PersonId).ToList();
+                info.avails = context.TeacherAvailabilities.Where(av => av.PersonId == teacher.PersonId).ToList();
+                teachers.Add(info);
+            }
+            List<Lesson> studentLessons = context.Lessons
+                    .Include("Teacher")
+                    .Include("Location")
+                    .Where(lesson => lesson.studentId == userFound.PersonId).ToList();
+            if (teachers == null)
+            {
+                return RedirectToAction("Index");
+            }
+            BigIndexViewModel bigModel = new BigIndexViewModel();
+            bigModel.teachersComp = teachers;
+            bigModel.studentLessons = studentLessons;
+            bigModel.currentUser = userFound;
+            return View(bigModel);
         }
 
         // GET: Person/Details/5

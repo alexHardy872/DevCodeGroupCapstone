@@ -1,0 +1,96 @@
+﻿@model DevCodeGroupCapstone.Models.View_Models.BigIndexViewModel
+
+
+
+<h2><strong>@Model.currentUser.firstName  @Model.currentUser.lastName</strong> Student Dashboard </h2>
+
+
+<div id="studentView">
+    
+    <table class="table" id="teacherList">
+        <tr>
+            <th></th>
+        </tr>
+
+
+
+        @{
+            var teacherList = Model.teachersComp;
+            var lessonList = Model.studentLessons;
+        }
+
+        @foreach (var item in teacherList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.person.firstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.person.lastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.person.subjects)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.location.city)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.location.state)
+                </td>
+
+
+
+                <td>
+
+                    @Html.ActionLink("Details", "Details", new { id = item.person.PersonId })
+
+                </td>
+            </tr>
+        }
+
+
+    </table>
+
+
+    <h2> LESSONS</h2>
+
+    <table class="table">
+        <tr>
+            <th> Lesson Date / Time </th>
+
+            <th> Lesson Subject </th>
+
+            <th> Instructor </th>
+
+            <th> Location </th>
+
+            <th> Price </th>
+
+            <th></th>
+
+        </tr>
+
+        @foreach (var lesson in lessonList)
+        {
+
+
+            <tr>
+
+                <td>  @Html.DisplayFor(modelItem => lesson.start) - @Html.DisplayFor(modelItem => lesson.end) </td>
+                <td>  @Html.DisplayFor(modelItem => lesson.LessonType)  </td>
+                <td>  @Html.DisplayFor(modelItem => lesson.Teacher.firstName) @Html.DisplayFor(modelItem => lesson.Teacher.lastName) </td>
+                <td>  @Html.DisplayFor(modelItem => lesson.Location.address1) @Html.DisplayFor(modelItem => lesson.Location.city) @Html.DisplayFor(modelItem => lesson.Location.state) </td>
+                <td>  @Html.DisplayFor(modelItem => lesson.Price)  </td>
+
+
+                <th><button type="button" id="btnCancel">CANCEL LESSON</button></th>
+                <td></td>
+            </tr>
+        }
+
+    </table>
+
+
+</div>
+
+

@@ -223,17 +223,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201911131930372_restart.cs" />
-    <Compile Include="Migrations\201911131930372_restart.designer.cs">
-      <DependentUpon>201911131930372_restart.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911131930301_NotSureWhyThisIsNecessary.cs" />
-    <Compile Include="Migrations\201911131930301_NotSureWhyThisIsNecessary.designer.cs">
-      <DependentUpon>201911131930301_NotSureWhyThisIsNecessary.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911141420172_FixedTypoInTeacherPreferenceModel.cs" />
-    <Compile Include="Migrations\201911141420172_FixedTypoInTeacherPreferenceModel.designer.cs">
-      <DependentUpon>201911141420172_FixedTypoInTeacherPreferenceModel.cs</DependentUpon>
+    <Compile Include="Migrations\201911141807321_resetModels.cs" />
+    <Compile Include="Migrations\201911141807321_resetModels.designer.cs">
+      <DependentUpon>201911141807321_resetModels.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -464,6 +456,8 @@
     <Content Include="Views\Lesson\Delete.cshtml" />
     <Content Include="Views\Shared\_USERLayout.cshtml" />
     <Content Include="Views\Lesson\Details.cshtml" />
+    <Content Include="Views\Person\StudentIndex.cshtml" />
+    <Content Include="Views\Person\TeacherIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -482,14 +476,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201911131930372_restart.resx">
-      <DependentUpon>201911131930372_restart.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911131930301_NotSureWhyThisIsNecessary.resx">
-      <DependentUpon>201911131930301_NotSureWhyThisIsNecessary.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911141420172_FixedTypoInTeacherPreferenceModel.resx">
-      <DependentUpon>201911141420172_FixedTypoInTeacherPreferenceModel.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201911141807321_resetModels.resx">
+      <DependentUpon>201911141807321_resetModels.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
