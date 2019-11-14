@@ -6,8 +6,10 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    "
-    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />"
+
+
+
+    @*<link href="@Url.Content("~/Content/Site.css")?<?=time()?>" rel="stylesheet" type="text/css" />*@
 
 </head>
 <body>
@@ -19,14 +21,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("weTeachToday", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <div class="logo">
+                    <a href="@Url.Action("Index", "Home")">
+                        <img src="~/Content/Images/WeTeachTodayLogoTransparent.png" style="height: 60px;" alt="logo" />
+                    </a>
+                </div>
             </div>
             <div class="navbar-collapse collapse" id="greenBar">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
+               
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -34,9 +36,7 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+       
     </div>
 
     @Scripts.Render("~/bundles/jquery")

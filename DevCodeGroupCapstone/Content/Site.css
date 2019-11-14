@@ -23,19 +23,26 @@ textarea {
     max-width: 280px;
 }
 
+.welcome{
+    text-align: center;
+}
+
+
+
 .gLogin {
     border: none;
-    height: 92px;
-    width: 382px;
+    height: 85px;
+    width: 100%;
     background-color: transparent;
     background-image: url("Images/signin-button1.png");
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
 }
 
     .gLogin:hover {
-        background-color: black;
+        
         background-image: url("Images/signin-button2.png");
+       
     }
 
     .greenBar{
@@ -43,3 +50,39 @@ textarea {
         
 
     }
+
+
+.dBox {
+    height: 290px;
+    width: 100%;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5%;
+    border: 1pt solid;
+    border-color: silver;
+    background-color: white;
+}
+
+
+
+
+
+.logBox{
+    height: 290px;
+    width: 100%;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5%;
+    border: 1pt solid;
+    border-color: silver;
+    background-color: white;
+    
+}
+
+.hoverGreen:hover{
+    background-color: rgb(153, 234, 158);
+
+}
+
+/*replace bootstrap here content out*/
+

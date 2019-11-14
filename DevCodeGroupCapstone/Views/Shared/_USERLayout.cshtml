@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - User Layout</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top greenBar">
+        <div class="container">
+            <div class="navbar-header greenBar">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                @*@Html.ActionLink("weTeachToday", "Index", "Person", new { area = "" }, new { @class = "navbar-brand" })*@
+                @*<a href="@Html.Action("Index", "Home")"><img scr="Images/WeTeachTodayLogo1.png" /></a>*@
+
+                @*<img src="~/Content/Images/WeTeachTodayLogo1.png" style="height: 60px;" href='@Html.ActionLink("weTeachToday", "Index", "Person", new { area = "" }, new { @class = "navbar-brand" })' alt="logo" />*@
+            <div class="logo">
+                <a href="@Url.Action("Index", "Person")">
+                    <img src="~/Content/Images/WeTeachTodayLogoTransparent.png" style="height: 60px;" alt="logo" />
+                </a>
+            </div>
+            </div>
+            <div class="navbar-collapse collapse" id="greenBar">
+                <ul class="nav navbar-nav">
+                    @Html.ActionLink("Student", "StudentIndex", "Person", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Teacher", "TeacherIndex", "Person", new { area = "" }, new { @class = "navbar-brand" })
+
+
+                </ul>
+               
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            
+        </footer>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        
+                (function ($) {
+
+                    
+                      // var color = $( this ).css( "background-color" );
+                    
+
+                    $(".headBtn").mouseenter(function () {
+                        $(this).css("background-color", "rgb(153, 234, 158)");
+                        $(this).css("color", "white");
+                    })
+
+                    //"rgb(56, 119, 128);"
+                     $(".headBtn").mouseleave(function () {
+                         $(this).css("background-color", "rgb(56, 119, 128)");
+                         $(this).css("color", "black");
+                     })
+
+                       $( "#viewChange" ).click(function() {
+                        console.log("Handler for .click() called.");
+                           $("#teacherView").hide();
+                            $("#introView").hide();
+                           $("#studentView").show();
+                           $(this).css("font-weight", "bold");
+                           $('#viewChange2').css("font-weight", "normal");
+                    });
+
+                       $( "#viewChange2" ).click(function() {
+                        console.log("Handler for .click() called.");
+                           $("#teacherView").show();
+                           $("#introView").hide();
+                           $("#studentView").hide();
+                           $(this).css("font-weight", "bold");
+                           $('#viewChange').css("font-weight", "normal");
+
+                        });
+
+                     
+
+                   
+
+                  
+
+                })(jQuery);
+
+        });
+    </script>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/fullcalendar")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

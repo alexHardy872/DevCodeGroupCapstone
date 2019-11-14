@@ -17,7 +17,7 @@ namespace DevCodeGroupCapstone.Models
         public int maxDistance { get; set; }
 
         [DataType(DataType.Currency)]
-        public decimal incementalCost { get; set; }
+        public decimal incrementalCost { get; set; }
 
         public int TimeBeforeCancellation { get; set; }
 

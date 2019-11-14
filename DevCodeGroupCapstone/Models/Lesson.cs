@@ -42,5 +42,7 @@ namespace DevCodeGroupCapstone.Models
         public decimal Price { get; set; }
         public string LessonType { get; set; }
 
+        public int travelDuration { get; set; }
+
     }
 }
