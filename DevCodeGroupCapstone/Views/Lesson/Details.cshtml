@@ -135,8 +135,8 @@
         };
 
         //add a marker
-        var marker = new google.maps.Marker({ position: lessonLocation, title: "Lesson location", map: map });
-        var markerTest = new google.maps.Marker({ position: teacherLocation, title: "Teacher location", map: map });
+        var lessonLocationMarker = new google.maps.Marker({ position: lessonLocation, title: "Lesson location", map: map });
+        var teacherLocationMarker = new google.maps.Marker({ position: teacherLocation, title: "Teacher location", map: map });
 
         //add a radius for max range
         var teacherRadius = new google.maps.Circle({
