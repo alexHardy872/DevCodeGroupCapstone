@@ -79,19 +79,23 @@ namespace DevCodeGroupCapstone.Controllers
 
         // POST: TeacherAvailability/Edit/5
         [HttpPost]
-        public ActionResult Edit(TeacherAvail avail)
+        public ActionResult Edit(TeacherAvail editedAvail)
         {
+            TeacherAvail availFromDb = null;
             try
             {
+                availFromDb = context.TeacherAvailabilities.Where(ta => ta.availId == editedAvail.availId).SingleOrDefault();
 
-
-
+                availFromDb.start = editedAvail.start;
+                availFromDb.end = editedAvail.end;
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception e)
             {
-                return View();
+                //return View();
+                Console.WriteLine(e.Message);
+                return RedirectToAction("Index");
             }
         }
 
