@@ -99,7 +99,7 @@
 
                         <td>
                             @Html.ActionLink("APPROVE/EDIT", "../Lesson/Edit", new { id = lesson.LessonId })
-                            @Html.ActionLink("DENY", "../Lesson/Delete", new { id = lesson.LessonId })
+                            @Html.ActionLink("DENY", "../Lesson/QuickDelete", new { id = lesson.LessonId })
 
                         </td>
                         <td>
@@ -142,6 +142,10 @@
 
             </tr>
                 }
+            <tr>
+               <td> @Html.ActionLink("CREAT MAKEUP", "../Lesson/CreateMakeup")
+                </td>
+            </tr>
 
             </table>
         </div>
