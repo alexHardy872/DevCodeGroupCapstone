@@ -135,7 +135,7 @@
                 {
                     teacherId = trevor.PersonId,
                     TimeBeforeCancellation = 24,
-                    incementalCost = cost,
+                    incrementalCost = cost,
                     maxDistance = 5,
                     distanceType = RadiusOptions.Miles,
                     defaultLessonLength = 60
@@ -144,7 +144,7 @@
                 {
                     teacherId = gabe.PersonId,
                     TimeBeforeCancellation = 24,
-                    incementalCost = cost,
+                    incrementalCost = cost,
                     maxDistance = 5,
                     distanceType = RadiusOptions.Miles,
                     defaultLessonLength = 60
@@ -153,7 +153,7 @@
                 {
                     teacherId = alex.PersonId,
                     TimeBeforeCancellation = 24,
-                    incementalCost = cost,
+                    incrementalCost = cost,
                     maxDistance = 5,
                     distanceType = RadiusOptions.Miles,
                     defaultLessonLength = 60
@@ -162,7 +162,7 @@
                 {
                     teacherId = adam.PersonId,
                     TimeBeforeCancellation = 24,
-                    incementalCost = cost,
+                    incrementalCost = cost,
                     maxDistance = 5,
                     distanceType = RadiusOptions.Miles,
                     defaultLessonLength = 60
@@ -174,8 +174,8 @@
             var gabe = context.People.FirstOrDefault(p => p.firstName == "Gabe");
             var alex = context.People.FirstOrDefault(p => p.firstName == "Alex");
             var adam = context.People.FirstOrDefault(p => p.firstName == "Adam");
-            DateTime start = new DateTime(2019, 11, 15, 8, 0, 0);
-            DateTime end = new DateTime(2019, 11, 15, 17, 0, 0);
+            DateTime start = new DateTime(2019, 11, 18, 8, 0, 0);
+            DateTime end = new DateTime(2019, 11, 18, 17, 0, 0);
             context.TeacherAvailabilities.AddOrUpdate(
                 new TeacherAvail
                 {
@@ -383,8 +383,8 @@
             var trevor = context.People.FirstOrDefault(p => p.firstName == "Trevor");
             var gabe = context.People.FirstOrDefault(p => p.firstName == "Gabe");
             var alex = context.People.FirstOrDefault(p => p.firstName == "Alex");
-            DateTime startTime = new DateTime(2019, 11, 5, 13, 0, 0);
-            DateTime endTime = new DateTime(2019, 11, 5, 14, 0, 0);
+            DateTime startTime = new DateTime(2019, 11, 18, 13, 0, 0);
+            DateTime endTime = new DateTime(2019, 11, 18, 14, 0, 0);
             context.Lessons.AddOrUpdate(
                 new Lesson
                 {

@@ -16,7 +16,6 @@
         protected override void Seed(DevCodeGroupCapstone.Models.ApplicationDbContext context)
         {
             
-    
         }
     }
 }
