@@ -185,6 +185,7 @@ namespace DevCodeGroupCapstone.Controllers
                         currentEvent.textColor = "#000000";
                         currentEvent.title = "Available";
                         currentEvent.groupId = "Availability";
+                    // current event.url
 
                         if (IsTimeAvailable(lessons, currentEvent))
                         {

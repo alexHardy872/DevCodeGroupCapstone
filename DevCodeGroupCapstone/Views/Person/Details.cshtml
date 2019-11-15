@@ -6,6 +6,15 @@
 
 <h2>Details</h2>
 
+<div id="teacherAvaila">
+    <table id="timeslotsTable">
+        <tr>
+            <td> @Html.ActionLink("REQUEST LESSON WITH THIS TEACHER", "../Lesson/Create", new { teacherId = Model.person.PersonId }) </td>
+        </tr>
+
+    </table>
+</div>
+
 <div>
     <h4>PersonAndLocationViewModel</h4>
     <hr />
@@ -106,3 +115,32 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.person.PersonId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+
+
+<script> // GENERATE AVAILABILITIES FOR TEACHER???
+    document.addEventListener('DOMContentLoaded', function () {
+
+
+        (function ($) {
+
+             $.ajax({
+                url: 'https://localhost:44326/api/ScheduleApi?generateForView=lessonOptions&teacherIdInt=@Model.person.PersonId',
+                type: 'GET',
+                success: function (result) {
+                    console.log("success");
+                    console.log(result);
+                    
+
+                    
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+
+
+    })(jQuery);
+
+    });
+</script>

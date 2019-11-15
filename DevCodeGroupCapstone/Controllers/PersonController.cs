@@ -80,15 +80,17 @@ namespace DevCodeGroupCapstone.Controllers
             List<Lesson> studentLessons = context.Lessons
                     .Include("Teacher")
                     .Include("Location")
-                    .Where(lesson => lesson.studentId == userFound.PersonId).ToList();
-            if (teachers == null)
-            {
-                return RedirectToAction("Index");
-            }
+                    .Where(lesson => lesson.studentId == userFound.PersonId && lesson.teacherApproval == true).ToList();
+            List<Lesson> lessonRequests = context.Lessons
+                    .Include("Student")
+                    .Include("Location")
+                    .Where(lesson => lesson.studentId == userFound.PersonId && lesson.teacherApproval == false).ToList();
+        
             BigIndexViewModel bigModel = new BigIndexViewModel();
             bigModel.teachersComp = teachers;
             bigModel.studentLessons = studentLessons;
             bigModel.currentUser = userFound;
+            bigModel.requests = lessonRequests;
             return View(bigModel);
         }
 
@@ -104,11 +106,17 @@ namespace DevCodeGroupCapstone.Controllers
             List<Lesson> teacherLessons = context.Lessons
                     .Include("Student")
                     .Include("Location")
-                    .Where(lesson => lesson.teacherId == userFound.PersonId).ToList();
-            
+                    .Where(lesson => lesson.teacherId == userFound.PersonId && lesson.teacherApproval == true).ToList();
+
+            List<Lesson> lessonRequests = context.Lessons
+                    .Include("Student")
+                    .Include("Location")
+                    .Where(lesson => lesson.teacherId == userFound.PersonId && lesson.teacherApproval == false).ToList();
             BigIndexViewModel bigModel = new BigIndexViewModel();        
             bigModel.teacherLessons = teacherLessons;
+            bigModel.requests = lessonRequests;
             bigModel.currentUser = userFound;
+
             return View(bigModel);
         }
 
