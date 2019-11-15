@@ -337,9 +337,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="Migrations\201911151222353_freshMigration.cs" />
     <Compile Include="Migrations\201911151222353_freshMigration.designer.cs">
       <DependentUpon>201911151222353_freshMigration.cs</DependentUpon>
+=======
+    <Compile Include="Migrations\201911151345259_Init.cs" />
+    <Compile Include="Migrations\201911151345259_Init.designer.cs">
+      <DependentUpon>201911151345259_Init.cs</DependentUpon>
+>>>>>>> 17d921bcf6d85932427fcb11f984986de9c2073c
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -591,8 +597,13 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <EmbeddedResource Include="Migrations\201911151222353_freshMigration.resx">
       <DependentUpon>201911151222353_freshMigration.cs</DependentUpon>
+=======
+    <EmbeddedResource Include="Migrations\201911151345259_Init.resx">
+      <DependentUpon>201911151345259_Init.cs</DependentUpon>
+>>>>>>> 17d921bcf6d85932427fcb11f984986de9c2073c
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

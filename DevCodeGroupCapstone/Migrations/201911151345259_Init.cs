@@ -1,5 +1,4 @@
-
-namespace DevCodeGroupCapstone.Migrations
+﻿namespace DevCodeGroupCapstone.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
@@ -144,6 +143,7 @@ namespace DevCodeGroupCapstone.Migrations
                         maxDistance = c.Int(nullable: false),
                         incrementalCost = c.Decimal(nullable: false, precision: 18, scale: 2),
                         TimeBeforeCancellation = c.Int(nullable: false),
+                        NumberOfProximalLessons = c.Int(),
                         teacherId = c.Int(),
                     })
                 .PrimaryKey(t => t.TeacherPreferenceId)

@@ -11,7 +11,12 @@
     <button type="button" id="showTeachers">SHOW TEACHERS</button>
 
 
+<<<<<<< HEAD
     <div id="teacherDirectory" style="display: none;">
+=======
+    <div id="teacherDirectory">
+        <h3>Teachers In Your Area</h3>
+>>>>>>> 17d921bcf6d85932427fcb11f984986de9c2073c
         <table class="table" id="teacherList">
             <tr>
                 <th></th>
@@ -48,7 +53,8 @@
 
                     <td>
 
-                        @Html.ActionLink("Details", "Details", new { id = item.person.PersonId })
+                        @Html.ActionLink("Details", "Details", new { id = item.person.PersonId })  |  
+                        @Html.ActionLink("Request Lesson", "Create", "Lesson", new { id = item.person.PersonId })
 
                     </td>
                 </tr>
@@ -59,8 +65,7 @@
     </div>
 
     <div id="lessonList">
-        <h2> LESSONS</h2>
-
+        <h3>Scheduled Lessons</h3>
         <table class="table">
             <tr>
                 <th> Lesson Date / Time </th>
@@ -99,7 +104,7 @@
     </div>
 
     <div id="requested">
-        <h2> Pending Approval </h2>
+        <h3> Awaiting Reply </h3>
 
         <table class="table">
             <tr>
