@@ -235,13 +235,22 @@ namespace DevCodeGroupCapstone.Controllers
             ViewBag.lessonLng = lessonLocation.lng;
             ViewBag.teacherLat = teacher.Location.lat;
             ViewBag.teacherLng = teacher.Location.lng;
-            if (teacherPreference.distanceType == RadiusOptions.Miles)
+
+            try
             {
-                ViewBag.radius = teacherPreference.maxDistance * Service_Classes.DistanceMatrix.metersToMiles;
+                if (teacherPreference.distanceType == RadiusOptions.Miles)
+                {
+                    ViewBag.radius = teacherPreference.maxDistance * Service_Classes.DistanceMatrix.metersToMiles;
+                }
+                else
+                {
+                    ViewBag.radius = teacherPreference.maxDistance;
+                }
             }
-            else
+            catch(Exception e)
             {
-                ViewBag.radius = teacherPreference.maxDistance;
+                Console.WriteLine(e.Message);
+                ViewBag.radius = 0;
             }
         }
     }
