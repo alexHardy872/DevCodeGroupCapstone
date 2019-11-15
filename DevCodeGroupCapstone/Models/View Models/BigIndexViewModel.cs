@@ -13,7 +13,9 @@ namespace DevCodeGroupCapstone.Models.View_Models
 
         public List<Lesson> teacherLessons;
 
-        public List<Lesson> requests;
+        public List<Lesson> requestsForStudent;
+
+        public List<Lesson> requestsForTeacher;
 
         public Person currentUser;
 

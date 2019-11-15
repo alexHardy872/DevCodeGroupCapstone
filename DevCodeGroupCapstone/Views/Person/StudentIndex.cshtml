@@ -1,9 +1,9 @@
 ﻿@model DevCodeGroupCapstone.Models.View_Models.BigIndexViewModel
 
 
-
-<h2><strong>@Model.currentUser.firstName  @Model.currentUser.lastName</strong> Student Dashboard </h2>
-
+    @*<div class="index-header">
+        <h2><strong>@Model.currentUser.firstName  @Model.currentUser.lastName</strong> Student Dashboard </h2>
+    </div>*@
 
 <div id="studentView">
 
@@ -11,7 +11,10 @@
     <button type="button" id="showTeachers">SHOW TEACHERS</button>
 
 
-    <div id="teacherDirectory">
+
+    <div id="teacherDirectory"  style="display: none;">
+        <h3>Teachers In Your Area</h3>
+
         <table class="table" id="teacherList">
             <tr>
                 <th></th>
@@ -22,7 +25,7 @@
             @{
                 var teacherList = Model.teachersComp;
                 var lessonList = Model.studentLessons;
-                var requestedList = Model.requests;
+                var requestedList = Model.requestsForStudent;
             }
 
             @foreach (var item in teacherList)
@@ -48,7 +51,8 @@
 
                     <td>
 
-                        @Html.ActionLink("Details", "Details", new { id = item.person.PersonId })
+                        @Html.ActionLink("Details", "Details", new { id = item.person.PersonId })  |  
+                        @Html.ActionLink("Request Lesson", "Create", "Lesson", new { teacherId = item.person.PersonId }, null)
 
                     </td>
                 </tr>
@@ -59,8 +63,7 @@
     </div>
 
     <div id="lessonList">
-        <h2> LESSONS</h2>
-
+        <h3>Scheduled Lessons</h3>
         <table class="table">
             <tr>
                 <th> Lesson Date / Time </th>
@@ -99,7 +102,7 @@
     </div>
 
     <div id="requested">
-        <h2> Pending Approval </h2>
+        <h3> Awaiting Reply </h3>
 
         <table class="table">
             <tr>
@@ -144,32 +147,36 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var calendarEl = document.getElementById('calendar');
+        
 
 
         (function ($) {
 
+            ResetHeader();
+
+            function ResetHeader() {
+                 $("index-header-parent").html("");
+            $("#index-header-parent").append("<div class='index-header'><h2><strong>@Model.currentUser.firstName  @Model.currentUser.lastName</strong> Student Dashboard </h2> </div>");
+            }
+           
+
           
-    // showLessons showTeachers teacherDirector lessonList
+   
 
              $( "#showLessons" ).click(function() {
                         console.log("Handler for .click() called.");
                             $("#teacherDirectory").hide();
-                            $("#lessonList").show();
-                            $("#requestedLessons").hide();
+                 $("#lessonList").show();
+                 $("#requested").show();
+                            //$("#requested").hide();
               });
             $( "#showTeachers" ).click(function() {
                         console.log("Handler for .click() called.");
-                            $("#calendar").show();
+                            $("#teacherDirectory").show();
                             $("#lessons").hide();
-                            $("#requestedLessons").hide();
+                            $("#requested").hide();
             });
-            $( "#requestedNotification" ).click(function() {
-                        console.log("Show requests");
-                            $("#requestedLessons").show();
-                            $("#lessons").hide();
-                            $("#calendar").hide();
-            });
+          
 
 
 

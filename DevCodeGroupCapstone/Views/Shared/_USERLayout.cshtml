@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - User Layout</title>
+    <title>WeTeachToday</title>
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap" rel="stylesheet">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -21,27 +21,33 @@
                     <span class="icon-bar"></span>
                 </button>
 
-            <div class="logo">
-                <a href="@Url.Action("Index", "Person")">
-                    <img src="~/Content/Images/WeTeachTodayLogoTransparent.png" style="height: 60px;" alt="logo" />
-                </a>
-            </div>
+                <div class="logo">
+                    <a id="logoLink" href="@Url.Action("Index", "Person")">
+                        <img id="logoImg" src="~/Content/Images/WeTeachTodayLogoTransparent.png" style="height: 60px;" alt="logo" />
+                        <img id="logoImgAlt" src="~/Content/Images/WeTeachTodayLogoTransparentAlt.png" style="display: none; height: 60px;" alt="logo" />
+
+                    </a>
+                </div>
             </div>
             <div class="navbar-collapse collapse" id="greenBar">
                 <ul class="nav navbar-nav route">
                     @Html.ActionLink("Student", "StudentIndex", "Person", new { area = "" }, new { @class = "navbar-brand" })
                     @Html.ActionLink("Teacher", "TeacherIndex", "Person", new { area = "" }, new { @class = "navbar-brand" })
                 </ul>
-               
+
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
+        <div id="index-header-parent">
+        </div>
     </div>
+    @*<div id="index-header-parent">
+        </div>*@
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            
+            <img id="infoDispLogo" style="height: 100px;" src="~/Content/Images/WeTeachTodayLogo1.png" alt="logo1" />
         </footer>
     </div>
 
@@ -51,38 +57,18 @@
                 (function ($) {
 
                     
-                      // var color = $( this ).css( "background-color" );
-                    
-
-                    $(".headBtn").mouseenter(function () {
-                        $(this).css("background-color", "rgb(153, 234, 158)");
-                        $(this).css("color", "white");
-                    })
-
-                    //"rgb(56, 119, 128);"
-                     $(".headBtn").mouseleave(function () {
-                         $(this).css("background-color", "rgb(56, 119, 128)");
-                         $(this).css("color", "black");
-                     })
-
-                       $( "#viewChange" ).click(function() {
-                        console.log("Handler for .click() called.");
-                           $("#teacherView").hide();
-                            $("#introView").hide();
-                           $("#studentView").show();
-                           $(this).css("font-weight", "bold");
-                           $('#viewChange2').css("font-weight", "normal");
-                    });
-
-                       $( "#viewChange2" ).click(function() {
-                        console.log("Handler for .click() called.");
-                           $("#teacherView").show();
-                           $("#introView").hide();
-                           $("#studentView").hide();
-                           $(this).css("font-weight", "bold");
-                           $('#viewChange').css("font-weight", "normal");
-
-                        });
+                  
+           $(".logo").mouseenter(function () {
+                  console.log("mouse eneter");
+               $("#logoImg").hide();
+               $("#logoImgAlt").show();
+           });
+             $(".logo").mouseleave(function () {
+                  console.log("mouse eneter");
+               $("#logoImgAlt").hide();
+               $("#logoImg").show();
+             });
+                 
 
                      
 
