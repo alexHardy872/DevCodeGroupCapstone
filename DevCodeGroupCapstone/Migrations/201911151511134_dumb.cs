@@ -1,10 +1,9 @@
-
-namespace DevCodeGroupCapstone.Migrations
+﻿namespace DevCodeGroupCapstone.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Init : DbMigration
+    public partial class dumb : DbMigration
     {
         public override void Up()
         {
@@ -144,6 +143,7 @@ namespace DevCodeGroupCapstone.Migrations
                         maxDistance = c.Int(nullable: false),
                         incrementalCost = c.Decimal(nullable: false, precision: 18, scale: 2),
                         TimeBeforeCancellation = c.Int(nullable: false),
+                        NumberOfProximalLessons = c.Int(),
                         teacherId = c.Int(),
                     })
                 .PrimaryKey(t => t.TeacherPreferenceId)

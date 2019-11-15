@@ -7,13 +7,13 @@ namespace DevCodeGroupCapstone.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.0-preview2-19525-03")]
-    public sealed partial class numberProximalLessonsOnSchedule : IMigrationMetadata
+    public sealed partial class dumb : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(numberProximalLessonsOnSchedule));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(dumb));
         
         string IMigrationMetadata.Id
         {
-            get { return "201911131649487_numberProximalLessonsOnSchedule"; }
+            get { return "201911151511134_dumb"; }
         }
         
         string IMigrationMetadata.Source
