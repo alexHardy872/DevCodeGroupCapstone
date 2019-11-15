@@ -24,6 +24,7 @@
                         Price = c.Decimal(nullable: false, precision: 18, scale: 2),
                         LessonType = c.String(),
                         travelDuration = c.Int(nullable: false),
+                        requiresMakeup = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.LessonId)
                 .ForeignKey("dbo.Locations", t => t.LocationId)
