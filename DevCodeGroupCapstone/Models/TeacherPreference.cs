@@ -10,6 +10,8 @@ namespace DevCodeGroupCapstone.Models
 
         public int defaultLessonLength { get; set; }
 
+        public decimal PerHourRate { get; set; }
+
 
         [Display(Name = "Increase Cost Per")]
         public RadiusOptions distanceType { get; set; }

@@ -129,11 +129,13 @@
             var gabe = context.People.FirstOrDefault(p => p.firstName == "Gabe");
             var alex = context.People.FirstOrDefault(p => p.firstName == "Alex");
             var adam = context.People.FirstOrDefault(p => p.firstName == "Adam");
+            decimal perHour = Convert.ToDecimal(25);
             decimal cost = Convert.ToDecimal(0.25);
             context.Preferences.AddOrUpdate(
                 new TeacherPreference
                 {
                     teacherId = trevor.PersonId,
+                    PerHourRate = perHour,
                     TimeBeforeCancellation = 24,
                     incrementalCost = cost,
                     maxDistance = 5,
@@ -143,6 +145,7 @@
                 new TeacherPreference
                 {
                     teacherId = gabe.PersonId,
+                    PerHourRate = perHour,
                     TimeBeforeCancellation = 24,
                     incrementalCost = cost,
                     maxDistance = 5,
@@ -152,6 +155,7 @@
                 new TeacherPreference
                 {
                     teacherId = alex.PersonId,
+                    PerHourRate = perHour,
                     TimeBeforeCancellation = 24,
                     incrementalCost = cost,
                     maxDistance = 5,
@@ -161,6 +165,7 @@
                 new TeacherPreference
                 {
                     teacherId = adam.PersonId,
+                    PerHourRate = perHour,
                     TimeBeforeCancellation = 24,
                     incrementalCost = cost,
                     maxDistance = 5,
