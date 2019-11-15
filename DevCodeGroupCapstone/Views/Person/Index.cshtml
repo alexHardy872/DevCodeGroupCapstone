@@ -5,178 +5,69 @@
 }
 
 @*<button type="button" id="viewChange"> Student </button>
-<button type="button" id="viewChange2"> Teacher </button>*@
+    <button type="button" id="viewChange2"> Teacher </button>*@
 
-    <div class="container welcome" id="introView">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1> Welcome to weTeachToday! </h1>
-                <img id="infoDispLogo" style="height: 100px;" src="~/Content/Images/WeTeachTodayLogo1.png" alt="logo1" />
+<div class="container welcome" id="introView">
 
+    <div class="row">
+        <div class="col-md-6 split-holder">
+            <div class="dBox">
+                <p>if you are a student click the <strong>"STUDENT"</strong> tab to browse availabile lessons and your appointments</p>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="dBox">
-                    <p>if you are a student click the <strong>"STUDENT"</strong> tab to browse availabile lessons and your appointments</p>
-                </div>
+        <div class="col-md-6 split-holder">
+            <div class="dBox">
+                <p>if you are a teacher click the <strong>"TEACHER"</strong> tab to view your dashboard!</p>
             </div>
-            <div class="col-md-6">
-                <div class="dBox">
-                    <p>if you are a teacher click the <strong>"TEACHER"</strong> tab to view your dashboard!</p>
-                </div>
-                </div>
-            </div>
+        </div>
     </div>
-
-
-<div id="studentView" style="display: none;">
-    <h2> Student DashBoard </h2>
-    <table class="table" id="teacherList">
-        <tr>
-            <th></th>
-        </tr>
-
-        
-
-        @{ 
-            var teacherList = Model.teachersComp;
-            var lessonList = Model.studentLessons;
-        }
-
-        @foreach (var item in teacherList)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.person.firstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.person.lastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.person.subjects)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.location.city)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.location.state)
-                </td>
-
-
-
-                <td>
-
-                    @Html.ActionLink("Details", "Details", new { id = item.person.PersonId }) 
-
-                </td>
-            </tr>
-        }
-
-
-    </table>
-
-
-<h2> LESSONS</h2>
-   
-<table class="table">
-    <tr>
-        <th> Lesson Date / Time </th>
-
-        <th> Lesson Subject </th>
-
-        <th> Instructor </th>
-
-        <th> Location </th>
-
-        <th> Price </th>
-
-        <th></th>
-
-    </tr>
-
-    @foreach(var lesson in lessonList)
-    {
-
-
-<tr>
-
-    <td>  @Html.DisplayFor(modelItem => lesson.start) - @Html.DisplayFor(modelItem => lesson.end) </td>
-    <td>  @Html.DisplayFor(modelItem => lesson.LessonType)  </td>
-    <td>  @Html.DisplayFor(modelItem => lesson.Teacher.firstName) @Html.DisplayFor(modelItem => lesson.Teacher.lastName) </td>
-    <td>  @Html.DisplayFor(modelItem => lesson.Location.address1) @Html.DisplayFor(modelItem => lesson.Location.city) @Html.DisplayFor(modelItem => lesson.Location.state) </td>
-    <td>  @Html.DisplayFor(modelItem => lesson.Price)  </td>
-
-
-    <th><button type="button" id="btnCancel">CANCEL LESSON</button></th>
-    <td></td>
-</tr>
-    }
-
-    </table>
-    
-    
 </div>
 
-<div id="teacherView" style="display: none;">
-    <h2> Teacher DashBoard </h2>
 
-    <ul>
-        <li>@Html.ActionLink("Teacher Preferences", "Create", "TeacherPreference")</li>
-        <li>@Html.ActionLink("Teacher Availability", "List", "TeacherAvailability")</li>
 
-    </ul>
 
-    <div id="calendar"></div>
-</div>
-
-<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/core/main.min.css">
-<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/timegrid/main.min.css">
-<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/list/main.min.css">
-<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/daygrid/main.min.css">
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" type="text/javascript"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/core/main.min.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/daygrid/main.min.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/interaction/main.min.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/timegrid/main.min.js"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var calendarEl = document.getElementById('calendar');
-    
 
-                (function ($) { 
 
-                    $.ajax({
-                        url: 'https://localhost:44326/api/ScheduleApi?generateForView=lessonOptions&teacherIdInt=1',
-                        type: 'GET',
-                        success: function (result) {
+        (function ($) {
 
-                            var calendar = new FullCalendar.Calendar(calendarEl, {
-                                plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
-                                defaultView: 'timeGridWeek',
-                                defaultDate: '2019-11-12',
-                                header: {
-                                    left: 'prev,next today',
-                                    center: 'title',
-                                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                                },
-                                events: result
-                            });
+            ResetHeader();
 
-                            calendar.render();
-                        },
-                        error: function (jqXhr, textStatus, errorThrown) {
-                            console.log(errorThrown);
-                        }
-                    });
+            function ResetHeader() {
+                 $("index-header-parent").html("");
+                $("#index-header-parent").append("<div class='index-header'><h2> Welcome <strong>@Model.currentUser.firstName  @Model.currentUser.lastName!</strong> </h2></div>")
+            }
 
-            
 
-                })(jQuery);
 
-        });
+
+
+             $( "#viewLessons" ).click(function() {
+                        console.log("Handler for .click() called.");
+                            $("#calendar").hide();
+                            $("#lessons").show();
+                            $("#requestedLessons").hide();
+              });
+            $( "#viewCalendar" ).click(function() {
+                        console.log("Handler for .click() called.");
+                            $("#calendar").show();
+                            $("#lessons").hide();
+                            $("#requestedLessons").hide();
+            });
+            $( "#requestNotification" ).click(function() {
+                        console.log("Show requests");
+                            $("#requestedLessons").show();
+                            $("#lessons").hide();
+                            $("#calendar").hide();
+            });
+
+
+
+        })(jQuery);
+
+    });
 </script>
+
