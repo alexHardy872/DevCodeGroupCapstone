@@ -23,8 +23,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div class="logo">
-                    <a href="@Url.Action("Index", "Home")">
-                        <img src="~/Content/Images/WeTeachTodayLogoTransparent.png" style="height: 60px;" alt="logo" />
+                    <a id="logoLink" href="@Url.Action("Index", "Home")">
+                        <img id="logoImg" src="~/Content/Images/WeTeachTodayLogoTransparent.png" style="height: 60px;" alt="logo" />
+                        <img id="logoImgAlt" src="~/Content/Images/WeTeachTodayLogoTransparentAlt.png" style="display: none; height: 60px;" alt="logo" />
+
                     </a>
                 </div>
             </div>
@@ -45,4 +47,40 @@
     @Scripts.Render("~/bundles/fullcalendar")
     @RenderSection("scripts", required: false)
 </body>
+<script>
+
+     document.addEventListener('DOMContentLoaded', function () {
+         (function ($) {
+
+
+           $(".logo").mouseenter(function () {
+                  console.log("mouse eneter");
+               $("#logoImg").hide();
+               $("#logoImgAlt").show();
+           });
+             $(".logo").mouseleave(function () {
+                  console.log("mouse eneter");
+               $("#logoImgAlt").hide();
+               $("#logoImg").show();
+             });
+
+            
+
+            
+
+        
+
+
+
+               })(jQuery);
+    });
+
+
+
+</script>
+
+
+
+
+
 </html>

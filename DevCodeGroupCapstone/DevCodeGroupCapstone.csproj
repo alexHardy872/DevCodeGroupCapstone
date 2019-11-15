@@ -337,9 +337,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201911151345259_Init.cs" />
-    <Compile Include="Migrations\201911151345259_Init.designer.cs">
-      <DependentUpon>201911151345259_Init.cs</DependentUpon>
+    <Compile Include="Migrations\201911151511134_dumb.cs" />
+    <Compile Include="Migrations\201911151511134_dumb.designer.cs">
+      <DependentUpon>201911151511134_dumb.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -371,6 +371,7 @@
     <Content Include="Content\Images\signin-button2.png" />
     <Content Include="Content\Images\WeTeachTodayLogo1.png" />
     <Content Include="Content\Images\WeTeachTodayLogoTransparent.png" />
+    <Content Include="Content\Images\WeTeachTodayLogoTransparentAlt.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -590,8 +591,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201911151345259_Init.resx">
-      <DependentUpon>201911151345259_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201911151511134_dumb.resx">
+      <DependentUpon>201911151511134_dumb.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

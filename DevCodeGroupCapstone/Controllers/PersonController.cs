@@ -90,7 +90,7 @@ namespace DevCodeGroupCapstone.Controllers
             bigModel.teachersComp = teachers;
             bigModel.studentLessons = studentLessons;
             bigModel.currentUser = userFound;
-            bigModel.requests = lessonRequests;
+            bigModel.requestsForStudent = lessonRequests;
             return View(bigModel);
         }
 
@@ -114,7 +114,7 @@ namespace DevCodeGroupCapstone.Controllers
                     .Where(lesson => lesson.teacherId == userFound.PersonId && lesson.teacherApproval == false).ToList();
             BigIndexViewModel bigModel = new BigIndexViewModel();        
             bigModel.teacherLessons = teacherLessons;
-            bigModel.requests = lessonRequests;
+            bigModel.requestsForTeacher = lessonRequests;
             bigModel.currentUser = userFound;
 
             return View(bigModel);

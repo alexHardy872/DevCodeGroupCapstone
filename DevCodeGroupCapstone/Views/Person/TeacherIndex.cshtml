@@ -1,8 +1,7 @@
 ﻿@model DevCodeGroupCapstone.Models.View_Models.BigIndexViewModel
 
 
-
-<h2><strong>@Model.currentUser.firstName  @Model.currentUser.lastName</strong> Instructor Dashboard </h2>
+   
 
 <div id="teacherView">
     <div class="container">
@@ -84,7 +83,7 @@
                 </tr>
 
                 @{
-                    var lessons = Model.requests;
+                    var lessons = Model.requestsForTeacher;
                 }
                 @foreach (var lesson in lessons)
                 {
@@ -111,6 +110,7 @@
         </div>
 
         <div id="calendar"></div>
+    </div>
     </div>
 
 <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/core/main.min.css">
@@ -140,6 +140,14 @@
 
 
         (function ($) {
+
+            ResetHeader();
+
+            function ResetHeader() {
+                 $("index-header-parent").html("");
+            $("#index-header-parent").append(" <div class='index-header'><h2><strong>@Model.currentUser.firstName  @Model.currentUser.lastName:</strong> Instructor Dashboard </h2> </div>");
+            }
+
 
             $.ajax({
                 url: 'https://localhost:44326/api/ScheduleApi?generateForView=lessonOptions&teacherIdInt=1',
