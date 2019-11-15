@@ -371,6 +371,7 @@
     <Content Include="Content\Images\signin-button2.png" />
     <Content Include="Content\Images\WeTeachTodayLogo1.png" />
     <Content Include="Content\Images\WeTeachTodayLogoTransparent.png" />
+    <Content Include="Content\Images\WeTeachTodayLogoTransparentAlt.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -556,7 +557,6 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Person\Create.cshtml" />
     <Content Include="Views\Person\Index.cshtml" />
-    <Content Include="Views\Person\ViewTeachers.cshtml" />
     <Content Include="Views\Lesson\Create.cshtml" />
     <Content Include="Views\Person\Details.cshtml" />
     <Content Include="Views\TeacherPreference\Create.cshtml" />

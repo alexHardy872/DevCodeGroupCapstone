@@ -45,12 +45,13 @@ namespace DevCodeGroupCapstone.Controllers
         }
 
         // GET: Lesson/Create
-        public ActionResult Create()
+        public ActionResult Create(int teacherId)
         {
             ViewBag.LessonType = new SelectList(lessonLocation);
             Lesson lesson = new Lesson();
             lesson.start = DateTime.Now;
             lesson.end = DateTime.Now;
+            lesson.teacherId = teacherId;
             return View(lesson);
         }
 
@@ -60,6 +61,8 @@ namespace DevCodeGroupCapstone.Controllers
         {
             try
             {
+                int? teacherId = lesson.teacherId;
+                var teacher = context.People.Where(t => t.PersonId == teacherId).FirstOrDefault();
                 var lessonType = new SelectList(new[]
 {
                     new {value = 1, text = "In-Studio"},
@@ -69,13 +72,15 @@ namespace DevCodeGroupCapstone.Controllers
                 ViewBag.LessonType = lessonType;
                 string id = User.Identity.GetUserId();
                 Person user = context.People.FirstOrDefault(u => u.ApplicationId == id);
-                lesson.teacherId = user.PersonId;
-                var preferences = context.Preferences.FirstOrDefault(p => p.teacherId == user.PersonId);
+                 lesson.teacherId = teacherId;
+                 lesson.studentId = user.PersonId;
+
+                var preferences = context.Preferences.FirstOrDefault(p => p.teacherId == teacherId);
                 lesson.Length = preferences.defaultLessonLength;
                 if (lesson.LessonType == "In-Studio" || lesson.LessonType == "Online")
                 {
-                    var person = context.People.FirstOrDefault(p => p.ApplicationId == id);
-                    lesson.LocationId = person.LocationId;
+                    //var person = context.People.FirstOrDefault(p => p.ApplicationId == id);
+                    lesson.LocationId = teacher.LocationId;
                     decimal cost = lesson.Price / 60 * lesson.Length;
                     cost = Math.Round(cost, 2);
                     lesson.cost = cost;
@@ -85,7 +90,7 @@ namespace DevCodeGroupCapstone.Controllers
                     //calculate travel duration
                     if (lesson.teacherId != null && lesson.studentId != null && lesson.LocationId != null)
                     {
-                        var teacher = context.People.Include("Location").Where(t => t.PersonId == lesson.teacherId).SingleOrDefault();
+                        //var teacher = context.People.Include("Location").Where(t => t.PersonId == lesson.teacherId).SingleOrDefault();
                         var location = context.Locations.Where(l => l.LocationId == lesson.LocationId).SingleOrDefault();
 
                         lesson = await Service_Classes.DistanceMatrix.GetTravelInfo(lesson);
@@ -174,11 +179,19 @@ namespace DevCodeGroupCapstone.Controllers
             return RedirectToAction("Details", "Lesson", new { id = id });//tlc
         }
 
-        // GET: Lesson/Delete/5
         public ActionResult Delete(int id)
         {
             Lesson lesson = context.Lessons.FirstOrDefault(l => l.LessonId == id);
             return View(lesson);
+        }
+
+        // GET: Lesson/Delete/5
+        public async Task<ActionResult> Approve(int id)
+        {
+            Lesson lesson = context.Lessons.FirstOrDefault(l => l.LessonId == id);
+            lesson.teacherApproval = true;
+            await context.SaveChangesAsync();
+            return RedirectToAction("TeacherIndex", "Person");
         }
 
         // POST: Lesson/Delete/5
