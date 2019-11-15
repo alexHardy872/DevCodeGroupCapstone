@@ -72,11 +72,12 @@ namespace DevCodeGroupCapstone.Controllers
                 ViewBag.LessonType = lessonType;
                 string id = User.Identity.GetUserId();
                 Person user = context.People.FirstOrDefault(u => u.ApplicationId == id);
-                 lesson.teacherId = teacherId;
-                 lesson.studentId = user.PersonId;
-
+                lesson.teacherId = teacherId;
+                lesson.studentId = user.PersonId;
                 var preferences = context.Preferences.FirstOrDefault(p => p.teacherId == teacherId);
+                lesson.Price = preferences.PerHourRate;
                 lesson.Length = preferences.defaultLessonLength;
+                lesson.subject = teacher.subjects;
                 if (lesson.LessonType == "In-Studio" || lesson.LessonType == "Online")
                 {
                     //var person = context.People.FirstOrDefault(p => p.ApplicationId == id);
@@ -108,7 +109,7 @@ namespace DevCodeGroupCapstone.Controllers
                 }
                 context.Lessons.Add(lesson);
                 context.SaveChanges();
-                return RedirectToAction("List");
+                return RedirectToAction("StudentIndex", "Person");
             }
             catch (Exception e)
             {
@@ -120,7 +121,7 @@ namespace DevCodeGroupCapstone.Controllers
         // GET: Lesson/Edit/5
         public ActionResult Edit(int id)
         {
-            ViewBag.LessonType = new SelectList(lessonLocation);
+            //ViewBag.LessonType = new SelectList(lessonLocation);
             Lesson lesson = context.Lessons.FirstOrDefault(l => l.LessonId == id);
             return View(lesson);
         }
@@ -131,18 +132,19 @@ namespace DevCodeGroupCapstone.Controllers
         {
             try
             {
-                var lessonType = new SelectList(new[]
-{
-                    new {value = 1, text = "In-Studio"},
-                    new {value = 2, text = "In-Home"},
-                    new {value = 3, text = "Online"}
-                });
-                ViewBag.LessonType = lessonType;
+//                var lessonType = new SelectList(new[]
+//{
+//                    new {value = 1, text = "In-Studio"},
+//                    new {value = 2, text = "In-Home"},
+//                    new {value = 3, text = "Online"}
+//                });
+//                ViewBag.LessonType = lessonType;
                 Lesson lessonFromDb = context.Lessons.FirstOrDefault(l => l.LessonId == id);
-                lessonFromDb.subject = lesson.subject;
-                lessonFromDb.Price = lesson.Price;
-                lessonFromDb.LessonType = lesson.LessonType;
-                if (lesson.LessonType == "In-Studio" || lesson.LessonType == "Online")
+                //lessonFromDb.subject = lesson.subject;
+                //lessonFromDb.Price = lesson.Price;
+                //lessonFromDb.LessonType = lesson.LessonType;
+                lessonFromDb.teacherApproval = lesson.teacherApproval;
+                if (lessonFromDb.LessonType == "In-Studio" || lessonFromDb.LessonType == "Online")
                 {
                     var userId = User.Identity.GetUserId();
                     var user = context.People.FirstOrDefault(p => p.ApplicationId == userId);
