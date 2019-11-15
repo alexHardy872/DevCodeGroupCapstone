@@ -50,7 +50,7 @@
                     <td>
 
                         @Html.ActionLink("Details", "Details", new { id = item.person.PersonId })  |  
-                        @Html.ActionLink("Request Lesson", "Create", "Lesson", new { id = item.person.PersonId })
+                        @Html.ActionLink("Request Lesson", "Create", "Lesson", new { teacherId = item.person.PersonId }, null)
 
                     </td>
                 </tr>
