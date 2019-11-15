@@ -24,35 +24,34 @@ namespace DevCodeGroupCapstone.Controllers
         {
             context = new ApplicationDbContext();
         }
-      public ActionResult SendSMS(int id, string text, string RecieverType)
-        {
-            Person person = context.People.Where(p => p.PersonId == id).FirstOrDefault();
-           
-                var accountSid = ApiKey.twillioAccountSID;
-                var authToken = ApiKey.twillioAuthToken;
-                 TwilioClient.Init(accountSid, authToken);
+   
 
-                //var to = new PhoneNumber(ApiKey.myNum);
-                var to = FormatNumber(person.phoneNumber);
-                var from = new PhoneNumber(ApiKey.fromNum);
-                var message = MessageResource.Create(
-                    to: to,
-                    from: from,
-                    body: text);
-                return RedirectToAction("Index","Person"); // needs to return to the same view it came from??
+
+        public async Task<ActionResult> SendSMSToTeacher(int id) // alert is cancel or opening
+        {
+            Lesson lesson = context.Lessons.Where(les => les.LessonId == id).FirstOrDefault();
+            Person student = context.People.Where(stu => stu.PersonId == lesson.studentId).FirstOrDefault();
+            Person teacher = context.People.Where(tea => tea.PersonId == lesson.teacherId).FirstOrDefault();
+            string textM = DetermineAlertTeacher(student, teacher, lesson).ToString();
+            var to = FormatNumber(teacher.phoneNumber);
+            var from = new PhoneNumber(ApiKey.fromNum);
+            bool success = await Task.Run(() => SendMessage(to, from, textM));
+            lesson.studentId = null;
+            await context.SaveChangesAsync();
+            return RedirectToAction("TeacherIndex", "Person"); // needs to return to the same view it came from??
         }
+
 
         public async Task<ActionResult> SendSMSToStudent(int id, string alert) // alert is cancel or opening
         {
             Lesson lesson = context.Lessons.Where(les => les.LessonId == id).FirstOrDefault();
             Person student = context.People.Where(stu => stu.PersonId == lesson.studentId).FirstOrDefault();
             Person teacher = context.People.Where(tea => tea.PersonId == lesson.teacherId).FirstOrDefault();
-
             string textM = DetermineAlertStudent(student, teacher, lesson, alert).ToString();
             var to = FormatNumber(student.phoneNumber);
             var from = new PhoneNumber(ApiKey.fromNum);
             bool success = await Task.Run( () => SendMessage(to, from, textM));
-            return RedirectToAction("Index", "Person"); // needs to return to the same view it came from??
+            return RedirectToAction("StudentIndex", "Person"); // needs to return to the same view it came from??
         }
 
         public string FormatNumber(string phonenumber)
@@ -77,6 +76,7 @@ namespace DevCodeGroupCapstone.Controllers
             }
             catch(Exception e)
             {
+                Console.WriteLine(e);
                 return false;
             }
             
@@ -85,7 +85,6 @@ namespace DevCodeGroupCapstone.Controllers
         public StringBuilder DetermineAlertStudent(Person student, Person teacher, Lesson lesson, string RecieverType)
         {
            StringBuilder finalMessage = new StringBuilder();
-
             switch (RecieverType)
             {
                 case "cancel":
@@ -95,7 +94,13 @@ namespace DevCodeGroupCapstone.Controllers
                     finalMessage.Append("Hello "+student.firstName+"... There is an opening for a ("+lesson.subject+") lesson with "+teacher.firstName+" "+teacher.lastName+" on "+lesson.start.Date+" at "+ lesson.start.TimeOfDay+"... if you are interested in picking up this opening, log into your WeTeachToday account and schedule with the instructor!");
                     break;
             }
+            return finalMessage;
+        }
 
+        public StringBuilder DetermineAlertTeacher(Person student, Person teacher, Lesson lesson)
+        {
+            StringBuilder finalMessage = new StringBuilder();       
+           finalMessage.Append("Hello " + teacher.firstName + "... Your student "+student.firstName+" "+student.lastName+" has canceled their "+lesson.subject+" lesson schduled for " + lesson.start.Date + " at " + lesson.start.TimeOfDay + "... log on to your WeTeachToday account to alert available students about the opening");
             return finalMessage;
         }
 
