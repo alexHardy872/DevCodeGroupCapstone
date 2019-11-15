@@ -7,13 +7,13 @@ namespace DevCodeGroupCapstone.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.0-preview2-19525-03")]
-    public sealed partial class nuke3 : IMigrationMetadata
+    public sealed partial class alexmigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(nuke3));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(alexmigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "201911152331408_nuke3"; }
+            get { return "201911152345550_alexmigration"; }
         }
         
         string IMigrationMetadata.Source
