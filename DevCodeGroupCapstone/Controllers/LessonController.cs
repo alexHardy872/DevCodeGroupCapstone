@@ -213,6 +213,22 @@ namespace DevCodeGroupCapstone.Controllers
             }
         }
 
+        
+        public ActionResult QuickDelete(int id)
+        {
+            try
+            {
+                Lesson lesson = context.Lessons.FirstOrDefault(l => l.LessonId == id);
+                context.Lessons.Remove(lesson);
+                context.SaveChanges();
+                return RedirectToAction("TeacherIndex","Person");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
         public Boolean TravelDurationIsGreaterThanMaxDistance(Lesson lesson) //tlc
         {
             bool result = false;

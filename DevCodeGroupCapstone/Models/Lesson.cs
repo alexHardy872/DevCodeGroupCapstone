@@ -44,5 +44,7 @@ namespace DevCodeGroupCapstone.Models
 
         public int travelDuration { get; set; }
 
+        public bool requiresMakeup { get; set; }
+
     }
 }

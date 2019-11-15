@@ -22,10 +22,13 @@
             <div class="col-md-4 optionsHeader">
                 <button type="button" id="viewCalendar">SCHEDULE</button>
             </div>
+            <div class="col-md-4 optionsHeader">
+                <button type="button" id="viewMakeups">MANAGE MAKEUPS</button>
+            </div>
         </div>
 
 
-        
+
 
 
         <div id="lessons" style="display: none;">
@@ -66,7 +69,7 @@
             </table>
         </div>
 
-      
+
         <button id="requestNotification" type="button">REQUESTS</button>
 
         <div id="requestedLessons" style="display: none;">
@@ -95,8 +98,8 @@
                         <td>  @Html.DisplayFor(modelItem => lesson.Price)  </td>
 
                         <td>
-                            @Html.ActionLink("APPROVE/EDIT", "../Lesson/Edit", new { id = lesson.LessonId})
-                            @Html.ActionLink("DENY", "../Lesson/Delete", new { id = lesson.LessonId})
+                            @Html.ActionLink("APPROVE/EDIT", "../Lesson/Edit", new { id = lesson.LessonId })
+                            @Html.ActionLink("DENY", "../Lesson/Delete", new { id = lesson.LessonId })
 
                         </td>
                         <td>
@@ -108,6 +111,41 @@
 
             </table>
         </div>
+
+        <div id="makeups" style="display: none;">
+            <h2> Make-up Lessons</h2>
+
+            <table class="table">
+                <tr>
+                    <
+                    <th> Student Name </th>
+                    <th> Location of Lesson </th>
+                    <th> Date of cancelled lesson </th>
+                    
+                    <th></th>
+                </tr>
+
+                @{
+                    var makeupList = Model.makeups;
+                }
+                @foreach (var lesson in makeupList)
+                {
+            <tr>
+                <td>  @Html.DisplayFor(modelItem => lesson.Student.firstName) @Html.DisplayFor(modelItem => lesson.Student.lastName) </td>
+                <td>  @Html.DisplayFor(modelItem => lesson.Location.address1) @Html.DisplayFor(modelItem => lesson.Location.city) @Html.DisplayFor(modelItem => lesson.Location.state) </td>
+                
+                <td>  @Html.DisplayFor(modelItem => lesson.start.Date) @Html.DisplayFor(modelItem => lesson.Student.lastName) </td>
+
+                <td>
+                    @Html.ActionLink("REMOVE", "../Lesson/QuickDelete", new { id = lesson.LessonId })
+                </td>
+
+            </tr>
+                }
+
+            </table>
+        </div>
+
 
         <div id="calendar"></div>
     </div>
@@ -181,16 +219,26 @@
                             $("#calendar").hide();
                             $("#lessons").show();  
                             $("#requestedLessons").hide();
+                            $("#makeups").hide();
               });
             $( "#viewCalendar" ).click(function() {
                         console.log("Handler for .click() called.");                       
                             $("#calendar").show();
                             $("#lessons").hide();  
                             $("#requestedLessons").hide();
+                            $("#makeups").hide();
             });
             $( "#requestNotification" ).click(function() {
                         console.log("Show requests");                       
                             $("#requestedLessons").show();
+                            $("#lessons").hide(); 
+                            $("#calendar").hide();  
+                             $("#makeups").hide();
+            });
+              $( "#viewMakeups" ).click(function() {
+                        console.log("Show Makeups");                       
+                            $("#makeups").show();
+                            $("#requestedLessons").hide();
                             $("#lessons").hide(); 
                             $("#calendar").hide();  
             });
