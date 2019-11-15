@@ -12,8 +12,7 @@
 
 
 
-    <div id="teacherDirectory" style="display: none;">
-
+    <div id="teacherDirectory  style="display: none;">
         <h3>Teachers In Your Area</h3>
 
         <table class="table" id="teacherList">
@@ -53,7 +52,7 @@
                     <td>
 
                         @Html.ActionLink("Details", "Details", new { id = item.person.PersonId })  |  
-                        @Html.ActionLink("Request Lesson", "Create", "Lesson", new { id = item.person.PersonId })
+                        @Html.ActionLink("Request Lesson", "Create", "Lesson", new { teacherId = item.person.PersonId }, null)
 
                     </td>
                 </tr>
