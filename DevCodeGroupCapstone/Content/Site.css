@@ -63,6 +63,14 @@ textarea {
     background-color: white;
 }
 
+#studentView{
+    padding-top: 100px;
+}
+
+#teacherView {
+    padding-top: 100px;
+}
+
 
 
 
@@ -112,4 +120,8 @@ body {
     padding-left: 0;
     margin-right: 0;
     margin-left: 0;
+}
+
+.split-holder{
+    padding-top: 80px;
 }
