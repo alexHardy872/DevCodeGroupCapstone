@@ -53,7 +53,7 @@ namespace DevCodeGroupCapstone.Controllers
             bigModel.teachersComp = teachers;
             bigModel.studentLessons = studentLessons;
             bigModel.currentUser = userFound;
-   
+
             return View(bigModel);
         }
 
@@ -85,7 +85,7 @@ namespace DevCodeGroupCapstone.Controllers
                     .Include("Student")
                     .Include("Location")
                     .Where(lesson => lesson.studentId == userFound.PersonId && lesson.teacherApproval == false).ToList();
-        
+
             BigIndexViewModel bigModel = new BigIndexViewModel();
             bigModel.teachersComp = teachers;
             bigModel.studentLessons = studentLessons;
@@ -102,7 +102,7 @@ namespace DevCodeGroupCapstone.Controllers
             {
                 return RedirectToAction("Create");
             }
-            
+
             List<Lesson> teacherLessons = context.Lessons
                     .Include("Student")
                     .Include("Location")
@@ -112,7 +112,7 @@ namespace DevCodeGroupCapstone.Controllers
                     .Include("Student")
                     .Include("Location")
                     .Where(lesson => lesson.teacherId == userFound.PersonId && lesson.teacherApproval == false).ToList();
-            BigIndexViewModel bigModel = new BigIndexViewModel();        
+            BigIndexViewModel bigModel = new BigIndexViewModel();
             bigModel.teacherLessons = teacherLessons;
             bigModel.requestsForTeacher = lessonRequests;
             bigModel.currentUser = userFound;
@@ -128,7 +128,7 @@ namespace DevCodeGroupCapstone.Controllers
             personLocationDetails.location = context.Locations.Where(l => l.LocationId == personLocationDetails.person.LocationId).Single();
 
             var tempTeacher = context.Preferences.Where(p => p.teacherId == personLocationDetails.person.PersonId).SingleOrDefault();//tlc
-            if (tempTeacher != null)                
+            if (tempTeacher != null)
             {
                 if (tempTeacher.distanceType == RadiusOptions.Miles)
                 {
@@ -139,7 +139,7 @@ namespace DevCodeGroupCapstone.Controllers
                 {
                     ViewBag.radius = tempTeacher.maxDistance;
                 }
-            }            
+            }
 
             return View(personLocationDetails);
         }
@@ -193,20 +193,20 @@ namespace DevCodeGroupCapstone.Controllers
                 var tempPerson = context.People.Where(p => p.PersonId == id).SingleOrDefault();//tlc
                 return View(tempPerson);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return RedirectToAction("Index");
             }
-            
+
             //tlc return View();
-            
+
         }
 
         // POST: Person/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, Person personToEdit)
         {
-            var personFromDb = context.People.Where(p=>p.PersonId == id).SingleOrDefault();
+            var personFromDb = context.People.Where(p => p.PersonId == id).SingleOrDefault();
             try
             {
                 // TODO: Add update logic here
@@ -252,6 +252,6 @@ namespace DevCodeGroupCapstone.Controllers
             }
         }
 
-        
+
     }
 }

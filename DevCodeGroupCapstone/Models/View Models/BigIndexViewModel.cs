@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace DevCodeGroupCapstone.Models.View_Models
 {
@@ -19,6 +16,6 @@ namespace DevCodeGroupCapstone.Models.View_Models
 
         public Person currentUser;
 
-      
+
     }
 }

@@ -1,18 +1,14 @@
 ﻿using DevCodeGroupCapstone.Models;
 using DevCodeGroupCapstone.Private;
+using System;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Twilio;
 using Twilio.AspNet.Mvc;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
-using Twilio.TwiML;
-using Twilio.AspNet.Mvc;
-using DevCodeGroupCapstone.Private;
-using DevCodeGroupCapstone.Models;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Text;
-using System;
 
 namespace DevCodeGroupCapstone.Controllers
 {
@@ -24,7 +20,7 @@ namespace DevCodeGroupCapstone.Controllers
         {
             context = new ApplicationDbContext();
         }
-   
+
 
 
         public async Task<ActionResult> SendSMSToTeacher(int id) // alert is cancel or opening
@@ -50,7 +46,7 @@ namespace DevCodeGroupCapstone.Controllers
             string textM = DetermineAlertStudent(student, teacher, lesson, alert).ToString();
             var to = FormatNumber(student.phoneNumber);
             var from = new PhoneNumber(ApiKey.fromNum);
-            bool success = await Task.Run( () => SendMessage(to, from, textM));
+            bool success = await Task.Run(() => SendMessage(to, from, textM));
             return RedirectToAction("StudentIndex", "Person"); // needs to return to the same view it came from??
         }
 
@@ -60,7 +56,7 @@ namespace DevCodeGroupCapstone.Controllers
             return result;
         }
 
-        public bool SendMessage (PhoneNumber to, PhoneNumber from, string text)
+        public bool SendMessage(PhoneNumber to, PhoneNumber from, string text)
         {
             var accountSid = ApiKey.twillioAccountSID;
             var authToken = ApiKey.twillioAuthToken;
@@ -74,24 +70,24 @@ namespace DevCodeGroupCapstone.Controllers
                                 body: text);
                 return true;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e);
                 return false;
             }
-            
+
         }
 
         public StringBuilder DetermineAlertStudent(Person student, Person teacher, Lesson lesson, string RecieverType)
         {
-           StringBuilder finalMessage = new StringBuilder();
+            StringBuilder finalMessage = new StringBuilder();
             switch (RecieverType)
             {
                 case "cancel":
-                    finalMessage.Append("Hello "+student.firstName+"... Your ("+lesson.subject+") lesson with "+teacher.firstName+" "+teacher.lastName+" on "+lesson.start.Date+" at "+ lesson.start.TimeOfDay+" has been cancelled");
-                        break;
+                    finalMessage.Append("Hello " + student.firstName + "... Your (" + lesson.subject + ") lesson with " + teacher.firstName + " " + teacher.lastName + " on " + lesson.start.Date + " at " + lesson.start.TimeOfDay + " has been cancelled");
+                    break;
                 case "open":
-                    finalMessage.Append("Hello "+student.firstName+"... There is an opening for a ("+lesson.subject+") lesson with "+teacher.firstName+" "+teacher.lastName+" on "+lesson.start.Date+" at "+ lesson.start.TimeOfDay+"... if you are interested in picking up this opening, log into your WeTeachToday account and schedule with the instructor!");
+                    finalMessage.Append("Hello " + student.firstName + "... There is an opening for a (" + lesson.subject + ") lesson with " + teacher.firstName + " " + teacher.lastName + " on " + lesson.start.Date + " at " + lesson.start.TimeOfDay + "... if you are interested in picking up this opening, log into your WeTeachToday account and schedule with the instructor!");
                     break;
             }
             return finalMessage;
@@ -99,8 +95,8 @@ namespace DevCodeGroupCapstone.Controllers
 
         public StringBuilder DetermineAlertTeacher(Person student, Person teacher, Lesson lesson)
         {
-            StringBuilder finalMessage = new StringBuilder();       
-           finalMessage.Append("Hello " + teacher.firstName + "... Your student "+student.firstName+" "+student.lastName+" has canceled their "+lesson.subject+" lesson schduled for " + lesson.start.Date + " at " + lesson.start.TimeOfDay + "... log on to your WeTeachToday account to alert available students about the opening");
+            StringBuilder finalMessage = new StringBuilder();
+            finalMessage.Append("Hello " + teacher.firstName + "... Your student " + student.firstName + " " + student.lastName + " has canceled their " + lesson.subject + " lesson schduled for " + lesson.start.Date + " at " + lesson.start.TimeOfDay + "... log on to your WeTeachToday account to alert available students about the opening");
             return finalMessage;
         }
 

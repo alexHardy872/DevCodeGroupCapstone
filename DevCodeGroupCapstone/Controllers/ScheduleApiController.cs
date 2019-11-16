@@ -1,4 +1,5 @@
 ﻿using DevCodeGroupCapstone.Models;
+using DevCodeGroupCapstone.Service_Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace DevCodeGroupCapstone.Controllers
                     return await ReturnTeacherScheduleForView(teacherIdInt, beginningCalendarDateTime);
                 case "lessonOptions":
                     return await ReturnStudentLessonOptionsForView(teacherIdInt, beginningCalendarDateTime);
-                // case "inHomeLessonOptions"
+                    // case "inHomeLessonOptions"
             }
 
             return await Task.Run(() => Ok());
@@ -78,14 +79,14 @@ namespace DevCodeGroupCapstone.Controllers
                 .SingleOrDefault()
             );
 
-            if(preferences.NumberOfProximalLessons == null || (1440 < preferences.NumberOfProximalLessons * preferences.defaultLessonLength))
+            if (preferences.NumberOfProximalLessons == null || (1440 < preferences.NumberOfProximalLessons * preferences.defaultLessonLength))
             {
                 return availabilities;
             }
 
             foreach (Event availability in availabilities)
             {
-                if(IsEventBeforeOrAfterALessonWithInProximalTolerance(availability, lessons, preferences))
+                if (IsEventBeforeOrAfterALessonWithInProximalTolerance(availability, lessons, preferences))
                 {
                     availabilitiesToReturnToStudent.Add(availability);
                 }
@@ -138,108 +139,89 @@ namespace DevCodeGroupCapstone.Controllers
 
         private async Task<List<Event>> GenerateTeacherCalendarView(int teacherIdInt, DateTime beginningCalendarDateTime)
         {
-                List<Event> eventList = new List<Event>();
+            // arrange
+            List<Event> eventList = new List<Event>();
 
-                List<Lesson> lessons = await Task.Run(() => context.Lessons
-                    .Include("Student")
-                    .Include("Location")
-                    .Where(lesson => lesson.teacherId == teacherIdInt)
-                    .ToList()
-                    );
+            List<Lesson> lessons = await Task.Run(() => context.Lessons
+                .Include("Student")
+                .Include("Location")
+                // todo: add in other lesson filter constraints
+                .Where(lesson => lesson.teacherId == teacherIdInt)
+                .ToList()
+                );
 
-                TeacherAvail teacherAvail = new TeacherAvail();
+            // todo: remove the following line wehn everything is tested
+            // TeacherAvail teacherAvail = new TeacherAvail();
 
-                eventList = GenerateEventsFromLessons(lessons);
+            eventList = SchedService.GenerateEventsFromLessons(lessons);
+            List<Event> lessonEventList = SchedService.GenerateEventsFromLessons(lessons);
 
-                var availabilities = await Task.Run(() => context.TeacherAvailabilities
+            List<TeacherAvail> availabilities = await Task.Run(() => context.TeacherAvailabilities
                     .Where(a => a.PersonId == teacherIdInt)
                     .ToList()
                     );
 
+            TeacherPreference preferences = await Task.Run(() => context.Preferences
+                .Where(p => p.teacherId == teacherIdInt)
+                .SingleOrDefault()
+            );
 
-                var preferences = await Task.Run(() => context.Preferences
-                    .Where(p => p.teacherId == teacherIdInt)
-                    .SingleOrDefault()
-                    //.FirstOrDefault()
-                );
+            double convertedLessonLength = Convert.ToDouble(preferences.defaultLessonLength);
+            TimeSpan timeSpanOfLesson = TimeSpan.FromMinutes(convertedLessonLength);
 
-                double convertedLessonLength = Convert.ToDouble(preferences.defaultLessonLength);
-                TimeSpan timeSpanOfLesson = TimeSpan.FromMinutes(convertedLessonLength);
 
-                foreach (var availableTimeSpan in availabilities)
-                {
-                    DayOfWeek dayOfWeek = availableTimeSpan.weekDay;
-                    DateTime workingDate = GetNextDayOfWeekForDateTime(dayOfWeek, beginningCalendarDateTime);
-                    DateTime workingStartTime = availableTimeSpan.start;
-                    DateTime finishedTime = workingStartTime + timeSpanOfLesson;
-                    TimeSpan endTimeOfLastEvent = finishedTime.TimeOfDay;
-                    TimeSpan endTimeOfFinalAvailableTimeSlot = availableTimeSpan.end.TimeOfDay;
-
-                    // How will I adjust the time around the lessons?
-
-                    while (endTimeOfLastEvent <= endTimeOfFinalAvailableTimeSlot)
-                    {
-                        Event currentEvent = new Event();
-                        currentEvent.start = CombineDateAndTime(workingDate, workingStartTime);
-                        currentEvent.end = CombineDateAndTime(workingDate, workingStartTime + timeSpanOfLesson);
-                        currentEvent.backgroundColor = "#dbd4d3";
-                        currentEvent.textColor = "#000000";
-                        currentEvent.title = "Available";
-                        currentEvent.groupId = "Availability";
-
-                        if (IsTimeAvailable(eventList, currentEvent))
-                        {
-                            eventList.Add(currentEvent);
-                        }
-
-                        workingStartTime = currentEvent.end;
-                        finishedTime = workingStartTime + timeSpanOfLesson;
-                        endTimeOfLastEvent = finishedTime.TimeOfDay;
-                    }
-                }
-                return eventList;
-        }
-
-        private List<Event> GenerateEventsFromLessons(List<Lesson> lessons)
-        {
-            List<Event> events = new List<Event>();
-
-            foreach (Lesson lesson in lessons)
+            // act on Available Timespans
+            foreach (var availableTimeSpan in availabilities)
             {
-                StringBuilder titleBuild = new StringBuilder();
-                titleBuild.Append(lesson.Student.firstName);
-                titleBuild.Append(" @ ");
-                titleBuild.Append(lesson.Location.address1);
-                titleBuild.Append(", ");
-                titleBuild.Append(lesson.Location.zip);
-                string title = titleBuild.ToString();
+             
+                // find the lesson events that are inclusive to that time span
+                List<Event> filteredLessonList = lessonEventList
+                    .Where(lessn => lessn.start >= availableTimeSpan.start && lessn.end <= availableTimeSpan.end)
+                    .ToList();
 
-                Event currentEvent = new Event();
-                currentEvent.start = AddDriveTimeBeforeLesson(lesson);
-                currentEvent.end = AddDriveTimeAfterLesson(lesson);
-                currentEvent.backgroundColor = "#f7a072";
-                currentEvent.textColor = "#000000";
-                currentEvent.title = title;
-                currentEvent.groupId = "Lesson";
+                // sort those lesson events
+                filteredLessonList.Sort();
 
-                events.Add(currentEvent);
+                // take the first one and create the new available events before it
+                List<Event>
+                eventList.AddRange
+
+                     // fill in the times between the lesson events
+                     // take the last one and fill in afterwards
+
+
+
+                DayOfWeek dayOfWeek = availableTimeSpan.weekDay;
+                DateTime workingDate = GetNextDayOfWeekForDateTime(dayOfWeek, beginningCalendarDateTime);
+                DateTime workingStartTime = availableTimeSpan.start;
+                DateTime finishedTime = workingStartTime + timeSpanOfLesson;
+
+                TimeSpan endTimeOfLastEvent = finishedTime.TimeOfDay;
+                TimeSpan endTimeOfFinalAvailableTimeSlot = availableTimeSpan.end.TimeOfDay;
+
+                // How will I adjust the time around the lessons?
+
+                while (endTimeOfLastEvent <= endTimeOfFinalAvailableTimeSlot)
+                {
+                    Event currentEvent = new Event();
+                    currentEvent.start = CombineDateAndTime(workingDate, workingStartTime);
+                    currentEvent.end = CombineDateAndTime(workingDate, workingStartTime + timeSpanOfLesson);
+                    currentEvent.backgroundColor = "#dbd4d3";
+                    currentEvent.textColor = "#000000";
+                    currentEvent.title = "Available";
+                    currentEvent.groupId = "Availability";
+
+                    if (IsTimeAvailable(eventList, currentEvent))
+                    {
+                        eventList.Add(currentEvent);
+                    }
+
+                    workingStartTime = currentEvent.end;
+                    finishedTime = workingStartTime + timeSpanOfLesson;
+                    endTimeOfLastEvent = finishedTime.TimeOfDay;
+                }
             }
-
-            return events;
-        }
-
-        private DateTime AddDriveTimeBeforeLesson(Lesson lesson)
-        {
-            double convertedLessonTime = Convert.ToDouble(lesson.travelDuration);
-            TimeSpan lengthOfTimeToSubtractFromStart = TimeSpan.FromMinutes(convertedLessonTime);
-            return lesson.start - lengthOfTimeToSubtractFromStart;
-        }
-
-        private DateTime AddDriveTimeAfterLesson(Lesson lesson)
-        {
-            double convertedLessonTime = Convert.ToDouble(lesson.travelDuration);
-            TimeSpan lengthOfTimeToAddToEnd = TimeSpan.FromMinutes(convertedLessonTime);
-            return lesson.end + lengthOfTimeToAddToEnd;
+            return eventList;
         }
 
         private bool IsTimeAvailable(List<Event> events, Event availableTimeSlotEvent)

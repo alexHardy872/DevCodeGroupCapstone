@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using DevCodeGroupCapstone.Models;
-using DevCodeGroupCapstone.Private;
+﻿using DevCodeGroupCapstone.Models;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -34,7 +31,7 @@ namespace DevCodeGroupCapstone.Service_Classes
             double[] lessonLocationLatLng = new double[2];
             lessonLocationLatLng[0] = double.Parse(tempLessonLocation.lat);
             lessonLocationLatLng[1] = double.Parse(tempLessonLocation.lng);
-            
+
             var response = await client.GetStringAsync(requestUrl + teacherLatLng[0] + "," + teacherLatLng[1] + destinationsString + lessonLocationLatLng[0] + "," + lessonLocationLatLng[1] + authenticationString);
 
             JObject distanceInfo = JObject.Parse(response);
@@ -49,7 +46,7 @@ namespace DevCodeGroupCapstone.Service_Classes
                 double tempMinutes = (int)distanceInfo["rows"][0]["elements"][0]["duration"]["value"];
                 lesson.travelDuration = Convert.ToInt32(Math.Floor(tempMinutes / 60));
             }
-            
+
 
             return lesson;
         }
