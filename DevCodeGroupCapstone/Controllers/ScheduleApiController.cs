@@ -22,17 +22,14 @@ namespace DevCodeGroupCapstone.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> Index(string generateForView, int teacherIdInt)
         {
-            // todo: eliminate this
-            string beginningCalendarDate = "2019-11-12T21:13:52.460Z"; // this should be set to the beginning of the month and adjust evry month change
-            DateTime beginningCalendarDateTime = DateTime.Parse(beginningCalendarDate);
 
 
             switch (generateForView)
             {
                 case "teacherSchedule":
-                    return await ReturnTeacherScheduleForView(teacherIdInt, beginningCalendarDateTime);
+                    return await ReturnTeacherScheduleForView(teacherIdInt);
                 case "lessonOptions":
-                    return await ReturnStudentLessonOptionsForView(teacherIdInt, beginningCalendarDateTime);
+                    return await ReturnStudentLessonOptionsForView(teacherIdInt);
                     // case "inHomeLessonOptions"
             }
 
@@ -40,12 +37,12 @@ namespace DevCodeGroupCapstone.Controllers
         }
 
 
-        private async Task<IHttpActionResult> ReturnTeacherScheduleForView(int teacherIdInt, DateTime beginningCalendarDateTime)
+        private async Task<IHttpActionResult> ReturnTeacherScheduleForView(int teacherIdInt)
         {
 
             try
             {
-                List<Event> eventList = await GenerateTeacherCalendarView(teacherIdInt, beginningCalendarDateTime);
+                List<Event> eventList = await GenerateTeacherCalendarView(teacherIdInt);
                 return Ok(eventList);
             }
             catch (Exception e)
@@ -54,15 +51,12 @@ namespace DevCodeGroupCapstone.Controllers
             }
         }
 
-        private async Task<IHttpActionResult> ReturnStudentLessonOptionsForView(int teacherIdInt, DateTime beginningCalendarDateTime)
+        private async Task<IHttpActionResult> ReturnStudentLessonOptionsForView(int teacherIdInt)
         {
 
             try
             {
-                // todo: eliminate all remnants of GenerateAvailableSlotsForStudents
-                //List<Event> eventList = await GenerateAvailableSlotsForStudents(teacherIdInt, beginningCalendarDateTime);
-
-                List<Event> eventList = await GenerateTeacherCalendarView(teacherIdInt, beginningCalendarDateTime);
+                List<Event> eventList = await GenerateTeacherCalendarView(teacherIdInt);
 
                 eventList = eventList
                     .Where(evnt => evnt.groupId == "Availability")
@@ -76,7 +70,7 @@ namespace DevCodeGroupCapstone.Controllers
             }
         }
 
-        private async Task<List<Event>> GenerateTeacherCalendarView(int teacherIdInt, DateTime beginningCalendarDate)
+        private async Task<List<Event>> GenerateTeacherCalendarView(int teacherIdInt)
         {
             // arrange
             List<Event> eventList = new List<Event>();
