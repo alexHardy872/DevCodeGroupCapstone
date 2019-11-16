@@ -58,7 +58,14 @@ namespace DevCodeGroupCapstone.Controllers
 
             try
             {
-                List<Event> eventList = await GenerateAvailableSlotsForStudents(teacherIdInt, beginningCalendarDateTime);
+                //List<Event> eventList = await GenerateAvailableSlotsForStudents(teacherIdInt, beginningCalendarDateTime);
+
+                List<Event> eventList = await GenerateTeacherCalendarView(teacherIdInt, beginningCalendarDateTime);
+
+                eventList = eventList
+                    .Where(evnt => evnt.groupId == "Availability")
+                    .ToList();
+
                 return Ok(eventList);
             }
             catch (Exception e)

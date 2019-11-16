@@ -20,7 +20,7 @@ namespace DevCodeGroupCapstone.Service_Classes
                 StringBuilder titleBuild = new StringBuilder();
                 titleBuild.Append(lesson.Student.firstName);
                 titleBuild.Append(" @ ");
-                if (lesson.travelDuration == 0)
+                if (lesson.travelDuration != 0)
                 {
                     titleBuild.Append(lesson.Location.address1);
                     titleBuild.Append(", ");
