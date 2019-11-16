@@ -8,6 +8,10 @@ namespace DevCodeGroupCapstone.Models
 
         public DateTime end { get; set; }
 
+        public DateTime officialStart { get; set; }
+
+        public DateTime officialEnd { get; set; }
+
         public string title { get; set; }
 
         public string backgroundColor { get; set; }

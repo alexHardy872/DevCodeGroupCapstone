@@ -183,12 +183,42 @@ namespace DevCodeGroupCapstone.Controllers
                 filteredLessonList.Sort();
 
                 // take the first one and create the new available events before it, checking if it fits in the available slot
-                List<Event> listOfAvailableLessonsBefore = SchedService.CreatePriorAvailabilities(preferences, availableTimeSpan, filteredLessonList[1].start, false);
+                List<Event> listOfAvailableLessonsBefore = SchedService.CreatePriorAvailabilities(preferences, availableTimeSpan.start, filteredLessonList[1].start);
                 eventList.AddRange(listOfAvailableLessonsBefore);
+
+                int currentLessonNumber = 0;
+                int nextLessonNumber = 1;
+
+                // create a while loop that goes through the lessons and adds available timeslots by making the end half-way between lessons if there are more than 2
+                while (nextLessonNumber < filteredLessonList.Count)
+                {
+                    TimeSpan timeSpan = filteredLessonList[nextLessonNumber].start - filteredLessonList[currentLessonNumber].end;
+
+                    if (timeSpan.TotalMinutes > Convert.ToDouble(2 * preferences.defaultLessonLength))
+                    {
+                        // add range of availabilty events
+
+                    }
+                    else
+                    {
+                        // add range of availabilty events
+                    }
+
+
+
+
+
+                    currentLessonNumber += 1;
+                    nextLessonNumber += 1;
+
+                }
+
 
                      // fill in the times between the lesson events
                      // take the last one and fill in afterwards
 
+
+                // add the next lessons off the final lesson
 
 
                 DayOfWeek dayOfWeek = availableTimeSpan.weekDay;
