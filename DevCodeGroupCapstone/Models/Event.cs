@@ -19,6 +19,8 @@ namespace DevCodeGroupCapstone.Models
         public string textColor { get; set; }
         public string groupId { get; set; }
 
+        public decimal price { get; set; }
+
         public TeacherPreference preferences { get; private set; }
 
         public Event()

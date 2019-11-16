@@ -88,15 +88,15 @@ namespace DevCodeGroupCapstone.Service_Classes
 
         }
 
-        private static DateTime GetNextDateForDateTime(DayOfWeek dayOfWeek, DateTime dateTime)
-        {
-            while (dateTime.DayOfWeek != dayOfWeek)
-            {
-                dateTime = dateTime.AddDays(1);
-            }
+        //private static DateTime GetNextDateForDateTime(DayOfWeek dayOfWeek, DateTime dateTime)
+        //{
+        //    while (dateTime.DayOfWeek != dayOfWeek)
+        //    {
+        //        dateTime = dateTime.AddDays(1);
+        //    }
 
-            return dateTime.Date; // time is zeroed out
-        }
+        //    return dateTime.Date; // time is zeroed out
+        //}
 
         private static DateTime CombineDateAndTime(DateTime date, DateTime time)
         {
