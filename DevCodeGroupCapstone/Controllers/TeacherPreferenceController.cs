@@ -23,6 +23,17 @@ namespace DevCodeGroupCapstone.Controllers
         // GET: TeacherPreference/Details/5
         public ActionResult Details(int id)
         {
+            TeacherPreference tempPreference = null;
+
+            try
+            {
+                tempPreference = context.Preferences.Where(p => p.teacherId == id).SingleOrDefault();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View(tempPreference);
+            }
             return View();
         }
 
@@ -87,6 +98,7 @@ namespace DevCodeGroupCapstone.Controllers
                 Person teacher = context.People.Where(p => p.ApplicationId == userId).Single();
                 TeacherPreference preferenceDb = context.Preferences.Where(pref => pref.teacherId == teacher.PersonId).Single();
 
+                preferenceDb.PerHourRate = preference.PerHourRate;
                 preferenceDb.maxDistance = preference.maxDistance;
                 preferenceDb.incrementalCost = preference.incrementalCost;
                 preferenceDb.distanceType = preference.distanceType;
