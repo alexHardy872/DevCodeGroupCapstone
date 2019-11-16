@@ -1,10 +1,10 @@
 ﻿using DevCodeGroupCapstone.Models;
+using DevCodeGroupCapstone.Models.View_Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;//tlc
-using System.Web;
 using System.Web.Mvc;
 
 namespace DevCodeGroupCapstone.Controllers
@@ -40,7 +40,7 @@ namespace DevCodeGroupCapstone.Controllers
             {
                 ViewBag.outOfRange = TravelDurationIsGreaterThanMaxDistance(lesson);
             }
-            
+
             return View(lesson);
         }
 
@@ -53,6 +53,48 @@ namespace DevCodeGroupCapstone.Controllers
             lesson.end = DateTime.Now;
             lesson.teacherId = teacherId;
             return View(lesson);
+        }
+
+        public ActionResult CreateMakeup()
+        {
+            string userId = User.Identity.GetUserId();
+            Person teacher = context.People.Where(t => t.ApplicationId == userId).FirstOrDefault();
+            List<Person> allStudents = context.People.Where(p => p.PersonId != teacher.PersonId).ToList();
+
+            LessonAndStudentsViewModel group = new LessonAndStudentsViewModel();
+            Lesson makeup = new Lesson();
+            makeup.requiresMakeup = true;
+            makeup.teacherId = teacher.PersonId;
+
+            group.lesson = makeup;
+            group.students = allStudents;
+
+            return View(group);
+        }
+        [HttpPost]
+        public async Task<ActionResult> CreateMakeup(LessonAndStudentsViewModel group)
+        {
+            try
+            {
+                string userId = User.Identity.GetUserId();
+                Person teacher = context.People.Where(t => t.ApplicationId == userId).FirstOrDefault();
+                Lesson makeup = group.lesson;
+                makeup.teacherId = teacher.PersonId;
+                makeup.requiresMakeup = true;
+                makeup.start = DateTime.Now;
+                makeup.end = DateTime.Now;
+               
+               // Person student = context.People.Where(p => p.PersonId == makeup.studentId).FirstOrDefault();
+               // makeup.studentId = student.PersonId;
+                context.Lessons.Add(makeup);
+                await context.SaveChangesAsync();
+                return RedirectToAction("TeacherIndex", "Person");
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+                return View();
+            }   
         }
 
         // POST: Lesson/Create
@@ -100,7 +142,7 @@ namespace DevCodeGroupCapstone.Controllers
                         {
                             ViewBag.outOfRange = TravelDurationIsGreaterThanMaxDistance(lesson);
                         }
-                        catch(Exception e)
+                        catch (Exception e)
                         {
                             ViewBag.outOfRange = false;
                             Console.WriteLine(e.Message);
@@ -132,17 +174,9 @@ namespace DevCodeGroupCapstone.Controllers
         {
             try
             {
-//                var lessonType = new SelectList(new[]
-//{
-//                    new {value = 1, text = "In-Studio"},
-//                    new {value = 2, text = "In-Home"},
-//                    new {value = 3, text = "Online"}
-//                });
-//                ViewBag.LessonType = lessonType;
+
                 Lesson lessonFromDb = context.Lessons.FirstOrDefault(l => l.LessonId == id);
-                //lessonFromDb.subject = lesson.subject;
-                //lessonFromDb.Price = lesson.Price;
-                //lessonFromDb.LessonType = lesson.LessonType;
+          
                 lessonFromDb.teacherApproval = lesson.teacherApproval;
                 if (lessonFromDb.LessonType == "In-Studio" || lessonFromDb.LessonType == "Online")
                 {
@@ -150,12 +184,12 @@ namespace DevCodeGroupCapstone.Controllers
                     var user = context.People.FirstOrDefault(p => p.ApplicationId == userId);
                     decimal cost = lesson.Price / 60 * lesson.Length;
                     cost = Math.Round(cost, 2);
-                    //tlc lessonFromDb.LocationId = user.LocationId;
+             
                     lesson.LocationId = user.LocationId;
-                    //lessonFromDb.cost = cost;
+                   
                     lesson.cost = cost;
                     lesson.travelDuration = 0;//tlc
-                    //return RedirectToAction("List");
+                    
                 }
                 else //"In-Home"
                 {
@@ -237,7 +271,7 @@ namespace DevCodeGroupCapstone.Controllers
 
             if (teacherPreference != null && location != null && teacherPreference.distanceType == RadiusOptions.Miles)
             {
-                result = (lesson.travelDuration > teacherPreference.maxDistance);          
+                result = (lesson.travelDuration > teacherPreference.maxDistance);
             }
 
             return result;

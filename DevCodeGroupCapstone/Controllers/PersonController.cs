@@ -34,7 +34,7 @@ namespace DevCodeGroupCapstone.Controllers
             BigIndexViewModel bigModel = new BigIndexViewModel();
            
             bigModel.currentUser = userFound;
-   
+
             return View(bigModel);
         }
 
@@ -83,7 +83,7 @@ namespace DevCodeGroupCapstone.Controllers
             {
                 return RedirectToAction("Create");
             }
-            
+
             List<Lesson> teacherLessons = context.Lessons
                     .Include("Student")
                     .Include("Location")
@@ -116,7 +116,7 @@ namespace DevCodeGroupCapstone.Controllers
             personLocationDetails.location = context.Locations.Where(l => l.LocationId == personLocationDetails.person.LocationId).Single();
 
             var tempTeacher = context.Preferences.Where(p => p.teacherId == personLocationDetails.person.PersonId).SingleOrDefault();//tlc
-            if (tempTeacher != null)                
+            if (tempTeacher != null)
             {
                 if (tempTeacher.distanceType == RadiusOptions.Miles)
                 {
@@ -127,7 +127,7 @@ namespace DevCodeGroupCapstone.Controllers
                 {
                     ViewBag.radius = tempTeacher.maxDistance;
                 }
-            }            
+            }
 
             return View(personLocationDetails);
         }
@@ -178,23 +178,29 @@ namespace DevCodeGroupCapstone.Controllers
         {
             try//tlc
             {
-                var tempPerson = context.People.Where(p => p.PersonId == id).SingleOrDefault();//tlc
+                var tempPerson = context.People
+                        .Include("Location")
+                        .Where(p => p.PersonId == id).SingleOrDefault();//tlc
                 return View(tempPerson);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return RedirectToAction("Index");
             }
-            
+
             //tlc return View();
-            
+
         }
 
         // POST: Person/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, Person personToEdit)
+        public async Task<ActionResult> Edit(int id, Person personToEdit)
         {
-            var personFromDb = context.People.Where(p=>p.PersonId == id).SingleOrDefault();
+            Person personFromDb = context.People
+                .Include("Location")
+                .Where(p=>p.PersonId == id).SingleOrDefault();
+
+            Location locationfromDb = context.Locations.Where(l => l.LocationId == personFromDb.LocationId).FirstOrDefault();
             try
             {
                 // TODO: Add update logic here
@@ -205,6 +211,20 @@ namespace DevCodeGroupCapstone.Controllers
                     personFromDb.lastName = personToEdit.lastName;
                     personFromDb.subjects = personToEdit.subjects;
                     personFromDb.phoneNumber = personToEdit.phoneNumber;
+                    personFromDb.ApplicationId = personToEdit.ApplicationId;
+
+                    locationfromDb.address1 = personToEdit.Location.address1;
+                    locationfromDb.address2 = personToEdit.Location.address2;
+                    locationfromDb.city = personToEdit.Location.city;
+                    locationfromDb.state = personToEdit.Location.state;
+                    locationfromDb.zip = personToEdit.Location.zip;
+
+                    string[] latLng = await GeoCode.GetLatLongFromApi(personToEdit.Location);
+                    personToEdit.Location.lat = latLng[0];
+                    personToEdit.Location.lng = latLng[1];
+
+                    locationfromDb.lat = personToEdit.Location.lat;
+                    locationfromDb.lng = personToEdit.Location.lng;
 
                 }
 
@@ -215,7 +235,7 @@ namespace DevCodeGroupCapstone.Controllers
                 return View();
             }
 
-            return RedirectToAction("Details", new { id = personFromDb.PersonId });
+            return RedirectToAction("Index");
         }
 
         // GET: Person/Delete/5
@@ -240,6 +260,6 @@ namespace DevCodeGroupCapstone.Controllers
             }
         }
 
-        
+
     }
 }
