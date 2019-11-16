@@ -161,6 +161,9 @@ namespace DevCodeGroupCapstone.Controllers
                     .ToList()
                     );
 
+            // todo: change the beginning and ending date for different calendar views
+            availabilities = SchedService.AddDatesToAvailabilities(availabilities, DateTime.Today, DateTime.Today.AddDays(60));
+
             TeacherPreference preferences = await Task.Run(() => context.Preferences
                 .Where(p => p.teacherId == teacherIdInt)
                 .SingleOrDefault()
@@ -168,7 +171,6 @@ namespace DevCodeGroupCapstone.Controllers
 
             double convertedLessonLength = Convert.ToDouble(preferences.defaultLessonLength);
             TimeSpan timeSpanOfLesson = TimeSpan.FromMinutes(convertedLessonLength);
-
 
             // act on Available Timespans
             foreach (var availableTimeSpan in availabilities)
@@ -183,110 +185,123 @@ namespace DevCodeGroupCapstone.Controllers
                 filteredLessonList.Sort();
 
                 // take the first one and create the new available events before it, checking if it fits in the available slot
-                List<Event> listOfAvailableLessonsBefore = SchedService.CreatePriorAvailabilities(preferences, availableTimeSpan.start, filteredLessonList[1].start);
-                eventList.AddRange(listOfAvailableLessonsBefore);
+                List<Event> listOfPreEvents = SchedService.CreatePriorAvailabilities(preferences, availableTimeSpan.start, filteredLessonList[1].start);
+                eventList.AddRange(listOfPreEvents);
 
                 int currentLessonNumber = 0;
                 int nextLessonNumber = 1;
 
-                // create a while loop that goes through the lessons and adds available timeslots by making the end half-way between lessons if there are more than 2
+                // fill in the times between the lesson events, evenly
                 while (nextLessonNumber < filteredLessonList.Count)
                 {
                     TimeSpan timeSpan = filteredLessonList[nextLessonNumber].start - filteredLessonList[currentLessonNumber].end;
 
                     if (timeSpan.TotalMinutes > Convert.ToDouble(2 * preferences.defaultLessonLength))
                     {
-                        // add range of availabilty events
+                        // find the mid point between the lessons
+                        TimeSpan timeBetweenLessons = filteredLessonList[nextLessonNumber].start - filteredLessonList[currentLessonNumber].end;
+                        Double timeBetweenLessonsInMinutes = timeBetweenLessons.TotalMinutes;
+                        Double midpointBetweenLessons = timeBetweenLessonsInMinutes / 2;
+                        TimeSpan timeSpanOfMidpointFromEndOfCurrentLesson = TimeSpan.FromMinutes(midpointBetweenLessons);
+                        DateTime midpoint = filteredLessonList[currentLessonNumber].end + timeSpanOfMidpointFromEndOfCurrentLesson;
+
+                        List<Event> listOfAfterEvents = SchedService.CreateNextAvailabilities(preferences, midpoint, filteredLessonList[currentLessonNumber].end);
+                        eventList.AddRange(listOfAfterEvents);
+
+                        List<Event> listOfBeforeEvents = SchedService.CreatePriorAvailabilities(preferences, midpoint, filteredLessonList[nextLessonNumber].start);
+                        eventList.AddRange(listOfBeforeEvents);
 
                     }
                     else
                     {
-                        // add range of availabilty events
+                        List<Event> listOfAfterEvents = SchedService.CreateNextAvailabilities(preferences, filteredLessonList[nextLessonNumber].start, filteredLessonList[currentLessonNumber].end);
+                        eventList.AddRange(listOfAfterEvents);
                     }
-
-
-
-
 
                     currentLessonNumber += 1;
                     nextLessonNumber += 1;
 
                 }
 
+                // take the last lesson and fill in afterwards
+                List<Event> listOfPostEvents = SchedService.CreateNextAvailabilities(preferences, availableTimeSpan.end, filteredLessonList[filteredLessonList.Count-1].end);
+                eventList.AddRange(listOfPostEvents);
 
-                     // fill in the times between the lesson events
-                     // take the last one and fill in afterwards
+                return eventList;
+
+                //    // add the next lessons off the final lesson
 
 
-                // add the next lessons off the final lesson
+                //    DayOfWeek dayOfWeek = availableTimeSpan.weekDay;
+                //    DateTime workingDate = GetNextDayOfWeekForDateTime(dayOfWeek, beginningCalendarDateTime);
+                //    DateTime workingStartTime = availableTimeSpan.start;
+                //    DateTime finishedTime = workingStartTime + timeSpanOfLesson;
+
+                //    TimeSpan endTimeOfLastEvent = finishedTime.TimeOfDay;
+                //    TimeSpan endTimeOfFinalAvailableTimeSlot = availableTimeSpan.end.TimeOfDay;
+
+                //    //    // How will I adjust the time around the lessons?
+
+                //    while (endTimeOfLastEvent <= endTimeOfFinalAvailableTimeSlot)
+                //    {
+                //        Event currentEvent = new Event();
+                //        currentEvent.start = CombineDateAndTime(workingDate, workingStartTime);
+                //        currentEvent.end = CombineDateAndTime(workingDate, workingStartTime + timeSpanOfLesson);
+                //        currentEvent.backgroundColor = "#dbd4d3";
+                //        currentEvent.textColor = "#000000";
+                //        currentEvent.title = "Available";
+                //        currentEvent.groupId = "Availability";
+
+                //        if (IsTimeAvailable(eventList, currentEvent))
+                //        {
+                //            eventList.Add(currentEvent);
+                //        }
+
+                //        workingStartTime = currentEvent.end;
+                //        finishedTime = workingStartTime + timeSpanOfLesson;
+                //        endTimeOfLastEvent = finishedTime.TimeOfDay;
+                //    }
+                //}
 
 
-                DayOfWeek dayOfWeek = availableTimeSpan.weekDay;
-                DateTime workingDate = GetNextDayOfWeekForDateTime(dayOfWeek, beginningCalendarDateTime);
-                DateTime workingStartTime = availableTimeSpan.start;
-                DateTime finishedTime = workingStartTime + timeSpanOfLesson;
 
-                TimeSpan endTimeOfLastEvent = finishedTime.TimeOfDay;
-                TimeSpan endTimeOfFinalAvailableTimeSlot = availableTimeSpan.end.TimeOfDay;
-
-                // How will I adjust the time around the lessons?
-
-                while (endTimeOfLastEvent <= endTimeOfFinalAvailableTimeSlot)
-                {
-                    Event currentEvent = new Event();
-                    currentEvent.start = CombineDateAndTime(workingDate, workingStartTime);
-                    currentEvent.end = CombineDateAndTime(workingDate, workingStartTime + timeSpanOfLesson);
-                    currentEvent.backgroundColor = "#dbd4d3";
-                    currentEvent.textColor = "#000000";
-                    currentEvent.title = "Available";
-                    currentEvent.groupId = "Availability";
-
-                    if (IsTimeAvailable(eventList, currentEvent))
-                    {
-                        eventList.Add(currentEvent);
-                    }
-
-                    workingStartTime = currentEvent.end;
-                    finishedTime = workingStartTime + timeSpanOfLesson;
-                    endTimeOfLastEvent = finishedTime.TimeOfDay;
-                }
-            }
-            return eventList;
-        }
-
-        private bool IsTimeAvailable(List<Event> events, Event availableTimeSlotEvent)
-        {
-            bool IsTimeAvailable = false;
-
-            foreach (Event evnt in events)
-            {
-                if (evnt.start >= availableTimeSlotEvent.end || evnt.end <= availableTimeSlotEvent.start)
-                {
-                    IsTimeAvailable = true;
-                }
-                else
-                {
-                    return false;
-                }
             }
 
-            return IsTimeAvailable;
-        }
 
-        private DateTime GetNextDayOfWeekForDateTime(DayOfWeek dayOfWeek, DateTime dateTime)
-        {
-            while (dateTime.DayOfWeek != dayOfWeek)
-            {
-                dateTime = dateTime.AddDays(1);
-            }
 
-            return dateTime.Date; // time is zeroed out
-        }
+        //private bool IsTimeAvailable(List<Event> events, Event availableTimeSlotEvent)
+        //{
+        //    bool IsTimeAvailable = false;
 
-        private DateTime CombineDateAndTime(DateTime date, DateTime time)
-        {
-            return date + time.TimeOfDay;
-        }
+        //    foreach (Event evnt in events)
+        //    {
+        //        if (evnt.start >= availableTimeSlotEvent.end || evnt.end <= availableTimeSlotEvent.start)
+        //        {
+        //            IsTimeAvailable = true;
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+        //    }
+
+        //    return IsTimeAvailable;
+        //}
+
+        //private DateTime GetNextDayOfWeekForDateTime(DayOfWeek dayOfWeek, DateTime dateTime)
+        //{
+        //    while (dateTime.DayOfWeek != dayOfWeek)
+        //    {
+        //        dateTime = dateTime.AddDays(1);
+        //    }
+
+        //    return dateTime.Date; // time is zeroed out
+        //}
+
+        //private DateTime CombineDateAndTime(DateTime date, DateTime time)
+        //{
+        //    return date + time.TimeOfDay;
+        //}
 
     }
 }

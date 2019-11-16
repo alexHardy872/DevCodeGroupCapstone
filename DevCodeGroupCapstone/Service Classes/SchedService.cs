@@ -49,6 +49,61 @@ namespace DevCodeGroupCapstone.Service_Classes
             return events;
         }
 
+        public static List<TeacherAvail> AddDatesToAvailabilities(List<TeacherAvail> availabilities, DateTime beginningDate, DateTime endingDate)
+        {
+
+            DateTime workingDate = beginningDate;
+
+            List<TeacherAvail> newTa = new List<TeacherAvail>();
+
+            while (workingDate <= endingDate)
+            {
+                List<TeacherAvail> ta = availabilities.Where(t => t.weekDay == workingDate.DayOfWeek).ToList();
+
+                if (ta != null && ta.Count > 0)
+                {
+                    foreach (TeacherAvail teachAvail in ta)
+                    {
+                        TeacherAvail newTeachAvail = new TeacherAvail
+                        {
+                            availId = teachAvail.availId,
+                            weekDay = teachAvail.weekDay,
+                            start = CombineDateAndTime(workingDate, teachAvail.start),
+                            end = CombineDateAndTime(workingDate, teachAvail.end),
+                            PersonId = teachAvail.PersonId,
+                            TeacherId = teachAvail.TeacherId
+
+                        };
+
+                        newTa.Add(newTeachAvail);
+                    }
+
+                }
+
+                workingDate.AddDays(1);
+
+            }
+
+            return newTa;
+
+        }
+
+        private static DateTime GetNextDateForDateTime(DayOfWeek dayOfWeek, DateTime dateTime)
+        {
+            while (dateTime.DayOfWeek != dayOfWeek)
+            {
+                dateTime = dateTime.AddDays(1);
+            }
+
+            return dateTime.Date; // time is zeroed out
+        }
+
+        private static DateTime CombineDateAndTime(DateTime date, DateTime time)
+        {
+            return date + time.TimeOfDay;
+        }
+
+
         public static List<Event> CreatePriorAvailabilities(TeacherPreference preferences, DateTime lowerLimit, DateTime lessonStart)
         {
             List<Event> availabilityEvents = new List<Event>();
@@ -85,8 +140,8 @@ namespace DevCodeGroupCapstone.Service_Classes
             List<Event> availabilityEvents = new List<Event>();
             TimeSpan LessonLength = ConvertIntToTimeSpan(preferences.defaultLessonLength);
 
-            DateTime workingStart = lessonEnd + LessonLength;
-            DateTime workingEnd = workingStart;
+            DateTime workingStart = lessonEnd;
+            DateTime workingEnd = workingStart + LessonLength;
 
             // loop through each until start is before the availableTimespan
             while (workingEnd <= upperLimit)
