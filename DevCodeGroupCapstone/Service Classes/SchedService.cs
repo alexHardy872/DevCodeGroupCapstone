@@ -19,9 +19,17 @@ namespace DevCodeGroupCapstone.Service_Classes
                 StringBuilder titleBuild = new StringBuilder();
                 titleBuild.Append(lesson.Student.firstName);
                 titleBuild.Append(" @ ");
-                titleBuild.Append(lesson.Location.address1);
-                titleBuild.Append(", ");
-                titleBuild.Append(lesson.Location.zip);
+                if (lesson.travelDuration == 0)
+                {
+                    titleBuild.Append(lesson.Location.address1);
+                    titleBuild.Append(", ");
+                    titleBuild.Append(lesson.Location.zip);
+                }
+                else
+                {
+                    titleBuild.Append("In Studio");
+                }
+
                 string title = titleBuild.ToString();
 
                 Event currentEvent = new Event();
