@@ -32,7 +32,7 @@ namespace DevCodeGroupCapstone.Models
         public Person Teacher { get; set; }
 
         [ForeignKey("Location")]//fk attr
-        [Column(Order = 2)]
+        //[Column(Order = 2)]
         public int? LocationId { get; set; } //fk's spot at the table
         public Location Location { get; set; }//the class the fk attr is referencing
 
@@ -43,6 +43,8 @@ namespace DevCodeGroupCapstone.Models
         public string LessonType { get; set; }
 
         public int travelDuration { get; set; }
+
+        public bool requiresMakeup { get; set; }
 
     }
 }

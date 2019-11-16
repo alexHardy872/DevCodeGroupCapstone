@@ -15,16 +15,7 @@ namespace DevCodeGroupCapstone.Controllers
             context = new ApplicationDbContext();
         }
         // GET: TeacherPreference
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        // GET: TeacherPreference/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+   
 
         // GET: TeacherPreference/Create
         public ActionResult Create()
@@ -59,7 +50,7 @@ namespace DevCodeGroupCapstone.Controllers
                 context.Preferences.Add(preferences);
                 await context.SaveChangesAsync();
 
-                return RedirectToAction("Index", "Person");
+                return RedirectToAction("TeacherIndex", "Person");
             }
             catch (Exception e)
             {
@@ -94,7 +85,7 @@ namespace DevCodeGroupCapstone.Controllers
 
 
                 context.SaveChanges();
-                return RedirectToAction("Index", "Person");
+                return RedirectToAction("TeacherIndex", "Person");
             }
             catch
             {
@@ -102,26 +93,6 @@ namespace DevCodeGroupCapstone.Controllers
             }
         }
 
-        // GET: TeacherPreference/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
 
-        // POST: TeacherPreference/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

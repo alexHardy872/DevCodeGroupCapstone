@@ -9,6 +9,15 @@ using Twilio;
 using Twilio.AspNet.Mvc;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
+using Twilio.TwiML;
+using Twilio.AspNet.Mvc;
+using DevCodeGroupCapstone.Private;
+using DevCodeGroupCapstone.Models;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Text;
+using System;
+using System.Collections.Generic;
 
 namespace DevCodeGroupCapstone.Controllers
 {
@@ -34,8 +43,36 @@ namespace DevCodeGroupCapstone.Controllers
             bool success = await Task.Run(() => SendMessage(to, from, textM));
             lesson.studentId = null;
             await context.SaveChangesAsync();
+
+            // send to teachrs others students 
+            
+            List<Lesson> remainingStudentsFromLessons = context.Lessons
+                        .Include("Student")
+                        .Where(less => less.teacherId == teacher.PersonId && less.studentId != lesson.studentId && lesson.requiresMakeup == true).ToList();
+            
+            foreach(Lesson item in remainingStudentsFromLessons)
+            {
+                // send text to each student with new message
+                string openingText = BuildOpeningMessage(item.Student, teacher, lesson);
+                PhoneNumber studNum = FormatNumber(item.Student.phoneNumber);
+                SendMessage(studNum, from, openingText);
+            }
+
+            
             return RedirectToAction("TeacherIndex", "Person"); // needs to return to the same view it came from??
         }
+
+        public string BuildOpeningMessage(Person student, Person teacher, Lesson lesson)
+        {
+            StringBuilder message = new StringBuilder();
+            message.Append(teacher.firstName+" "+teacher.lastName+"'s schedule has a new opening for a lesson ");
+            message.Append("on " + lesson.start.Date + " at " + lesson.start.TimeOfDay + ".");
+            message.Append("Log into your account to claim this lesson!");
+            return message.ToString();
+        }
+
+
+         
 
 
         public async Task<ActionResult> SendSMSToStudent(int id, string alert) // alert is cancel or opening
@@ -46,7 +83,9 @@ namespace DevCodeGroupCapstone.Controllers
             string textM = DetermineAlertStudent(student, teacher, lesson, alert).ToString();
             var to = FormatNumber(student.phoneNumber);
             var from = new PhoneNumber(ApiKey.fromNum);
-            bool success = await Task.Run(() => SendMessage(to, from, textM));
+            bool success = await Task.Run( () => SendMessage(to, from, textM));
+            lesson.requiresMakeup = true;
+            await context.SaveChangesAsync();
             return RedirectToAction("StudentIndex", "Person"); // needs to return to the same view it came from??
         }
 

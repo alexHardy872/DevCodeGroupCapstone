@@ -12,6 +12,14 @@
         @Html.HiddenFor(model => model.TeacherPreferenceId)
 
         <div class="form-group">
+            @Html.Label("Per Hour Rate", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PerHourRate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PerHourRate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.Label("Default Lesson Length", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.defaultLessonLength, new { htmlAttributes = new { @class = "form-control" } })

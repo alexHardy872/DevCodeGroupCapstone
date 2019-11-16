@@ -30,28 +30,9 @@ namespace DevCodeGroupCapstone.Controllers
             {
                 return RedirectToAction("Create");
             }
-            List<PersonAndLocationViewModel> teachers = new List<PersonAndLocationViewModel>();
-            List<Person> eligibleTeachers = context.People.Where(s => s.subjects != null && s.PersonId != userFound.PersonId).ToList();
-            foreach (Person teacher in eligibleTeachers)
-            {
-                PersonAndLocationViewModel info = new PersonAndLocationViewModel();
-                info.person = teacher;
-                info.location = context.Locations.Where(l => l.LocationId == teacher.LocationId).Single();
-                info.lessons = context.Lessons.Where(lesson => lesson.teacherId == teacher.PersonId).ToList();
-                info.avails = context.TeacherAvailabilities.Where(av => av.PersonId == teacher.PersonId).ToList();
-                teachers.Add(info);
-            }
-            List<Lesson> studentLessons = context.Lessons
-                    .Include("Teacher")
-                    .Include("Location")
-                    .Where(lesson => lesson.studentId == userFound.PersonId).ToList();
-            if (teachers == null)
-            {
-                return RedirectToAction("Index");
-            }
+         
             BigIndexViewModel bigModel = new BigIndexViewModel();
-            bigModel.teachersComp = teachers;
-            bigModel.studentLessons = studentLessons;
+           
             bigModel.currentUser = userFound;
 
             return View(bigModel);
@@ -80,12 +61,12 @@ namespace DevCodeGroupCapstone.Controllers
             List<Lesson> studentLessons = context.Lessons
                     .Include("Teacher")
                     .Include("Location")
-                    .Where(lesson => lesson.studentId == userFound.PersonId && lesson.teacherApproval == true).ToList();
+                    .Where(lesson => lesson.studentId == userFound.PersonId && lesson.teacherApproval == true && lesson.requiresMakeup == false).ToList();
             List<Lesson> lessonRequests = context.Lessons
                     .Include("Student")
                     .Include("Location")
-                    .Where(lesson => lesson.studentId == userFound.PersonId && lesson.teacherApproval == false).ToList();
-
+                    .Where(lesson => lesson.studentId == userFound.PersonId && lesson.teacherApproval == false && lesson.requiresMakeup == false).ToList();
+        
             BigIndexViewModel bigModel = new BigIndexViewModel();
             bigModel.teachersComp = teachers;
             bigModel.studentLessons = studentLessons;
@@ -106,16 +87,23 @@ namespace DevCodeGroupCapstone.Controllers
             List<Lesson> teacherLessons = context.Lessons
                     .Include("Student")
                     .Include("Location")
-                    .Where(lesson => lesson.teacherId == userFound.PersonId && lesson.teacherApproval == true).ToList();
+                    .Where(lesson => lesson.teacherId == userFound.PersonId && lesson.teacherApproval == true && lesson.requiresMakeup == false).ToList();
 
             List<Lesson> lessonRequests = context.Lessons
                     .Include("Student")
                     .Include("Location")
-                    .Where(lesson => lesson.teacherId == userFound.PersonId && lesson.teacherApproval == false).ToList();
-            BigIndexViewModel bigModel = new BigIndexViewModel();
+                    .Where(lesson => lesson.teacherId == userFound.PersonId && lesson.teacherApproval == false && lesson.requiresMakeup == false).ToList();
+
+            List<Lesson> makeupLessons = context.Lessons
+                    .Include("Student")
+                    .Include("Location")
+                    .Where(lesson => lesson.teacherId == userFound.PersonId && lesson.requiresMakeup == true).ToList();
+
+            BigIndexViewModel bigModel = new BigIndexViewModel();        
             bigModel.teacherLessons = teacherLessons;
             bigModel.requestsForTeacher = lessonRequests;
             bigModel.currentUser = userFound;
+            bigModel.makeups = makeupLessons;
 
             return View(bigModel);
         }
@@ -190,7 +178,9 @@ namespace DevCodeGroupCapstone.Controllers
         {
             try//tlc
             {
-                var tempPerson = context.People.Where(p => p.PersonId == id).SingleOrDefault();//tlc
+                var tempPerson = context.People
+                        .Include("Location")
+                        .Where(p => p.PersonId == id).SingleOrDefault();//tlc
                 return View(tempPerson);
             }
             catch (Exception)
@@ -204,9 +194,13 @@ namespace DevCodeGroupCapstone.Controllers
 
         // POST: Person/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, Person personToEdit)
+        public async Task<ActionResult> Edit(int id, Person personToEdit)
         {
-            var personFromDb = context.People.Where(p => p.PersonId == id).SingleOrDefault();
+            Person personFromDb = context.People
+                .Include("Location")
+                .Where(p=>p.PersonId == id).SingleOrDefault();
+
+            Location locationfromDb = context.Locations.Where(l => l.LocationId == personFromDb.LocationId).FirstOrDefault();
             try
             {
                 // TODO: Add update logic here
@@ -217,6 +211,20 @@ namespace DevCodeGroupCapstone.Controllers
                     personFromDb.lastName = personToEdit.lastName;
                     personFromDb.subjects = personToEdit.subjects;
                     personFromDb.phoneNumber = personToEdit.phoneNumber;
+                    personFromDb.ApplicationId = personToEdit.ApplicationId;
+
+                    locationfromDb.address1 = personToEdit.Location.address1;
+                    locationfromDb.address2 = personToEdit.Location.address2;
+                    locationfromDb.city = personToEdit.Location.city;
+                    locationfromDb.state = personToEdit.Location.state;
+                    locationfromDb.zip = personToEdit.Location.zip;
+
+                    string[] latLng = await GeoCode.GetLatLongFromApi(personToEdit.Location);
+                    personToEdit.Location.lat = latLng[0];
+                    personToEdit.Location.lng = latLng[1];
+
+                    locationfromDb.lat = personToEdit.Location.lat;
+                    locationfromDb.lng = personToEdit.Location.lng;
 
                 }
 
@@ -227,7 +235,7 @@ namespace DevCodeGroupCapstone.Controllers
                 return View();
             }
 
-            return RedirectToAction("Details", new { id = personFromDb.PersonId });
+            return RedirectToAction("Index");
         }
 
         // GET: Person/Delete/5

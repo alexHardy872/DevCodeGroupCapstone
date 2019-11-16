@@ -15,18 +15,7 @@ namespace DevCodeGroupCapstone.Controllers
         {
             context = new ApplicationDbContext();
         }
-        // GET: TeacherAvailability
-        public ActionResult Index()
-        {
-
-            return RedirectToAction("List");
-        }
-
-        // GET: TeacherAvailability/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+        
 
         // GET: TeacherAvailability/Create
         public ActionResult Create()
@@ -47,7 +36,7 @@ namespace DevCodeGroupCapstone.Controllers
                 context.TeacherAvailabilities.Add(avail);
                 context.SaveChanges();
 
-                return RedirectToAction("Index");
+                return RedirectToAction("List");
             }
             catch
             {
@@ -79,19 +68,23 @@ namespace DevCodeGroupCapstone.Controllers
 
         // POST: TeacherAvailability/Edit/5
         [HttpPost]
-        public ActionResult Edit(TeacherAvail avail)
+        public ActionResult Edit(TeacherAvail editedAvail)
         {
+            TeacherAvail availFromDb = null;
             try
             {
+                availFromDb = context.TeacherAvailabilities.Where(ta => ta.availId == editedAvail.availId).SingleOrDefault();
 
-
-
+                availFromDb.start = editedAvail.start;
+                availFromDb.end = editedAvail.end;
                 context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("List");
             }
-            catch
+            catch(Exception e)
             {
-                return View();
+                //return View();
+                Console.WriteLine(e.Message);
+                return RedirectToAction("List");
             }
         }
 
@@ -112,7 +105,7 @@ namespace DevCodeGroupCapstone.Controllers
                 context.TeacherAvailabilities.Remove(availDb);
 
                 context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("List");
             }
             catch (Exception e)
             {

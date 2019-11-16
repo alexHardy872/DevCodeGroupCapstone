@@ -1,4 +1,5 @@
 ﻿using DevCodeGroupCapstone.Models;
+using DevCodeGroupCapstone.Models.View_Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -54,6 +55,48 @@ namespace DevCodeGroupCapstone.Controllers
             return View(lesson);
         }
 
+        public ActionResult CreateMakeup()
+        {
+            string userId = User.Identity.GetUserId();
+            Person teacher = context.People.Where(t => t.ApplicationId == userId).FirstOrDefault();
+            List<Person> allStudents = context.People.Where(p => p.PersonId != teacher.PersonId).ToList();
+
+            LessonAndStudentsViewModel group = new LessonAndStudentsViewModel();
+            Lesson makeup = new Lesson();
+            makeup.requiresMakeup = true;
+            makeup.teacherId = teacher.PersonId;
+
+            group.lesson = makeup;
+            group.students = allStudents;
+
+            return View(group);
+        }
+        [HttpPost]
+        public async Task<ActionResult> CreateMakeup(LessonAndStudentsViewModel group)
+        {
+            try
+            {
+                string userId = User.Identity.GetUserId();
+                Person teacher = context.People.Where(t => t.ApplicationId == userId).FirstOrDefault();
+                Lesson makeup = group.lesson;
+                makeup.teacherId = teacher.PersonId;
+                makeup.requiresMakeup = true;
+                makeup.start = DateTime.Now;
+                makeup.end = DateTime.Now;
+               
+               // Person student = context.People.Where(p => p.PersonId == makeup.studentId).FirstOrDefault();
+               // makeup.studentId = student.PersonId;
+                context.Lessons.Add(makeup);
+                await context.SaveChangesAsync();
+                return RedirectToAction("TeacherIndex", "Person");
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+                return View();
+            }   
+        }
+
         // POST: Lesson/Create
         [HttpPost]
         public async Task<ActionResult> Create(Lesson lesson) //public ActionResult Create(Lesson lesson)
@@ -73,9 +116,10 @@ namespace DevCodeGroupCapstone.Controllers
                 Person user = context.People.FirstOrDefault(u => u.ApplicationId == id);
                 lesson.teacherId = teacherId;
                 lesson.studentId = user.PersonId;
-
                 var preferences = context.Preferences.FirstOrDefault(p => p.teacherId == teacherId);
+                lesson.Price = preferences.PerHourRate;
                 lesson.Length = preferences.defaultLessonLength;
+                lesson.subject = teacher.subjects;
                 if (lesson.LessonType == "In-Studio" || lesson.LessonType == "Online")
                 {
                     //var person = context.People.FirstOrDefault(p => p.ApplicationId == id);
@@ -107,7 +151,7 @@ namespace DevCodeGroupCapstone.Controllers
                 }
                 context.Lessons.Add(lesson);
                 context.SaveChanges();
-                return RedirectToAction("List");
+                return RedirectToAction("StudentIndex", "Person");
             }
             catch (Exception e)
             {
@@ -119,7 +163,7 @@ namespace DevCodeGroupCapstone.Controllers
         // GET: Lesson/Edit/5
         public ActionResult Edit(int id)
         {
-            ViewBag.LessonType = new SelectList(lessonLocation);
+            //ViewBag.LessonType = new SelectList(lessonLocation);
             Lesson lesson = context.Lessons.FirstOrDefault(l => l.LessonId == id);
             return View(lesson);
         }
@@ -130,29 +174,22 @@ namespace DevCodeGroupCapstone.Controllers
         {
             try
             {
-                var lessonType = new SelectList(new[]
-{
-                    new {value = 1, text = "In-Studio"},
-                    new {value = 2, text = "In-Home"},
-                    new {value = 3, text = "Online"}
-                });
-                ViewBag.LessonType = lessonType;
+
                 Lesson lessonFromDb = context.Lessons.FirstOrDefault(l => l.LessonId == id);
-                lessonFromDb.subject = lesson.subject;
-                lessonFromDb.Price = lesson.Price;
-                lessonFromDb.LessonType = lesson.LessonType;
-                if (lesson.LessonType == "In-Studio" || lesson.LessonType == "Online")
+          
+                lessonFromDb.teacherApproval = lesson.teacherApproval;
+                if (lessonFromDb.LessonType == "In-Studio" || lessonFromDb.LessonType == "Online")
                 {
                     var userId = User.Identity.GetUserId();
                     var user = context.People.FirstOrDefault(p => p.ApplicationId == userId);
                     decimal cost = lesson.Price / 60 * lesson.Length;
                     cost = Math.Round(cost, 2);
-                    //tlc lessonFromDb.LocationId = user.LocationId;
+             
                     lesson.LocationId = user.LocationId;
-                    //lessonFromDb.cost = cost;
+                   
                     lesson.cost = cost;
                     lesson.travelDuration = 0;//tlc
-                    //return RedirectToAction("List");
+                    
                 }
                 else //"In-Home"
                 {
@@ -210,6 +247,22 @@ namespace DevCodeGroupCapstone.Controllers
             }
         }
 
+        
+        public ActionResult QuickDelete(int id)
+        {
+            try
+            {
+                Lesson lesson = context.Lessons.FirstOrDefault(l => l.LessonId == id);
+                context.Lessons.Remove(lesson);
+                context.SaveChanges();
+                return RedirectToAction("TeacherIndex","Person");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
         public Boolean TravelDurationIsGreaterThanMaxDistance(Lesson lesson) //tlc
         {
             bool result = false;
@@ -234,13 +287,22 @@ namespace DevCodeGroupCapstone.Controllers
             ViewBag.lessonLng = lessonLocation.lng;
             ViewBag.teacherLat = teacher.Location.lat;
             ViewBag.teacherLng = teacher.Location.lng;
-            if (teacherPreference.distanceType == RadiusOptions.Miles)
+
+            try
             {
-                ViewBag.radius = teacherPreference.maxDistance * Service_Classes.DistanceMatrix.metersToMiles;
+                if (teacherPreference.distanceType == RadiusOptions.Miles)
+                {
+                    ViewBag.radius = teacherPreference.maxDistance * Service_Classes.DistanceMatrix.metersToMiles;
+                }
+                else
+                {
+                    ViewBag.radius = teacherPreference.maxDistance;
+                }
             }
-            else
+            catch(Exception e)
             {
-                ViewBag.radius = teacherPreference.maxDistance;
+                Console.WriteLine(e.Message);
+                ViewBag.radius = 0;
             }
         }
     }

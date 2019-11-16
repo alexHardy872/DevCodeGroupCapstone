@@ -337,6 +337,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911152345550_alexmigration.cs" />
+    <Compile Include="Migrations\201911152345550_alexmigration.designer.cs">
+      <DependentUpon>201911152345550_alexmigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Event.cs" />
@@ -351,6 +355,7 @@
     <Compile Include="Models\TeacherAvail.cs" />
     <Compile Include="Models\TeacherPreference.cs" />
     <Compile Include="Models\View Models\BigIndexViewModel.cs" />
+    <Compile Include="Models\View Models\LessonAndStudentsViewModel.cs" />
     <Compile Include="Models\View Models\PersonAndLocationViewModel.cs" />
     <Compile Include="Private\ApiKey.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -570,6 +575,7 @@
     <Content Include="Views\Lesson\Details.cshtml" />
     <Content Include="Views\Person\StudentIndex.cshtml" />
     <Content Include="Views\Person\TeacherIndex.cshtml" />
+    <Content Include="Views\Lesson\CreateMakeup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -586,6 +592,11 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201911152345550_alexmigration.resx">
+      <DependentUpon>201911152345550_alexmigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

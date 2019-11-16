@@ -11,7 +11,7 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.subject)
+            @Html.DisplayName("Subject")
         </dt>
 
         <dd>
@@ -35,7 +35,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.cost)
+            @Html.DisplayName("Price for Lesson")
         </dt>
 
         <dd>
@@ -43,35 +43,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.teacherApproval)
+            @Html.DisplayName("Teacher Approved")
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.teacherApproval)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.studentId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.studentId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.teacherId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.teacherId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LocationId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LocationId)
         </dd>
 
         <dt>
@@ -91,7 +67,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.LessonType)
+            @Html.DisplayName("Lesson Type")
         </dt>
 
         <dd>
@@ -99,7 +75,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.travelDuration)
+            @Html.DisplayName("Travel Time")
         </dt>
 
         <dd>
@@ -135,8 +111,8 @@
         };
 
         //add a marker
-        var marker = new google.maps.Marker({ position: lessonLocation, title: "Lesson location", map: map });
-        var markerTest = new google.maps.Marker({ position: teacherLocation, title: "Teacher location", map: map });
+        var lessonLocationMarker = new google.maps.Marker({ position: lessonLocation, title: "Lesson location", map: map });
+        var teacherLocationMarker = new google.maps.Marker({ position: teacherLocation, title: "Teacher location", map: map });
 
         //add a radius for max range
         var teacherRadius = new google.maps.Circle({
@@ -163,5 +139,5 @@
 
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.LessonId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "../Person/StudentIndex")
 </p>
