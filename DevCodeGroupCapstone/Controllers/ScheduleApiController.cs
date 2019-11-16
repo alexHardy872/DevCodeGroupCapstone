@@ -182,9 +182,9 @@ namespace DevCodeGroupCapstone.Controllers
                 // sort those lesson events
                 filteredLessonList.Sort();
 
-                // take the first one and create the new available events before it
-                List<Event>
-                eventList.AddRange
+                // take the first one and create the new available events before it, checking if it fits in the available slot
+                List<Event> listOfAvailableLessonsBefore = SchedService.CreatePriorAvailabilities(preferences, availableTimeSpan, filteredLessonList[1].start, false);
+                eventList.AddRange(listOfAvailableLessonsBefore);
 
                      // fill in the times between the lesson events
                      // take the last one and fill in afterwards

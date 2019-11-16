@@ -46,6 +46,59 @@ namespace DevCodeGroupCapstone.Service_Classes
             return events;
         }
 
+        public static List<Event> CreatePriorAvailabilities(TeacherPreference preferences, TeacherAvail availableTimeSpan, DateTime lessonStartTime, bool inHome)
+        {
+            List<Event> availabilityEvents = new List<Event>();
+            TimeSpan LessonLength;
+
+            if (inHome == false)
+            {
+                LessonLength = ConvertIntToTimeSpan(preferences.defaultLessonLength);
+            }
+            else
+            {
+                // todo: include drive time
+                LessonLength = ConvertIntToTimeSpan(preferences.defaultLessonLength);
+            }
+
+            DateTime workingStart = lessonStartTime - LessonLength;
+            DateTime workingEnd = lessonStartTime;
+
+            // loop through each until start is before the availableTimespan
+            while (workingStart >= availableTimeSpan.start)
+            {
+                // check: is start and end inside timespan
+                if (IsStartAndEndInsideTimeSpan(workingStart, workingEnd, availableTimeSpan.start, availableTimeSpan.end))
+                {
+                    // create available timeslot
+                    Event availableSlot = Event.CreateAvailableTimeSlot(preferences, workingStart, workingEnd);
+
+                    // add it
+                    availabilityEvents.Add(availableSlot);
+                }
+
+                // update workingStart
+                workingStart -= LessonLength;
+
+                // update workingEnd
+                workingEnd -= LessonLength;
+            }
+
+            return availabilityEvents;
+        }
+
+        private static bool IsStartAndEndInsideTimeSpan(DateTime start, DateTime end, DateTime spanStart, DateTime spanEnd)
+        {
+            return start >= spanStart || end <= spanEnd;
+        }
+
+        public static TimeSpan ConvertIntToTimeSpan(int timeInMinutes)
+        {
+            Double MinutesInDouble = Convert.ToDouble(timeInMinutes);
+            return TimeSpan.FromMinutes(MinutesInDouble);
+
+        }
+
         private static DateTime AddDriveTimeBeforeLesson(Lesson lesson)
         {
             double convertedLessonTime = Convert.ToDouble(lesson.travelDuration);
