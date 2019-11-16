@@ -2,7 +2,7 @@
 
 namespace DevCodeGroupCapstone.Models
 {
-    public class Event
+    public class Event : IComparable<Event>
     {
         public DateTime start { get; set; }
 
@@ -13,5 +13,21 @@ namespace DevCodeGroupCapstone.Models
 
         public string textColor { get; set; }
         public string groupId { get; set; }
+
+        public int CompareTo(Event other)
+        {
+            if (start < other.start)
+            {
+                return -1;
+            }
+            else if (start > other.start)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
     }
 }

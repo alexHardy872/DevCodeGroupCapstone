@@ -32,6 +32,7 @@ namespace DevCodeGroupCapstone.Controllers
                     return await ReturnTeacherScheduleForView(teacherIdInt, beginningCalendarDateTime);
                 case "lessonOptions":
                     return await ReturnStudentLessonOptionsForView(teacherIdInt, beginningCalendarDateTime);
+                // case "inHomeLessonOptions"
             }
 
             return await Task.Run(() => Ok());
@@ -77,7 +78,7 @@ namespace DevCodeGroupCapstone.Controllers
                 .SingleOrDefault()
             );
 
-            if(preferences.NumberOfProximalLessons == null || (1440 > preferences.NumberOfProximalLessons * preferences.defaultLessonLength))
+            if(preferences.NumberOfProximalLessons == null || (1440 < preferences.NumberOfProximalLessons * preferences.defaultLessonLength))
             {
                 return availabilities;
             }
@@ -137,17 +138,16 @@ namespace DevCodeGroupCapstone.Controllers
 
         private async Task<List<Event>> GenerateTeacherCalendarView(int teacherIdInt, DateTime beginningCalendarDateTime)
         {
-            List<Event> eventList = new List<Event>();
+                List<Event> eventList = new List<Event>();
 
-                var lessons = await Task.Run(() => context.Lessons
+                List<Lesson> lessons = await Task.Run(() => context.Lessons
                     .Include("Student")
                     .Include("Location")
                     .Where(lesson => lesson.teacherId == teacherIdInt)
                     .ToList()
                     );
+
                 TeacherAvail teacherAvail = new TeacherAvail();
-
-
 
                 eventList = GenerateEventsFromLessons(lessons);
 
@@ -175,6 +175,7 @@ namespace DevCodeGroupCapstone.Controllers
                     TimeSpan endTimeOfLastEvent = finishedTime.TimeOfDay;
                     TimeSpan endTimeOfFinalAvailableTimeSlot = availableTimeSpan.end.TimeOfDay;
 
+                    // How will I adjust the time around the lessons?
 
                     while (endTimeOfLastEvent <= endTimeOfFinalAvailableTimeSlot)
                     {
@@ -185,9 +186,8 @@ namespace DevCodeGroupCapstone.Controllers
                         currentEvent.textColor = "#000000";
                         currentEvent.title = "Available";
                         currentEvent.groupId = "Availability";
-                    // current event.url
 
-                        if (IsTimeAvailable(lessons, currentEvent))
+                        if (IsTimeAvailable(eventList, currentEvent))
                         {
                             eventList.Add(currentEvent);
                         }
@@ -199,7 +199,6 @@ namespace DevCodeGroupCapstone.Controllers
                 }
                 return eventList;
         }
-        
 
         private List<Event> GenerateEventsFromLessons(List<Lesson> lessons)
         {
@@ -216,8 +215,8 @@ namespace DevCodeGroupCapstone.Controllers
                 string title = titleBuild.ToString();
 
                 Event currentEvent = new Event();
-                currentEvent.start = lesson.start;
-                currentEvent.end = lesson.end;
+                currentEvent.start = AddDriveTimeBeforeLesson(lesson);
+                currentEvent.end = AddDriveTimeAfterLesson(lesson);
                 currentEvent.backgroundColor = "#f7a072";
                 currentEvent.textColor = "#000000";
                 currentEvent.title = title;
@@ -229,13 +228,27 @@ namespace DevCodeGroupCapstone.Controllers
             return events;
         }
 
-        private bool IsTimeAvailable(List<Lesson> lessons, Event availableTimeSlotEvent)
+        private DateTime AddDriveTimeBeforeLesson(Lesson lesson)
+        {
+            double convertedLessonTime = Convert.ToDouble(lesson.travelDuration);
+            TimeSpan lengthOfTimeToSubtractFromStart = TimeSpan.FromMinutes(convertedLessonTime);
+            return lesson.start - lengthOfTimeToSubtractFromStart;
+        }
+
+        private DateTime AddDriveTimeAfterLesson(Lesson lesson)
+        {
+            double convertedLessonTime = Convert.ToDouble(lesson.travelDuration);
+            TimeSpan lengthOfTimeToAddToEnd = TimeSpan.FromMinutes(convertedLessonTime);
+            return lesson.end + lengthOfTimeToAddToEnd;
+        }
+
+        private bool IsTimeAvailable(List<Event> events, Event availableTimeSlotEvent)
         {
             bool IsTimeAvailable = false;
 
-            foreach (Lesson lesson in lessons)
+            foreach (Event evnt in events)
             {
-                if (lesson.start >= availableTimeSlotEvent.end || lesson.end <= availableTimeSlotEvent.start)
+                if (evnt.start >= availableTimeSlotEvent.end || evnt.end <= availableTimeSlotEvent.start)
                 {
                     IsTimeAvailable = true;
                 }
