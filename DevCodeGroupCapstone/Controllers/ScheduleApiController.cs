@@ -137,7 +137,7 @@ namespace DevCodeGroupCapstone.Controllers
             return TimeSpan.FromMinutes(lengthOfTimeToCoverProximalLessonsInMinutes);
         }
 
-        private async Task<List<Event>> GenerateTeacherCalendarView(int teacherIdInt, DateTime beginningCalendarDateTime)
+        private async Task<List<Event>> GenerateTeacherCalendarView(int teacherIdInt, DateTime beginningCalendarDate)
         {
             // arrange
             List<Event> eventList = new List<Event>();
@@ -162,7 +162,7 @@ namespace DevCodeGroupCapstone.Controllers
                     );
 
             // todo: change the beginning and ending date for different calendar views
-            availabilities = SchedService.AddDatesToAvailabilities(availabilities, DateTime.Today, DateTime.Today.AddDays(60));
+            availabilities = SchedService.AddDatesToAvailabilities(availabilities, DateTime.Today.AddDays(-20), DateTime.Today.AddDays(30));
 
             TeacherPreference preferences = await Task.Run(() => context.Preferences
                 .Where(p => p.teacherId == teacherIdInt)
@@ -175,17 +175,25 @@ namespace DevCodeGroupCapstone.Controllers
             // act on Available Timespans
             foreach (var availableTimeSpan in availabilities)
             {
-             
+
                 // find the lesson events that are inclusive to that time span
                 List<Event> filteredLessonList = lessonEventList
                     .Where(lessn => lessn.start >= availableTimeSpan.start && lessn.end <= availableTimeSpan.end)
                     .ToList();
 
+                if (filteredLessonList.Count == 0)
+                {
+                    List<Event> listOfAfterEvents = SchedService.CreateNextAvailabilities(preferences, availableTimeSpan.end, availableTimeSpan.start, false);
+                    eventList.AddRange(listOfAfterEvents);
+
+                    continue;
+                }
+
                 // sort those lesson events
                 filteredLessonList.Sort();
 
                 // take the first one and create the new available events before it, checking if it fits in the available slot
-                List<Event> listOfPreEvents = SchedService.CreatePriorAvailabilities(preferences, availableTimeSpan.start, filteredLessonList[1].start);
+                List<Event> listOfPreEvents = SchedService.CreatePriorAvailabilities(preferences, availableTimeSpan.start, filteredLessonList[0].start);
                 eventList.AddRange(listOfPreEvents);
 
                 int currentLessonNumber = 0;
@@ -224,10 +232,8 @@ namespace DevCodeGroupCapstone.Controllers
                 }
 
                 // take the last lesson and fill in afterwards
-                List<Event> listOfPostEvents = SchedService.CreateNextAvailabilities(preferences, availableTimeSpan.end, filteredLessonList[filteredLessonList.Count-1].end);
+                List<Event> listOfPostEvents = SchedService.CreateNextAvailabilities(preferences, availableTimeSpan.end, filteredLessonList[filteredLessonList.Count - 1].end);
                 eventList.AddRange(listOfPostEvents);
-
-                return eventList;
 
                 //    // add the next lessons off the final lesson
 
@@ -267,41 +273,41 @@ namespace DevCodeGroupCapstone.Controllers
 
             }
 
+            return eventList;
 
+            //private bool IsTimeAvailable(List<Event> events, Event availableTimeSlotEvent)
+            //{
+            //    bool IsTimeAvailable = false;
 
-        //private bool IsTimeAvailable(List<Event> events, Event availableTimeSlotEvent)
-        //{
-        //    bool IsTimeAvailable = false;
+            //    foreach (Event evnt in events)
+            //    {
+            //        if (evnt.start >= availableTimeSlotEvent.end || evnt.end <= availableTimeSlotEvent.start)
+            //        {
+            //            IsTimeAvailable = true;
+            //        }
+            //        else
+            //        {
+            //            return false;
+            //        }
+            //    }
 
-        //    foreach (Event evnt in events)
-        //    {
-        //        if (evnt.start >= availableTimeSlotEvent.end || evnt.end <= availableTimeSlotEvent.start)
-        //        {
-        //            IsTimeAvailable = true;
-        //        }
-        //        else
-        //        {
-        //            return false;
-        //        }
-        //    }
+            //    return IsTimeAvailable;
+            //}
 
-        //    return IsTimeAvailable;
-        //}
+            //private DateTime GetNextDayOfWeekForDateTime(DayOfWeek dayOfWeek, DateTime dateTime)
+            //{
+            //    while (dateTime.DayOfWeek != dayOfWeek)
+            //    {
+            //        dateTime = dateTime.AddDays(1);
+            //    }
 
-        //private DateTime GetNextDayOfWeekForDateTime(DayOfWeek dayOfWeek, DateTime dateTime)
-        //{
-        //    while (dateTime.DayOfWeek != dayOfWeek)
-        //    {
-        //        dateTime = dateTime.AddDays(1);
-        //    }
+            //    return dateTime.Date; // time is zeroed out
+            //}
 
-        //    return dateTime.Date; // time is zeroed out
-        //}
-
-        //private DateTime CombineDateAndTime(DateTime date, DateTime time)
-        //{
-        //    return date + time.TimeOfDay;
-        //}
-
+            //private DateTime CombineDateAndTime(DateTime date, DateTime time)
+            //{
+            //    return date + time.TimeOfDay;
+            //}
+        }
     }
 }

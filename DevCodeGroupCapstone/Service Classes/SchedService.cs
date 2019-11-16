@@ -58,7 +58,7 @@ namespace DevCodeGroupCapstone.Service_Classes
 
             while (workingDate <= endingDate)
             {
-                List<TeacherAvail> ta = availabilities.Where(t => t.weekDay == workingDate.DayOfWeek).ToList();
+                List<TeacherAvail> ta = availabilities.Where(t => (int)t.weekDay == Convert.ToInt32(workingDate.DayOfWeek)).ToList();
 
                 if (ta != null && ta.Count > 0)
                 {
@@ -80,7 +80,7 @@ namespace DevCodeGroupCapstone.Service_Classes
 
                 }
 
-                workingDate.AddDays(1);
+                workingDate = workingDate.AddDays(1);
 
             }
 
@@ -111,6 +111,7 @@ namespace DevCodeGroupCapstone.Service_Classes
 
             DateTime workingStart = lessonStart - LessonLength;
             DateTime workingEnd = lessonStart;
+            int ProximalLessonCheck = 0;
 
             // loop through each until start is before the availableTimespan
             while (workingStart >= lowerLimit)
@@ -125,6 +126,13 @@ namespace DevCodeGroupCapstone.Service_Classes
                     availabilityEvents.Add(availableSlot);
                 }
 
+                ProximalLessonCheck += 1;
+                if (ProximalLessonCheck == preferences.NumberOfProximalLessons)
+                {
+                    break;
+                }
+               
+
                 // update workingStart
                 workingStart -= LessonLength;
 
@@ -135,18 +143,21 @@ namespace DevCodeGroupCapstone.Service_Classes
             return availabilityEvents;
         }
 
-        public static List<Event> CreateNextAvailabilities(TeacherPreference preferences, DateTime upperLimit, DateTime lessonEnd)
+        public static List<Event> CreateNextAvailabilities(TeacherPreference preferences, DateTime upperLimit, DateTime lessonEnd, bool proximalLessonCheck = true)
         {
             List<Event> availabilityEvents = new List<Event>();
             TimeSpan LessonLength = ConvertIntToTimeSpan(preferences.defaultLessonLength);
 
             DateTime workingStart = lessonEnd;
             DateTime workingEnd = workingStart + LessonLength;
+            int ProximalLessonCheck = 0;
 
             // loop through each until start is before the availableTimespan
             while (workingEnd <= upperLimit)
             {
+
                 // check: is start and end inside timespan
+                // todo: do I even need to make this check?
                 if (IsStartAndEndInsideTimeSpan(workingStart, workingEnd, DateTime.MinValue, upperLimit))
                 {
                     // create available timeslot
@@ -154,6 +165,12 @@ namespace DevCodeGroupCapstone.Service_Classes
 
                     // add it
                     availabilityEvents.Add(availableSlot);
+                }
+
+                ProximalLessonCheck += 1;
+                if (ProximalLessonCheck == preferences.NumberOfProximalLessons && proximalLessonCheck)
+                {
+                    break;
                 }
 
                 // update workingStart

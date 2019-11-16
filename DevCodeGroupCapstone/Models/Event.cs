@@ -39,6 +39,10 @@ namespace DevCodeGroupCapstone.Models
             this.textColor = "#000000";
             this.title = "Available";
             this.groupId = "Availability";
+            this.start = availabilityStart;
+            this.end = availabilityEnd;
+            this.officialStart = availabilityStart;
+            this.officialEnd = availabilityEnd;
         }
 
         public int CompareTo(Event other)
