@@ -258,17 +258,5 @@ namespace DevCodeGroupCapstone.Controllers
             return date + time.TimeOfDay;
         }
 
-        private int GetNumberOfDaysForView(string view)
-        {
-            switch (view)
-            {
-                case "timeGridWeek":
-                    return 7;
-                default:
-                    return 0;
-            }
-        }
-
-
     }
 }
