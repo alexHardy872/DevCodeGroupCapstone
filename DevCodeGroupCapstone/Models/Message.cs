@@ -11,10 +11,10 @@ namespace DevCodeGroupCapstone.Models
         ////tlc
 
         //[ForeignKey("Person1")]//fk attr
-        //public int senderId { get; set; } //fk's spot at the table
-        //public Person Person1 { get; set; }//the class the fk attr is referencing
+        //public int senderId { get; set; } 
+        //public Person Person1 { get; set; }
         //[ForeignKey("Person2")]//fk attr
         //public int recipientId { get; set; }
-        //public Person Person2 { get; set; }//the class the fk attr is referencing
+        //public Person Person2 { get; set; }
     }
 }
