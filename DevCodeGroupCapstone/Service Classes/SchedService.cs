@@ -184,10 +184,7 @@ namespace DevCodeGroupCapstone.Service_Classes
                     break;
                 }
 
-                // update workingStart
                 workingStart += LessonLength;
-
-                // update workingEnd
                 workingEnd += LessonLength;
             }
 

@@ -66,20 +66,17 @@ namespace DevCodeGroupCapstone.Controllers
                     // use lesson to get drive time
                     lesson = await DistanceMatrix.GetTravelInfo(lesson);
 
-
-
-                    // use the drive time to create availability events 
-                    // add a boolean with a default to false for in-home lessons
-                    // create special event constructor for in-home lessons
                     List<Event> eventList = await GenerateTeacherCalendarView(teacherIdInt, lesson.travelDuration);
+
+                    eventList = eventList.Where(evnt => evnt.groupId == "Availability").ToList();
 
                     return Ok(eventList);
                 }
                 catch (Exception e)
                 {
-
-                    List<Event> emptyList = new List<Event>();
-                    return Ok(emptyList);
+                    return InternalServerError(e);
+                    //List<Event> emptyList = new List<Event>();
+                    //return Ok(emptyList);
                 }
             }
 
