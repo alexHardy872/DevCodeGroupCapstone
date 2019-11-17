@@ -50,12 +50,16 @@ namespace DevCodeGroupCapstone.Controllers
                 lesson.requiresMakeup = true;
                 context.SaveChanges();
             }
+            else
+            {
+                lesson.studentId = null;
+            }
 
             bool success = await Task.Run(() => SendMessage(to, from, textM));
-            //lesson.studentId = null;
+           
             await context.SaveChangesAsync();
 
-            // send to teachrs others students 
+            // send to teachr's others students 
             
             List<Lesson> remainingStudentsFromLessons = context.Lessons
                         .Include("Student")

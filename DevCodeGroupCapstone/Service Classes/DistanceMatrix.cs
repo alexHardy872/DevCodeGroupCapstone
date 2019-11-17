@@ -36,14 +36,14 @@ namespace DevCodeGroupCapstone.Service_Classes
 
             JObject distanceInfo = JObject.Parse(response);
 
-            if (teacherPreference.distanceType == RadiusOptions.Miles)
+            if (teacherPreference.distanceType != RadiusOptions.Miles)
             {
                 double tempDuration = (double)distanceInfo["rows"][0]["elements"][0]["distance"]["value"];
-                lesson.travelDuration = Convert.ToInt32(tempDuration / metersToMiles);
+               lesson.travelDuration = Convert.ToInt32(tempDuration / metersToMiles);
             }
             else //minutes
             {
-                double tempMinutes = (int)distanceInfo["rows"][0]["elements"][0]["duration"]["value"];
+                double tempMinutes = (int)distanceInfo["rows"][0]["elements"][0]["duration"]["value"]; // throws error?
                 lesson.travelDuration = Convert.ToInt32(Math.Floor(tempMinutes / 60));
             }
 
