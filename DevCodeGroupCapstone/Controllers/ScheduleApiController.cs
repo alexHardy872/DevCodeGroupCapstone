@@ -149,7 +149,7 @@ namespace DevCodeGroupCapstone.Controllers
                     );
 
             // todo: make calendar views dynamic by changing this
-            availabilities = SchedService.AddDatesToAvailabilities(availabilities, DateTime.Today.AddDays(-20), DateTime.Today.AddDays(30));
+            availabilities = SchedService.AddDatesToAvailabilities(availabilities, DateTime.Today.AddDays(-15), DateTime.Today.AddDays(15));
 
             double convertedLessonLength = Convert.ToDouble(preferences.defaultLessonLength);
             TimeSpan timeSpanOfLesson = TimeSpan.FromMinutes(convertedLessonLength);
@@ -165,7 +165,7 @@ namespace DevCodeGroupCapstone.Controllers
 
                 if (filteredLessonList.Count == 0)
                 {
-                    List<Event> listOfAfterEvents = SchedService.CreateNextAvailabilities(preferences, availableTimeSpan.end, availableTimeSpan.start, false);
+                    List<Event> listOfAfterEvents = SchedService.CreateNextAvailabilities(preferences, availableTimeSpan.end, availableTimeSpan.start, false, travelDuration);
                     eventList.AddRange(listOfAfterEvents);
 
                     continue;
@@ -175,7 +175,7 @@ namespace DevCodeGroupCapstone.Controllers
                 filteredLessonList.Sort();
 
                 // take the first one and create the new available events before it, checking if it fits in the available slot
-                List<Event> listOfPreEvents = SchedService.CreatePriorAvailabilities(preferences, availableTimeSpan.start, filteredLessonList[0].start);
+                List<Event> listOfPreEvents = SchedService.CreatePriorAvailabilities(preferences, availableTimeSpan.start, filteredLessonList[0].start, travelDuration);
                 eventList.AddRange(listOfPreEvents);
 
                 int currentLessonNumber = 0;
@@ -195,16 +195,16 @@ namespace DevCodeGroupCapstone.Controllers
                         TimeSpan timeSpanOfMidpointFromEndOfCurrentLesson = TimeSpan.FromMinutes(midpointBetweenLessons);
                         DateTime midpoint = filteredLessonList[currentLessonNumber].end + timeSpanOfMidpointFromEndOfCurrentLesson;
 
-                        List<Event> listOfAfterEvents = SchedService.CreateNextAvailabilities(preferences, midpoint, filteredLessonList[currentLessonNumber].end);
+                        List<Event> listOfAfterEvents = SchedService.CreateNextAvailabilities(preferences, midpoint, filteredLessonList[currentLessonNumber].end, true, travelDuration);
                         eventList.AddRange(listOfAfterEvents);
 
-                        List<Event> listOfBeforeEvents = SchedService.CreatePriorAvailabilities(preferences, midpoint, filteredLessonList[nextLessonNumber].start);
+                        List<Event> listOfBeforeEvents = SchedService.CreatePriorAvailabilities(preferences, midpoint, filteredLessonList[nextLessonNumber].start, travelDuration);
                         eventList.AddRange(listOfBeforeEvents);
 
                     }
                     else
                     {
-                        List<Event> listOfAfterEvents = SchedService.CreateNextAvailabilities(preferences, filteredLessonList[nextLessonNumber].start, filteredLessonList[currentLessonNumber].end);
+                        List<Event> listOfAfterEvents = SchedService.CreateNextAvailabilities(preferences, filteredLessonList[nextLessonNumber].start, filteredLessonList[currentLessonNumber].end, true, travelDuration);
                         eventList.AddRange(listOfAfterEvents);
                     }
 
@@ -214,7 +214,7 @@ namespace DevCodeGroupCapstone.Controllers
                 }
 
                 // take the last lesson and fill in afterwards
-                List<Event> listOfPostEvents = SchedService.CreateNextAvailabilities(preferences, availableTimeSpan.end, filteredLessonList[filteredLessonList.Count - 1].end);
+                List<Event> listOfPostEvents = SchedService.CreateNextAvailabilities(preferences, availableTimeSpan.end, filteredLessonList[filteredLessonList.Count - 1].end, true, travelDuration);
                 eventList.AddRange(listOfPostEvents);
 
             }
