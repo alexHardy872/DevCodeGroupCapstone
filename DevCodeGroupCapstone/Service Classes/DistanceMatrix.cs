@@ -38,12 +38,12 @@ namespace DevCodeGroupCapstone.Service_Classes
 
             if (teacherPreference.distanceType == RadiusOptions.Miles)
             {
-                double tempDuration = (double)distanceInfo["rows"][0]["elements"][0]["distance"]["value"];
+                double tempDuration = (double)distanceInfo["rows"][0]["elements"][0]["distance"]["value"]; // throws error?
                 lesson.travelDuration = Convert.ToInt32(tempDuration / metersToMiles);
             }
             else //minutes
             {
-                double tempMinutes = (int)distanceInfo["rows"][0]["elements"][0]["duration"]["value"];
+                double tempMinutes = (int)distanceInfo["rows"][0]["elements"][0]["duration"]["value"]; // throws error?
                 lesson.travelDuration = Convert.ToInt32(Math.Floor(tempMinutes / 60));
             }
 
