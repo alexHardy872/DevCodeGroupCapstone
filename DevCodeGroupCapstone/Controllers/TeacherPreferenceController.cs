@@ -84,7 +84,24 @@ namespace DevCodeGroupCapstone.Controllers
         {
             string userId = User.Identity.GetUserId();
             Person teacher = context.People.Where(p => p.ApplicationId == userId).Single();
+            //tlc TeacherPreference preference = context.Preferences.Where(pref => pref.teacherId == teacher.PersonId).Single();
             TeacherPreference preference = context.Preferences.Where(pref => pref.teacherId == teacher.PersonId).Single();
+
+            if (teacher != null && teacher.LocationId != null)
+            {
+                var location = context.Locations.Where(l => l.LocationId == teacher.LocationId).SingleOrDefault();
+                ViewBag.teacherLocationLat = location.lat;
+                ViewBag.teacherLocationLng = location.lng;
+                if (preference.distanceType == RadiusOptions.Miles)
+                {
+                    ViewBag.radius = preference.maxDistance * Service_Classes.DistanceMatrix.metersToMiles;
+                }
+                else
+                {
+                    ViewBag.radius = preference.maxDistance;
+                }
+                
+            }
             return View(preference);
         }
 
