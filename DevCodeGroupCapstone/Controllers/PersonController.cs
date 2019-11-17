@@ -134,6 +134,7 @@ namespace DevCodeGroupCapstone.Controllers
             personLocationDetails.location = context.Locations.Where(l => l.LocationId == personLocationDetails.person.LocationId).Single();
 
             var tempTeacher = context.Preferences.Where(p => p.teacherId == personLocationDetails.person.PersonId).SingleOrDefault();//tlc
+
             if (tempTeacher != null)
             {
                 if (tempTeacher.distanceType == RadiusOptions.Miles)
@@ -145,7 +146,7 @@ namespace DevCodeGroupCapstone.Controllers
                 {
                     ViewBag.radius = tempTeacher.maxDistance;
                 }
-            }
+            }           
 
             return View(personLocationDetails);
         }

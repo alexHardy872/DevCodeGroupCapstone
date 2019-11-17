@@ -54,12 +54,11 @@ INSERT INTO [dbo].[TeacherAvails] ([availId], [weekDay], [start], [end], [Person
 SET IDENTITY_INSERT [dbo].[TeacherAvails] OFF
 GO
 
-
 SET IDENTITY_INSERT [dbo].[TeacherPreferences] ON
-INSERT INTO [dbo].[TeacherPreferences] ([TeacherPreferenceId], [defaultLessonLength], [distanceType], [maxDistance], [incrementalCost], [TimeBeforeCancellation], [teacherId], [NumberOfProximalLessons]) VALUES (1, 60, 0, 5, CAST(0.25 AS Decimal(18, 2)), 24, 1, NULL)
-INSERT INTO [dbo].[TeacherPreferences] ([TeacherPreferenceId], [defaultLessonLength], [distanceType], [maxDistance], [incrementalCost], [TimeBeforeCancellation], [teacherId], [NumberOfProximalLessons]) VALUES (2, 60, 0, 5, CAST(0.25 AS Decimal(18, 2)), 24, 2, NULL)
-INSERT INTO [dbo].[TeacherPreferences] ([TeacherPreferenceId], [defaultLessonLength], [distanceType], [maxDistance], [incrementalCost], [TimeBeforeCancellation], [teacherId], [NumberOfProximalLessons]) VALUES (3, 60, 0, 5, CAST(0.25 AS Decimal(18, 2)), 24, 3, NULL)
-INSERT INTO [dbo].[TeacherPreferences] ([TeacherPreferenceId], [defaultLessonLength], [distanceType], [maxDistance], [incrementalCost], [TimeBeforeCancellation], [teacherId], [NumberOfProximalLessons]) VALUES (4, 60, 0, 5, CAST(0.25 AS Decimal(18, 2)), 24, 4, NULL)
+INSERT INTO [dbo].[TeacherPreferences] ([TeacherPreferenceId], [defaultLessonLength], [perHourRate], [distanceType], [maxDistance], [incrementalCost], [TimeBeforeCancellation], [teacherId], [NumberOfProximalLessons]) VALUES (2, 60, 7.77, 0, 5, CAST(0.25 AS Decimal(18, 2)), 24, 2, 0)
+INSERT INTO [dbo].[TeacherPreferences] ([TeacherPreferenceId], [defaultLessonLength], [perHourRate], [distanceType], [maxDistance], [incrementalCost], [TimeBeforeCancellation], [teacherId], [NumberOfProximalLessons]) VALUES (2, 60, 7.11, 0, 5, CAST(0.25 AS Decimal(18, 2)), 24, 2, 0)
+INSERT INTO [dbo].[TeacherPreferences] ([TeacherPreferenceId], [defaultLessonLength], [perHourRate], [distanceType], [maxDistance], [incrementalCost], [TimeBeforeCancellation], [teacherId], [NumberOfProximalLessons]) VALUES (3, 60, 11.00, 0, 5, CAST(0.25 AS Decimal(18, 2)), 24, 3, 0)
+INSERT INTO [dbo].[TeacherPreferences] ([TeacherPreferenceId], [defaultLessonLength], [perHourRate], [distanceType], [maxDistance], [incrementalCost], [TimeBeforeCancellation], [teacherId], [NumberOfProximalLessons]) VALUES (4, 60, 13.00, 0, 5, CAST(0.25 AS Decimal(18, 2)), 24, 4, 0)
 SET IDENTITY_INSERT [dbo].[TeacherPreferences] OFF
 GO
 
