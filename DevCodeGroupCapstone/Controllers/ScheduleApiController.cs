@@ -36,6 +36,18 @@ namespace DevCodeGroupCapstone.Controllers
             return await Task.Run(() => Ok());
         }
 
+        // ReturnStudentInHomeLessonOptions seperate API?
+
+
+            // create a lesson
+
+            // use lesson to get drive time
+
+            // use the drive time to create availability events 
+                // add a boolean with a default to false for in-home lessons
+                // create special event constructor for in-home lessons
+
+
 
         private async Task<IHttpActionResult> ReturnTeacherScheduleForView(int teacherIdInt)
         {
@@ -47,7 +59,9 @@ namespace DevCodeGroupCapstone.Controllers
             }
             catch (Exception e)
             {
-                return InternalServerError(e);
+
+                List<Event> emptyList = new List<Event>();
+                return Ok(emptyList);
             }
         }
 
@@ -66,7 +80,8 @@ namespace DevCodeGroupCapstone.Controllers
             }
             catch (Exception e)
             {
-                return InternalServerError(e);
+                List<Event> emptyList = new List<Event>();
+                return Ok(emptyList);
             }
         }
 
@@ -79,7 +94,7 @@ namespace DevCodeGroupCapstone.Controllers
                 .Include("Student")
                 .Include("Location")
                 // todo: add in other lesson filter constraints
-                .Where(lesson => lesson.teacherId == teacherIdInt)
+                .Where(lesson => lesson.teacherId == teacherIdInt && lesson.teacherApproval)
                 .ToList()
                 );
 
