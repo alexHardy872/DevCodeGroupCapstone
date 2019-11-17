@@ -93,9 +93,7 @@ namespace DevCodeGroupCapstone.Controllers
             }
             catch (Exception e)
             {
-
-                List<Event> emptyList = new List<Event>();
-                return Ok(emptyList);
+                return InternalServerError(e);
             }
         }
 
@@ -114,8 +112,7 @@ namespace DevCodeGroupCapstone.Controllers
             }
             catch (Exception e)
             {
-                List<Event> emptyList = new List<Event>();
-                return Ok(emptyList);
+                return InternalServerError(e);
             }
         }
 
@@ -145,8 +142,8 @@ namespace DevCodeGroupCapstone.Controllers
                     .ToList()
                     );
 
-            // todo: make calendar views dynamic by changing this
-            availabilities = SchedService.AddDatesToAvailabilities(availabilities, DateTime.Today.AddDays(-15), DateTime.Today.AddDays(15));
+            // todo: make calendar views dynamic by changing this per the view
+            availabilities = SchedService.AddDatesToAvailabilities(availabilities, DateTime.Today.AddDays(-7), DateTime.Today.AddDays(1));
 
             double convertedLessonLength = Convert.ToDouble(preferences.defaultLessonLength);
             TimeSpan timeSpanOfLesson = TimeSpan.FromMinutes(convertedLessonLength);
