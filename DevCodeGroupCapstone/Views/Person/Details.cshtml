@@ -4,46 +4,50 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
 
-<div id="teacherAvaila">
-    <table id="timeslotsTable">
-        <tr>
-            <td> @Html.ActionLink("REQUEST LESSON WITH THIS TEACHER", "../Lesson/Create", new { teacherId = Model.person.PersonId }) </td>
-        </tr>
 
-    </table>
-</div>
 
-<div>
-    <h4>PersonAndLocationViewModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.person.firstName)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.person.firstName)
-        </dd>
+<div class="container">
+    <div class="row">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.person.lastName)
-        </dt>
+        <div class="col-md-6">
 
-        <dd>
-            @Html.DisplayFor(model => model.person.lastName)
-        </dd>
+            <h4>Lesson Details</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.person.firstName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.person.firstName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.person.lastName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.person.lastName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.person.subjects)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.person.subjects)
+                </dd>
+            </dl>
+        </div>
+        <div class="col-md-6" id="teacherAvailability">
+            <h1>@Model.person.firstName @Model.person.lastName's Availabilities</h1>
+            <table id="timeslotsTable">
+                <tr>
+                    <td> <button>@Html.ActionLink("REQUEST CUSTOM IN-STUDIO LESSON", "../Lesson/Create", new { teacherId = Model.person.PersonId })</button> </td>
+                </tr>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.person.subjects)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.person.subjects)
-        </dd>
+            </table>
+        </div>
 
-    </dl>
+    </div>
 </div>
 
 <div id="map" style="height: 400px; width: 400px;"></div>
@@ -109,12 +113,17 @@
 
         (function ($) {
 
+
+
+
+
              $.ajax({
                 url: 'https://localhost:44326/api/ScheduleApi?generateForView=lessonOptions&teacherIdInt=@Model.person.PersonId',
                 type: 'GET',
                 success: function (result) {
                     console.log("success");
                     console.log(result);
+                    $("#teacherAvailability").append(result);
                     
 
                     

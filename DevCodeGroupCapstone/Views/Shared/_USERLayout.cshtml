@@ -31,9 +31,9 @@
             </div>
             <div class="navbar-collapse collapse" id="greenBar">
                 <ul class="nav navbar-nav route">
-                    @Html.ActionLink("Student", "StudentIndex", "Person", new { area = "" }, new { @class = "navbar-brand" })
-                    @Html.ActionLink("Teacher", "TeacherIndex", "Person", new { area = "" }, new { @class = "navbar-brand" })
-
+                    <li> @Html.ActionLink("Student", "StudentIndex", "Person", new { area = "" }, new { @class = "navbar-brand" })</li>
+                <li> @Html.ActionLink("Teacher", "TeacherIndex", "Person", new { area = "" }, new { @class = "navbar-brand" })</li>
+                <li>@Html.ActionLink("Update Information", "Edit", "Person")</li>
                 </ul>
                
                 @Html.Partial("_LoginPartial")

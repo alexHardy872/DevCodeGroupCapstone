@@ -91,7 +91,7 @@ namespace DevCodeGroupCapstone.Controllers
             }
 
 
-            //// maybe redirect if teacher not setup?
+            // maybe redirect if teacher not setup?
 
             //int preferencesCheck = context.Preferences.Where(p => p.teacherId == userFound.PersonId).Count();
             //int availsCheck = context.TeacherAvailabilities.Where(p => p.PersonId == userFound.PersonId).Count();
@@ -100,12 +100,12 @@ namespace DevCodeGroupCapstone.Controllers
             //{
             //    return RedirectToAction("Index"); // redirect to index/ or info page
             //}
-            
+
 
             List<Lesson> teacherLessons = context.Lessons
                     .Include("Student")
                     .Include("Location")
-                    .Where(lesson => lesson.teacherId == userFound.PersonId && lesson.teacherApproval == true && lesson.requiresMakeup == false).ToList();
+                    .Where(lesson => lesson.teacherId == userFound.PersonId && lesson.teacherApproval == true && lesson.requiresMakeup == false && lesson.studentId != null).ToList();
 
             List<Lesson> lessonRequests = context.Lessons
                     .Include("Student")
@@ -192,16 +192,23 @@ namespace DevCodeGroupCapstone.Controllers
         }
 
         // GET: Person/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
             try//tlc
             {
+                if (id == null)
+                {
+                    string userId = User.Identity.GetUserId();
+                    Person current = context.People.Where(p => p.ApplicationId == userId).FirstOrDefault();
+                    id = current.PersonId;
+                }
+
                 var tempPerson = context.People
                         .Include("Location")
                         .Where(p => p.PersonId == id).SingleOrDefault();//tlc
                 return View(tempPerson);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return RedirectToAction("Index");
             }
