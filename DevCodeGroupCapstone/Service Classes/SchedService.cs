@@ -10,7 +10,7 @@ namespace DevCodeGroupCapstone.Service_Classes
     public static class SchedService
     {
 
-        public static List<Event> GenerateEventsFromLessons(List<Lesson> lessons)
+        public static List<Event> GenerateEventsFromLessons(TeacherPreference preferences, List<Lesson> lessons)
         {
             List<Event> events = new List<Event>();
 
@@ -20,7 +20,7 @@ namespace DevCodeGroupCapstone.Service_Classes
                 StringBuilder titleBuild = new StringBuilder();
                 titleBuild.Append(lesson.Student.firstName);
                 titleBuild.Append(" @ ");
-                if (lesson.travelDuration == 0)
+                if (lesson.travelDuration != 0)
                 {
                     titleBuild.Append(lesson.Location.address1);
                     titleBuild.Append(", ");
@@ -42,11 +42,22 @@ namespace DevCodeGroupCapstone.Service_Classes
                 currentEvent.textColor = "#000000";
                 currentEvent.title = title;
                 currentEvent.groupId = "Lesson";
+                currentEvent.price = CreatePrice(preferences.PerHourRate, currentEvent.start, currentEvent.end);
 
                 events.Add(currentEvent);
             }
 
             return events;
+        }
+
+        public static decimal CreatePrice(decimal perHourRate, DateTime start, DateTime end)
+        {
+            TimeSpan timeSpan = end - start;
+            Double totalMinutes = timeSpan.TotalMinutes;
+            Decimal costPerMinute = perHourRate / 60;
+            Decimal totalCost = Convert.ToDecimal(totalMinutes) * costPerMinute;
+
+            return totalCost;
         }
 
         public static List<TeacherAvail> AddDatesToAvailabilities(List<TeacherAvail> availabilities, DateTime beginningDate, DateTime endingDate)
@@ -88,26 +99,21 @@ namespace DevCodeGroupCapstone.Service_Classes
 
         }
 
-        private static DateTime GetNextDateForDateTime(DayOfWeek dayOfWeek, DateTime dateTime)
-        {
-            while (dateTime.DayOfWeek != dayOfWeek)
-            {
-                dateTime = dateTime.AddDays(1);
-            }
-
-            return dateTime.Date; // time is zeroed out
-        }
-
         private static DateTime CombineDateAndTime(DateTime date, DateTime time)
         {
             return date + time.TimeOfDay;
         }
 
 
-        public static List<Event> CreatePriorAvailabilities(TeacherPreference preferences, DateTime lowerLimit, DateTime lessonStart)
+        public static List<Event> CreatePriorAvailabilities(TeacherPreference preferences, DateTime lowerLimit, DateTime lessonStart, int travelDuration = 0)
         {
             List<Event> availabilityEvents = new List<Event>();
             TimeSpan LessonLength = ConvertIntToTimeSpan(preferences.defaultLessonLength);
+
+            if (travelDuration > 0)
+            {
+                LessonLength = LessonLength + ConvertIntToTimeSpan(travelDuration);
+            }
 
             DateTime workingStart = lessonStart - LessonLength;
             DateTime workingEnd = lessonStart;
@@ -120,7 +126,7 @@ namespace DevCodeGroupCapstone.Service_Classes
                 if (IsStartAndEndInsideTimeSpan(workingStart, workingEnd, lowerLimit, DateTime.MaxValue))
                 {
                     // create available timeslot
-                    Event availableSlot = Event.CreateAvailableTimeSlot(preferences, workingStart, workingEnd);
+                    Event availableSlot = Event.CreateAvailableTimeSlot(preferences, workingStart, workingEnd, travelDuration);
 
                     // add it
                     availabilityEvents.Add(availableSlot);
@@ -143,10 +149,15 @@ namespace DevCodeGroupCapstone.Service_Classes
             return availabilityEvents;
         }
 
-        public static List<Event> CreateNextAvailabilities(TeacherPreference preferences, DateTime upperLimit, DateTime lessonEnd, bool proximalLessonCheck = true)
+        public static List<Event> CreateNextAvailabilities(TeacherPreference preferences, DateTime upperLimit, DateTime lessonEnd, bool proximalLessonCheck = true, int travelDuration = 0)
         {
             List<Event> availabilityEvents = new List<Event>();
             TimeSpan LessonLength = ConvertIntToTimeSpan(preferences.defaultLessonLength);
+
+            if(travelDuration > 0)
+            {
+                LessonLength = LessonLength + ConvertIntToTimeSpan(travelDuration);
+            }
 
             DateTime workingStart = lessonEnd;
             DateTime workingEnd = workingStart + LessonLength;
@@ -161,7 +172,7 @@ namespace DevCodeGroupCapstone.Service_Classes
                 if (IsStartAndEndInsideTimeSpan(workingStart, workingEnd, DateTime.MinValue, upperLimit))
                 {
                     // create available timeslot
-                    Event availableSlot = Event.CreateAvailableTimeSlot(preferences, workingStart, workingEnd);
+                    Event availableSlot = Event.CreateAvailableTimeSlot(preferences, workingStart, workingEnd, travelDuration);
 
                     // add it
                     availabilityEvents.Add(availableSlot);
@@ -173,18 +184,12 @@ namespace DevCodeGroupCapstone.Service_Classes
                     break;
                 }
 
-                // update workingStart
                 workingStart += LessonLength;
-
-                // update workingEnd
                 workingEnd += LessonLength;
             }
 
             return availabilityEvents;
         }
-
-
-
 
         private static bool IsStartAndEndInsideTimeSpan(DateTime start, DateTime end, DateTime spanStart, DateTime spanEnd)
         {
