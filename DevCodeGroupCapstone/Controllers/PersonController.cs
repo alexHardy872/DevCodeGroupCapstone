@@ -193,16 +193,15 @@ namespace DevCodeGroupCapstone.Controllers
         }
 
         // GET: Person/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit()
         {
             try//tlc
             {
-                if (id == null)
-                {
+               
                     string userId = User.Identity.GetUserId();
                     Person current = context.People.Where(p => p.ApplicationId == userId).FirstOrDefault();
-                    id = current.PersonId;
-                }
+                    int id = current.PersonId;
+                
 
                 var tempPerson = context.People
                         .Include("Location")
@@ -220,41 +219,45 @@ namespace DevCodeGroupCapstone.Controllers
 
         // POST: Person/Edit/5
         [HttpPost]
-        public async Task<ActionResult> Edit(int id, Person personToEdit)
+        public async Task<ActionResult> Edit(Person personToEdit)
         {
-            Person personFromDb = context.People
-                .Include("Location")
-                .Where(p=>p.PersonId == id).SingleOrDefault();
+            string userId = User.Identity.GetUserId();
+            Person current = context.People.Where(p => p.ApplicationId == userId).FirstOrDefault();
+            int id = current.PersonId;
 
-            Location locationfromDb = context.Locations.Where(l => l.LocationId == personFromDb.LocationId).FirstOrDefault();
+            Location locationfromDb = context.Locations.Where(l => l.LocationId == current.LocationId).FirstOrDefault();
             try
             {
                 // TODO: Add update logic here
-                if (personFromDb != null)
-                {
-                    personFromDb = personToEdit;
-                    personFromDb.firstName = personToEdit.firstName;
-                    personFromDb.lastName = personToEdit.lastName;
-                    personFromDb.subjects = personToEdit.subjects;
-                    personFromDb.phoneNumber = personToEdit.phoneNumber;
-                    personFromDb.ApplicationId = personToEdit.ApplicationId;
+                if (current != null)
+                {              
+                    Location locationToEdit = personToEdit.Location;
 
-                    locationfromDb.address1 = personToEdit.Location.address1;
-                    locationfromDb.address2 = personToEdit.Location.address2;
-                    locationfromDb.city = personToEdit.Location.city;
-                    locationfromDb.state = personToEdit.Location.state;
-                    locationfromDb.zip = personToEdit.Location.zip;
+                    current.PersonId = personToEdit.PersonId;
+                    current.LocationId = personToEdit.LocationId;
+                    current.firstName = personToEdit.firstName;
+                    current.lastName = personToEdit.lastName;
+                    current.subjects = personToEdit.subjects;
+                    current.phoneNumber = personToEdit.phoneNumber;
+                    current.ApplicationId = personToEdit.ApplicationId;
 
-                    string[] latLng = await GeoCode.GetLatLongFromApi(personToEdit.Location);
-                    personToEdit.Location.lat = latLng[0];
-                    personToEdit.Location.lng = latLng[1];
+                    locationfromDb.LocationId = current.Location.LocationId;
+                    locationfromDb.address1 = locationToEdit.address1;
+                    locationfromDb.address2 = locationToEdit.address2;
+                    locationfromDb.city = locationToEdit.city;
+                    locationfromDb.state = locationToEdit.state;
+                    locationfromDb.zip = locationToEdit.zip;
 
-                    locationfromDb.lat = personToEdit.Location.lat;
-                    locationfromDb.lng = personToEdit.Location.lng;
+                    string[] latLng = await GeoCode.GetLatLongFromApi(locationToEdit);
+                    locationToEdit.lat = latLng[0];
+                    locationToEdit.lng = latLng[1];
 
+                    locationfromDb.lat = locationToEdit.lat;
+                    locationfromDb.lng = locationToEdit.lng;
+                    context.SaveChanges();
                 }
 
-                context.SaveChanges();
+                 
             }
             catch
             {
@@ -264,27 +267,8 @@ namespace DevCodeGroupCapstone.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: Person/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+      
 
-        // POST: Person/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
 
     }

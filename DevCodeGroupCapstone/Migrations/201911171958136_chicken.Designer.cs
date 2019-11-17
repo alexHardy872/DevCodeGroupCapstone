@@ -7,13 +7,13 @@ namespace DevCodeGroupCapstone.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.0-preview2-19525-03")]
-    public sealed partial class alexmigration : IMigrationMetadata
+    public sealed partial class chicken : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(alexmigration));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(chicken));
         
         string IMigrationMetadata.Id
         {
-            get { return "201911152345550_alexmigration"; }
+            get { return "201911171958136_chicken"; }
         }
         
         string IMigrationMetadata.Source

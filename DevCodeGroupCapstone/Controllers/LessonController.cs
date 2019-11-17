@@ -113,9 +113,9 @@ namespace DevCodeGroupCapstone.Controllers
                 });
                 ViewBag.LessonType = lessonType;
                 string id = User.Identity.GetUserId();
-                Person user = context.People.FirstOrDefault(u => u.ApplicationId == id);
+                Person currentUser = context.People.FirstOrDefault(u => u.ApplicationId == id);
                 lesson.teacherId = teacherId;
-                lesson.studentId = user.PersonId;
+                lesson.studentId = currentUser.PersonId;
                 var preferences = context.Preferences.FirstOrDefault(p => p.teacherId == teacherId);
                 lesson.Price = preferences.PerHourRate;
                 lesson.Length = preferences.defaultLessonLength;
