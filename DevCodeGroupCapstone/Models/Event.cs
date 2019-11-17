@@ -42,10 +42,10 @@ namespace DevCodeGroupCapstone.Models
             this.textColor = "#000000";
             this.title = "Available";
             this.groupId = "Availability";
-            this.start = availabilityStart - SchedService.ConvertIntToTimeSpan(travelDuration);
-            this.end = availabilityEnd + SchedService.ConvertIntToTimeSpan(travelDuration);
-            this.officialStart = availabilityStart;
-            this.officialEnd = availabilityEnd;
+            this.start = availabilityStart;
+            this.end = availabilityEnd;
+            this.officialStart = availabilityStart + SchedService.ConvertIntToTimeSpan(travelDuration);
+            this.officialEnd = availabilityEnd - -SchedService.ConvertIntToTimeSpan(travelDuration);
             this.price = SchedService.CreatePrice(preferences.PerHourRate, this.start, this.end);
         }
 
