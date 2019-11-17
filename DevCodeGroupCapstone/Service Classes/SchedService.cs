@@ -112,7 +112,7 @@ namespace DevCodeGroupCapstone.Service_Classes
 
             if (travelDuration > 0)
             {
-                LessonLength = LessonLength + ConvertIntToTimeSpan(travelDuration);
+                LessonLength = LessonLength + ConvertIntToTimeSpan(travelDuration * 2);
             }
 
             DateTime workingStart = lessonStart - LessonLength;
@@ -156,7 +156,7 @@ namespace DevCodeGroupCapstone.Service_Classes
 
             if(travelDuration > 0)
             {
-                LessonLength = LessonLength + ConvertIntToTimeSpan(travelDuration);
+                LessonLength = LessonLength + ConvertIntToTimeSpan(travelDuration * 2);
             }
 
             DateTime workingStart = lessonEnd;
