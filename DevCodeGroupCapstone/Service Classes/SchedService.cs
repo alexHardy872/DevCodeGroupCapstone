@@ -10,7 +10,7 @@ namespace DevCodeGroupCapstone.Service_Classes
     public static class SchedService
     {
 
-        public static List<Event> GenerateEventsFromLessons(List<Lesson> lessons)
+        public static List<Event> GenerateEventsFromLessons(TeacherPreference preferences, List<Lesson> lessons)
         {
             List<Event> events = new List<Event>();
 
@@ -42,11 +42,23 @@ namespace DevCodeGroupCapstone.Service_Classes
                 currentEvent.textColor = "#000000";
                 currentEvent.title = title;
                 currentEvent.groupId = "Lesson";
+                currentEvent.price = CreatePrice(preferences.PerHourRate, currentEvent.start, currentEvent.end);
 
                 events.Add(currentEvent);
             }
 
             return events;
+        }
+
+        private static decimal CreatePrice(decimal perHourRate, DateTime start, DateTime end)
+        {
+            TimeSpan timeSpan = end - start;
+            Double totalMinutes = timeSpan.TotalMinutes;
+            Decimal costPerMinute = perHourRate / 60;
+            Decimal totalCost = Convert.ToDecimal(totalMinutes) * costPerMinute;
+
+            return totalCost;
+
         }
 
         public static List<TeacherAvail> AddDatesToAvailabilities(List<TeacherAvail> availabilities, DateTime beginningDate, DateTime endingDate)

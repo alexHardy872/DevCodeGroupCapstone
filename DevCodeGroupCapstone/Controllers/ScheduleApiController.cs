@@ -20,9 +20,8 @@ namespace DevCodeGroupCapstone.Controllers
         }
 
         [HttpGet]
-        public async Task<IHttpActionResult> Index(string generateForView, int teacherIdInt)
+        public async Task<IHttpActionResult> Index(string generateForView, int teacherIdInt, int studentIdInt)
         {
-
 
             switch (generateForView)
             {
@@ -30,24 +29,62 @@ namespace DevCodeGroupCapstone.Controllers
                     return await ReturnTeacherScheduleForView(teacherIdInt);
                 case "lessonOptions":
                     return await ReturnStudentLessonOptionsForView(teacherIdInt);
-                    // case "inHomeLessonOptions"
+                case "inHomeLessonOptions":
+                    return await ReturnStudentInHomeLessonOptions(teacherIdInt, studentIdInt);
             }
 
             return await Task.Run(() => Ok());
         }
 
-        // ReturnStudentInHomeLessonOptions seperate API?
+        private async Task<IHttpActionResult> ReturnStudentInHomeLessonOptions (int teacherIdInt, int studentIdInt)
+        {
+            {
+
+                try
+                {
+                    Lesson lesson = new Lesson
+                    {
+                        studentId = studentIdInt,
+                        teacherId = teacherIdInt
+                    };
+
+                    Person student = await Task.Run(() => context.People
+                        .Include("Location")
+                        .Where(person => person.PersonId == studentIdInt)
+                        .SingleOrDefault()
+                        );
+
+                    TeacherPreference preferences = await Task.Run(() => context.Preferences
+                       .Include("Teacher")
+                       .Where(pref => pref.teacherId == teacherIdInt)
+                       .SingleOrDefault()
+                       );
+
+                    lesson.LocationId = student.LocationId;
+                    lesson.Price = preferences.PerHourRate;
+
+                    // use lesson to get drive time
+                    lesson = await DistanceMatrix.GetTravelInfo(lesson);
 
 
-            // create a lesson
 
-            // use lesson to get drive time
+                    // use the drive time to create availability events 
+                    // add a boolean with a default to false for in-home lessons
+                    // create special event constructor for in-home lessons
+                    List<Event> eventList = await GenerateTeacherCalendarView(teacherIdInt, lesson.travelDuration);
 
-            // use the drive time to create availability events 
-                // add a boolean with a default to false for in-home lessons
-                // create special event constructor for in-home lessons
+                    return Ok(eventList);
+                }
+                catch (Exception e)
+                {
+
+                    List<Event> emptyList = new List<Event>();
+                    return Ok(emptyList);
+                }
+            }
 
 
+        }
 
         private async Task<IHttpActionResult> ReturnTeacherScheduleForView(int teacherIdInt)
         {
@@ -85,10 +122,15 @@ namespace DevCodeGroupCapstone.Controllers
             }
         }
 
-        private async Task<List<Event>> GenerateTeacherCalendarView(int teacherIdInt)
+        private async Task<List<Event>> GenerateTeacherCalendarView(int teacherIdInt, int travelDuration = 0)
         {
             // arrange
             List<Event> eventList = new List<Event>();
+
+            TeacherPreference preferences = await Task.Run(() => context.Preferences
+            .Where(p => p.teacherId == teacherIdInt)
+            .SingleOrDefault()
+        );
 
             List<Lesson> lessons = await Task.Run(() => context.Lessons
                 .Include("Student")
@@ -98,8 +140,8 @@ namespace DevCodeGroupCapstone.Controllers
                 .ToList()
                 );
 
-            eventList = SchedService.GenerateEventsFromLessons(lessons);
-            List<Event> lessonEventList = SchedService.GenerateEventsFromLessons(lessons);
+            eventList = SchedService.GenerateEventsFromLessons(preferences, lessons);
+            List<Event> lessonEventList = SchedService.GenerateEventsFromLessons(preferences, lessons);
 
             List<TeacherAvail> availabilities = await Task.Run(() => context.TeacherAvailabilities
                     .Where(a => a.PersonId == teacherIdInt)
@@ -108,11 +150,6 @@ namespace DevCodeGroupCapstone.Controllers
 
             // todo: make calendar views dynamic by changing this
             availabilities = SchedService.AddDatesToAvailabilities(availabilities, DateTime.Today.AddDays(-20), DateTime.Today.AddDays(30));
-
-            TeacherPreference preferences = await Task.Run(() => context.Preferences
-                .Where(p => p.teacherId == teacherIdInt)
-                .SingleOrDefault()
-            );
 
             double convertedLessonLength = Convert.ToDouble(preferences.defaultLessonLength);
             TimeSpan timeSpanOfLesson = TimeSpan.FromMinutes(convertedLessonLength);
