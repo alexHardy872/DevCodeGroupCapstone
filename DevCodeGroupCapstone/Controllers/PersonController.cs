@@ -34,7 +34,7 @@ namespace DevCodeGroupCapstone.Controllers
             BigIndexViewModel bigModel = new BigIndexViewModel();
            
             bigModel.currentUser = userFound;
-   
+
             return View(bigModel);
         }
 
@@ -90,6 +90,7 @@ namespace DevCodeGroupCapstone.Controllers
                 return RedirectToAction("Create");
             }
 
+
             //// maybe redirect if teacher not setup?
 
             //int preferencesCheck = context.Preferences.Where(p => p.teacherId == userFound.PersonId).Count();
@@ -100,6 +101,7 @@ namespace DevCodeGroupCapstone.Controllers
             //    return RedirectToAction("Index"); // redirect to index/ or info page
             //}
             
+
             List<Lesson> teacherLessons = context.Lessons
                     .Include("Student")
                     .Include("Location")
@@ -132,7 +134,7 @@ namespace DevCodeGroupCapstone.Controllers
             personLocationDetails.location = context.Locations.Where(l => l.LocationId == personLocationDetails.person.LocationId).Single();
 
             var tempTeacher = context.Preferences.Where(p => p.teacherId == personLocationDetails.person.PersonId).SingleOrDefault();//tlc
-            if (tempTeacher != null)                
+            if (tempTeacher != null)
             {
                 if (tempTeacher.distanceType == RadiusOptions.Miles)
                 {
@@ -143,7 +145,7 @@ namespace DevCodeGroupCapstone.Controllers
                 {
                     ViewBag.radius = tempTeacher.maxDistance;
                 }
-            }            
+            }
 
             return View(personLocationDetails);
         }
@@ -199,13 +201,13 @@ namespace DevCodeGroupCapstone.Controllers
                         .Where(p => p.PersonId == id).SingleOrDefault();//tlc
                 return View(tempPerson);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return RedirectToAction("Index");
             }
-            
+
             //tlc return View();
-            
+
         }
 
         // POST: Person/Edit/5
@@ -276,6 +278,6 @@ namespace DevCodeGroupCapstone.Controllers
             }
         }
 
-        
+
     }
 }

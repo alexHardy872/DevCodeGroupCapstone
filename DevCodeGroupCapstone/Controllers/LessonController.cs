@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;//tlc
-using System.Web;
 using System.Web.Mvc;
 
 namespace DevCodeGroupCapstone.Controllers
@@ -41,7 +40,7 @@ namespace DevCodeGroupCapstone.Controllers
             {
                 ViewBag.outOfRange = TravelDurationIsGreaterThanMaxDistance(lesson);
             }
-            
+
             return View(lesson);
         }
 
@@ -143,7 +142,7 @@ namespace DevCodeGroupCapstone.Controllers
                         {
                             ViewBag.outOfRange = TravelDurationIsGreaterThanMaxDistance(lesson);
                         }
-                        catch(Exception e)
+                        catch (Exception e)
                         {
                             ViewBag.outOfRange = false;
                             Console.WriteLine(e.Message);
@@ -272,7 +271,7 @@ namespace DevCodeGroupCapstone.Controllers
 
             if (teacherPreference != null && location != null && teacherPreference.distanceType == RadiusOptions.Miles)
             {
-                result = (lesson.travelDuration > teacherPreference.maxDistance);          
+                result = (lesson.travelDuration > teacherPreference.maxDistance);
             }
 
             return result;
