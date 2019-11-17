@@ -66,12 +66,18 @@ namespace DevCodeGroupCapstone.Controllers
                     .Include("Student")
                     .Include("Location")
                     .Where(lesson => lesson.studentId == userFound.PersonId && lesson.teacherApproval == false && lesson.requiresMakeup == false).ToList();
-        
+
+            List<Lesson> makeupLessons = context.Lessons
+                    .Include("Teacher")
+                    .Include("Location")
+                    .Where(lesson => lesson.studentId == userFound.PersonId && lesson.requiresMakeup == true).ToList();
+
             BigIndexViewModel bigModel = new BigIndexViewModel();
             bigModel.teachersComp = teachers;
             bigModel.studentLessons = studentLessons;
             bigModel.currentUser = userFound;
             bigModel.requestsForStudent = lessonRequests;
+            bigModel.makeups = makeupLessons;
             return View(bigModel);
         }
 
@@ -83,6 +89,18 @@ namespace DevCodeGroupCapstone.Controllers
             {
                 return RedirectToAction("Create");
             }
+
+
+            //// maybe redirect if teacher not setup?
+
+            //int preferencesCheck = context.Preferences.Where(p => p.teacherId == userFound.PersonId).Count();
+            //int availsCheck = context.TeacherAvailabilities.Where(p => p.PersonId == userFound.PersonId).Count();
+
+            //if (userFound.subjects == null || preferencesCheck == 0 || availsCheck == 0)
+            //{
+            //    return RedirectToAction("Index"); // redirect to index/ or info page
+            //}
+            
 
             List<Lesson> teacherLessons = context.Lessons
                     .Include("Student")

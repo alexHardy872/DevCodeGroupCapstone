@@ -57,6 +57,9 @@ textarea {
     width: 100%;
     margin: 5px;
     padding: 5px;
+    padding-top: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
     border-radius: 5%;
     border: 1pt solid;
     border-color: silver;
@@ -64,15 +67,24 @@ textarea {
 }
 
 #studentView{
-    padding-top: 100px;
+    padding-top: 50px;
+    min-height: 500px;
 }
 
 #teacherView {
-    padding-top: 100px;
+    padding-top: 50px;
+    min-height: 500px;
 }
 
 
+#infoDisplayLogo{
+    width: 300px;
+}
 
+.claims{
+    text-align: left;
+    font-size: 8pt;
+}
 
 
 .logBox{
@@ -80,7 +92,7 @@ textarea {
     width: 100%;
     margin: 5px;
     padding: 5px;
-    border-radius: 5%;
+    border-radius: 10%;
     border: 1pt solid;
     border-color: silver;
     background-color: white;
@@ -124,4 +136,56 @@ body {
 
 .split-holder{
     padding-top: 80px;
+}
+
+.optionsContainer {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    background-color: transparent;
+}
+
+.optionsHeader {
+    border: 2pt solid rgba(56, 119, 128, .30);
+    /*background-color: #dbd4d3;*/
+    font-weight: normal;
+    background-color: white;
+    width: 25%;
+    height: 60px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 0;
+    text-align: center;
+    line-height: 75px;
+    overflow: hidden;
+}
+
+.optionsHeadCurrent{
+    border: 2pt solid rgb(56, 119, 128);
+    border-bottom: none;
+    font-weight: bold;
+}
+
+.optionsHeader:hover{
+    background-image: linear-gradient(silver, transparent);
+}
+
+.txtBtn{
+    padding: 0;
+    margin: 0;
+    height: 25px;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    font-size: 18pt;
+}
+
+#reminder-to-fill-info {
+    margin-top: 20px;
+    border: 1pt solid black;
+    background-color: #f7a072;
+}
+
+#updateInfo{
+    float: left;
 }

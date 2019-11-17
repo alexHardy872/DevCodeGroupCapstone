@@ -68,7 +68,11 @@
                     <h2>Resiter New User</h2>
                     <div id="registerBtn">
 
-                        @Html.ActionLink("Register as a new user", "Register")
+                        @*@Html.ActionLink("Register as a new user", "Register")*@
+
+                        <a href="@Url.Action("Register", "Account")">
+                            <h3>Register Here</h3>
+                        </a>
 
                     </div>
                 </div>

@@ -37,11 +37,22 @@ namespace DevCodeGroupCapstone.Controllers
             Lesson lesson = context.Lessons.Where(les => les.LessonId == id).FirstOrDefault();
             Person student = context.People.Where(stu => stu.PersonId == lesson.studentId).FirstOrDefault();
             Person teacher = context.People.Where(tea => tea.PersonId == lesson.teacherId).FirstOrDefault();
+            TeacherPreference preference = context.Preferences.Where(pref => pref.teacherId == teacher.PersonId).FirstOrDefault();
             string textM = DetermineAlertTeacher(student, teacher, lesson).ToString();
             var to = FormatNumber(teacher.phoneNumber);
             var from = new PhoneNumber(ApiKey.fromNum);
+
+            double fromCancel = (lesson.start - DateTime.Now).TotalHours;
+            double prefHours = Convert.ToDouble(preference.TimeBeforeCancellation);
+
+            if (fromCancel > prefHours)
+            {
+                lesson.requiresMakeup = true;
+                context.SaveChanges();
+            }
+
             bool success = await Task.Run(() => SendMessage(to, from, textM));
-            lesson.studentId = null;
+            //lesson.studentId = null;
             await context.SaveChangesAsync();
 
             // send to teachrs others students 
@@ -49,7 +60,7 @@ namespace DevCodeGroupCapstone.Controllers
             List<Lesson> remainingStudentsFromLessons = context.Lessons
                         .Include("Student")
                         .Where(less => less.teacherId == teacher.PersonId && less.studentId != lesson.studentId && lesson.requiresMakeup == true).ToList();
-            
+       
             foreach(Lesson item in remainingStudentsFromLessons)
             {
                 // send text to each student with new message

@@ -15,7 +15,27 @@ namespace DevCodeGroupCapstone.Controllers
             context = new ApplicationDbContext();
         }
         // GET: TeacherPreference
-   
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        // GET: TeacherPreference/Details/5
+        public ActionResult Details(int id)
+        {
+            TeacherPreference tempPreference = null;
+
+            try
+            {
+                tempPreference = context.Preferences.Where(p => p.teacherId == id).SingleOrDefault();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View(tempPreference);
+            }
+            return View();
+        }
 
         // GET: TeacherPreference/Create
         public ActionResult Create()
@@ -64,7 +84,24 @@ namespace DevCodeGroupCapstone.Controllers
         {
             string userId = User.Identity.GetUserId();
             Person teacher = context.People.Where(p => p.ApplicationId == userId).Single();
+            //tlc TeacherPreference preference = context.Preferences.Where(pref => pref.teacherId == teacher.PersonId).Single();
             TeacherPreference preference = context.Preferences.Where(pref => pref.teacherId == teacher.PersonId).Single();
+
+            if (teacher != null && teacher.LocationId != null)
+            {
+                var location = context.Locations.Where(l => l.LocationId == teacher.LocationId).SingleOrDefault();
+                ViewBag.teacherLocationLat = location.lat;
+                ViewBag.teacherLocationLng = location.lng;
+                if (preference.distanceType == RadiusOptions.Miles)
+                {
+                    ViewBag.radius = preference.maxDistance * Service_Classes.DistanceMatrix.metersToMiles;
+                }
+                else
+                {
+                    ViewBag.radius = preference.maxDistance;
+                }
+                
+            }
             return View(preference);
         }
 
@@ -78,6 +115,7 @@ namespace DevCodeGroupCapstone.Controllers
                 Person teacher = context.People.Where(p => p.ApplicationId == userId).Single();
                 TeacherPreference preferenceDb = context.Preferences.Where(pref => pref.teacherId == teacher.PersonId).Single();
 
+                preferenceDb.PerHourRate = preference.PerHourRate;
                 preferenceDb.maxDistance = preference.maxDistance;
                 preferenceDb.incrementalCost = preference.incrementalCost;
                 preferenceDb.distanceType = preference.distanceType;

@@ -2,22 +2,57 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="row">
-    <div class="col-md-12">
-        <center>
-            <img id="infoDispLogo" src="~/Content/Images/WeTeachTodayLogo1.png" alt="logo1" />
-        </center>
+    <div class="row">
+        <div class="col-md-3">
+            <center>
+                <h1><i>teach</i></h1>
+                <br />
+                <p>Connect with students seeking in home or in studio private lessons</p>
+                <br />
+                <div class="claims">
+                    <h3>We can...</h3>
+                    <ul>
+                        <li>Set your schedule</li>
+                        <li>Limit your availability by distance or drive-time for in-home lessons</li>
+                        <li>Calculate pricing based on traveltime to <strong>optimize</strong> <i>your</i> time and business</li>
+                        <li>Suggest proximal time-slots to students</li>
+                        <li>Alert students about cancelatons</li>
+                        <li>Update students with open availabilities</li>
+                    </ul>
+                </div>
+                <br />
+                <p>Take the stress out of managing your private instructions and <strong>Teach</strong> today!</p>
+            </center>
+        </div>
+        <div class="col-md-6">
+            <center>
+                <img id="infoDispLogo" src="~/Content/Images/WeTeachTodayLogo1.png" alt="logo1" />
+            </center>
+            <center>
+                <h2>Welcome to WeTeachToday!</h2>
+                <p><i>Teach...Learn...Succeed...<strong>TODAY!</strong></i></p>
+                <a href="@Url.Action("Login", "Account")">
+                    <h3>Register Here</h3>
+                </a>
+            </center>
+        </div>
+        <div class="col-md-3">
+            <center>
+                <h1><i>learn</i></h1>
+                <br />
+                <p>Connect with local teachers offering in-home and in-studio lessons</p>
+                <br />
+                <div class="claims">
+                    <h3>We can...</h3>
+                    <ul>
+                        <li>Show you teachers offering lessons near you</li>
+                        <li>Notify you on updates concerning your lessons</li>
+                        <li>Manage lessons/requests and make-up lessons with Teachers</li>
+                    </ul>
+                    </div>
+                    <br />
+                    <p>Revolutionize the way you seek private instruction and <strong>Learn</strong> today!</p>
+            </center>
+        </div>
     </div>
-</div>
 
-<div class="row">
-    <div class="col-md-12">
-        <center>
-            <h2>Welcome to WeTeachToday!</h2>
-            <p>WeTeachToday pairs teachers and students that will want to either teach or learn any subject.</p>
-            <a href="@Url.Action("Login", "Account")">
-                <h3>Register Here</h3>
-            </a>
-        </center>
-    </div>
-</div>
