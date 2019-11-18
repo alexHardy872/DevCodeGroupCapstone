@@ -162,7 +162,7 @@ namespace DevCodeGroupCapstone.Controllers
                     );
 
             // todo: make calendar views dynamic by changing this per the view
-            availabilities = SchedService.AddDatesToAvailabilities(availabilities, DateTime.Today.AddDays(-7), DateTime.Today.AddDays(1));
+            availabilities = SchedService.AddDatesToAvailabilities(availabilities, DateTime.Today.AddDays(-15), DateTime.Today.AddDays(15));
 
             double convertedLessonLength = Convert.ToDouble(preferences.defaultLessonLength);
             TimeSpan timeSpanOfLesson = TimeSpan.FromMinutes(convertedLessonLength);
