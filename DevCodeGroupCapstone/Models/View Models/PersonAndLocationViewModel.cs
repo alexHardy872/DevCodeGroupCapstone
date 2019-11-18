@@ -14,7 +14,6 @@ namespace DevCodeGroupCapstone.Models.View_Models
 
         public int studentId { get; set; }
 
-
         public bool outOfRange { get; set; }
 
         public int outOfRangeNum { get; set; }

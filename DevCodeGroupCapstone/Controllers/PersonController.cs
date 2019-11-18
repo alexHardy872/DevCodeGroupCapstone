@@ -146,6 +146,8 @@ namespace DevCodeGroupCapstone.Controllers
             //this is the teacher's location!
             personLocationDetails.location = context.Locations.Where(l => l.LocationId == personLocationDetails.person.LocationId).Single();
 
+            personLocationDetails.studentLocationId = student.LocationId;
+
             TeacherPreference tpreffer = context.Preferences.Where(pref => pref.teacherId == id).FirstOrDefault();
 
             int range = tpreffer.maxDistance;
@@ -177,7 +179,7 @@ namespace DevCodeGroupCapstone.Controllers
             //{
             //    if (teacherPreferences.distanceType == RadiusOptions.Miles)
             //    {
-            //        string userId = User.Identity.GetUserId();
+            //        //string userId = User.Identity.GetUserId();
 
             //        double teacherPreferenceRadius = teacherPreferences.maxDistance;//tlc
             //        ViewBag.radius = teacherPreferenceRadius * Service_Classes.DistanceMatrix.metersToMiles;//tlc
@@ -191,7 +193,7 @@ namespace DevCodeGroupCapstone.Controllers
             //            tempLesson.Student = tempStudent;
             //            tempLesson = await Service_Classes.DistanceMatrix.GetTravelInfo(tempLesson);
 
-            //            ViewBag.lessonPrice =                         
+            //            //ViewBag.lessonPrice =                         
             //            ViewBag.outOfRange = teacherPreferences.maxDistance > tempLesson.travelDuration;
             //        }
                     

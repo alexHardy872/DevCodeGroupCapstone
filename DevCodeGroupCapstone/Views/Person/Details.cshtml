@@ -13,7 +13,7 @@
 
         <div class="col-md-6">
 
-            <h4>Instructor Details</h4>
+            <h4>Lesson Details</h4>
             <hr />
             <dl class="dl-horizontal">
                 <dt>
@@ -75,7 +75,7 @@
                     inStudioListData = response.data;
                     onlineListData = response.data;
                     console.log(inStudioListData);
-        
+
                     inStudioListData.forEach(function (item) {
                         $('#availability-list-in-studio')
                             .append('<div id=\"in-studio' + item.sortId + '\">' + moment(item.officialStart).format("dddd, MMMM Do YYYY, h:mm:ss a") + ' to ' + moment(item.officialEnd).format("h:mm:ss a") + '</div>')
@@ -162,7 +162,7 @@
                 .then(function (response) {
                     inHomeListData = response.data;
                     console.log(inHomeListData);
-        
+
                     inHomeListData.forEach(function (item) {
                         $('#availability-list-in-home')
                             .append('<div id=\"in-home' + item.sortId + '\">' + moment(item.officialStart).format("dddd, MMMM Do YYYY, h:mm:ss a") + ' to ' + moment(item.officialEnd).format("h:mm:ss a") + '</div>')
@@ -206,7 +206,7 @@
         })(jQuery);
 
     });
-       
+
 
 </script>
 
@@ -246,7 +246,7 @@
           fillOpacity: 0.35,
           map: map,
           center: pinLocation,
-          radius: @ViewBag.radius
+          radius: 5 // @*@ViewBag.radius*@
         });
      }
 </script>
@@ -267,32 +267,3 @@
 </p>
 
 
-
-@*<script>
- // GENERATE AVAILABILITIES FOR TEACHER???
-    document.addEventListener('DOMContentLoaded', function () {
-
-
-        (function ($) {
-
-             $.ajax({
-                url: 'https://localhost:44326/api/ScheduleApi?generateForView=lessonOptions&teacherIdInt=@Model.person.PersonId',
-                type: 'GET',
-                success: function (result) {
-                    console.log("success");
-                    console.log(result);
-                    $("#teacherAvailability").append(result);
-
-
-
-                },
-                error: function (jqXhr, textStatus, errorThrown) {
-                    console.log(errorThrown);
-                }
-            });
-
-
-    })(jQuery);*@
-
-    @*});
-</script>*@

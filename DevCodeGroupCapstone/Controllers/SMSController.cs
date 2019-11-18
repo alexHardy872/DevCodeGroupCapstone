@@ -150,8 +150,35 @@ namespace DevCodeGroupCapstone.Controllers
         public StringBuilder DetermineAlertTeacher(Person student, Person teacher, Lesson lesson)
         {
             StringBuilder finalMessage = new StringBuilder();
-            finalMessage.Append("Hello " + teacher.firstName + "... Your student " + student.firstName + " " + student.lastName + " has canceled their " + lesson.subject + " lesson schduled for " + lesson.start.Date + " at " + lesson.start.TimeOfDay + "... log on to your WeTeachToday account to alert available students about the opening");
+            finalMessage.Append("Hello " + teacher.firstName + "... Your student " + student.firstName + " " + student.lastName + " has canceled their " + lesson.subject + " lesson schduled for " + lesson.start.Date + " at " + lesson.start.TimeOfDay + "... all of your students entitled to make-up lessons have been notified about the opening");
             return finalMessage;
+        }
+
+        public StringBuilder RequestString(Person student, Person teacher, Lesson lesson)
+        {
+            StringBuilder finalMessage = new StringBuilder();
+            finalMessage.Append("Hello " + teacher.firstName + "...  " + student.firstName + " " + student.lastName + " has requested a " + lesson.subject + " lesson on " + lesson.start.Date + " at " + lesson.start.TimeOfDay + "... log on to your WeTeachToday account to confirm or deny the request");
+            return finalMessage;
+        }
+
+
+        public async Task<ActionResult> AlertRequest(int id) // alert is cancel or opening
+        {
+            Lesson lesson = context.Lessons.Where(les => les.LessonId == id).FirstOrDefault();
+            Person student = context.People.Where(stu => stu.PersonId == lesson.studentId).FirstOrDefault();
+            Person teacher = context.People.Where(tea => tea.PersonId == lesson.teacherId).FirstOrDefault();
+            TeacherPreference preference = context.Preferences.Where(pref => pref.teacherId == teacher.PersonId).FirstOrDefault();
+            string textM = RequestString(student, teacher, lesson).ToString();
+            var to = FormatNumber(teacher.phoneNumber);
+            var from = new PhoneNumber(ApiKey.fromNum);
+
+      
+
+            bool success = await Task.Run(() => SendMessage(to, from, textM));
+
+            await context.SaveChangesAsync();
+
+            return RedirectToAction("StudentIndex", "Person"); // needs to return to the same view it came from??
         }
 
 
