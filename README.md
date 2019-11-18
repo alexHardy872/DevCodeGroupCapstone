@@ -6,25 +6,25 @@ Find this project's Trello board at: [https://trello.com/b/vK6u8aOV/weteachtoday
 
 ## Critical Tasks
 
-- [ ] Solve a real-world business problem.
+- [X] Solve a real-world business problem.
 
 - [X] Use ASP.NET MVC
 
-- [ ] Integrate multiple APIs to solve the business problem. 
+- [X] Integrate multiple APIs to solve the business problem. 
 
 - [X] Write a project proposal.
 
 - [X] Get proposal approved.
 
-- [ ] (5points): As a developer, I want to get my team’s projectproposal, which mustbe in the form of user storiesapproved by an instructor, so that I know my team has a good project to work on.Technologies used to build the application will include ASP.NET MVC, multiple integrated APIs, and *our own built REST API*.
+- [X] (5points): As a developer, I want to get my team’s projectproposal, which mustbe in the form of user storiesapproved by an instructor, so that I know my team has a good project to work on.Technologies used to build the application will include ASP.NET MVC, multiple integrated APIs, and *our own built REST API*.
 
-- [ ] (5 points) As a database designer, I want to create an entity relationship (ER) diagram to show the relationships amongst my tables in my normalized database.
+- [X] (5 points) As a database designer, I want to create an entity relationship (ER) diagram to show the relationships amongst my tables in my normalized database.
 
-- [ ] (5 points) As a project manager, I want to create a Trello board that has user stories broken down into tasks so that I can assign tasks to other team members as well as myself in order to efficiently reach the minimal viable product (MVP).
+- [X] (5 points) As a project manager, I want to create a Trello board that has user stories broken down into tasks so that I can assign tasks to other team members as well as myself in order to efficiently reach the minimal viable product (MVP).
 
-- [ ] (5 points): Make good, consistent commits.
+- [X] (5 points): Make good, consistent commits.
 
-- [ ] (10 points): Use asynchronous actions for all I/O calls made in my application, with a specific emphasis on all API actions.
+- [X] (10 points): Use asynchronous actions for all I/O calls made in my application, with a specific emphasis on all API actions.
 
 - [ ] Complete all the instructor-approved features during the project approval phase, so that I can ensure the project is as good as it can be. (90 points)
 

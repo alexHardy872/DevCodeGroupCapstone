@@ -127,7 +127,7 @@ namespace DevCodeGroupCapstone.Controllers
         }
 
         // GET: Person/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
             string head = User.Identity.GetUserId();
 
@@ -150,23 +150,49 @@ namespace DevCodeGroupCapstone.Controllers
             var tempTeacher = context.Preferences
                 .Where(p => p.teacherId == personLocationDetails.person.PersonId)
                 .SingleOrDefault();//tlc
+            PersonAndLocationViewModel teacherLocationDetails = new PersonAndLocationViewModel();
 
-            if (tempTeacher != null)
+            //this is the teacher
+            teacherLocationDetails.person = context.People.Include("Location").Where(p => p.PersonId == id).Single();
+
+            //this is the teacher's location
+            teacherLocationDetails.location = context.Locations.Where(l => l.LocationId == teacherLocationDetails.person.LocationId).Single();
+
+            //this is the teacher's preferences
+            var teacherPreferences = context.Preferences.Where(p => p.teacherId == teacherLocationDetails.person.PersonId).SingleOrDefault();//tlc
+
+            if (teacherPreferences != null)
             {
-                if (tempTeacher.distanceType == RadiusOptions.Miles)
+                if (teacherPreferences.distanceType == RadiusOptions.Miles)
                 {
-                    double teacherPreferenceRadius = tempTeacher.maxDistance;//tlc
+                    string userId = User.Identity.GetUserId();
+
+                    double teacherPreferenceRadius = teacherPreferences.maxDistance;//tlc
                     ViewBag.radius = teacherPreferenceRadius * Service_Classes.DistanceMatrix.metersToMiles;//tlc
+
+                    var tempStudent = context.People.Include("Location").Where(p => p.ApplicationId == userId).SingleOrDefault();
+                    
+                    if (tempStudent.PersonId != teacherPreferences.teacherId)
+                    {
+                        Lesson tempLesson = new Lesson();
+                        tempLesson.Teacher = context.People.Where(t=>t.PersonId == teacherPreferences.teacherId).SingleOrDefault();
+                        tempLesson.Student = tempStudent;
+                        tempLesson = await Service_Classes.DistanceMatrix.GetTravelInfo(tempLesson);
+
+                        ViewBag.lessonPrice =                         
+                        ViewBag.outOfRange = teacherPreferences.maxDistance > tempLesson.travelDuration;
+                    }
+                    
                 }
-                else if (tempTeacher.distanceType == RadiusOptions.Miles)
+                else if (teacherPreferences.distanceType == RadiusOptions.Miles)
                 {
-                    ViewBag.radius = tempTeacher.maxDistance;
+                    ViewBag.radius = teacherPreferences.maxDistance;
                 }
             }
 
             
 
-            return View(personLocationDetails);
+            return View(teacherLocationDetails);
         }
 
         // GET: Person/Create
