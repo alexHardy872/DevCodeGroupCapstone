@@ -21,7 +21,7 @@ namespace DevCodeGroupCapstone.Service_Classes
             string authenticationString = "&key=" + Private.ApiKey.googleMapsApiKey;
 
             var teacher = context.People.Include("Location").Where(p => p.PersonId == lesson.teacherId).SingleOrDefault();
-            var teacherPreference = context.Preferences.Where(p => p.teacherId == teacher.PersonId).SingleOrDefault();
+            var teacherPreference = context.Preferences.Where(p => p.teacherId == lesson.teacherId).SingleOrDefault();
             var tempLessonLocation = context.Locations.Where(l => l.LocationId == lesson.LocationId).SingleOrDefault();
 
             if (tempLessonLocation == null)
@@ -46,17 +46,20 @@ namespace DevCodeGroupCapstone.Service_Classes
 
             JObject distanceInfo = JObject.Parse(response);
             // this MIGHT have to go 
-            if (teacherPreference.distanceType != RadiusOptions.Miles)
-            {
-                double tempduration = (double)distanceInfo["rows"][0]["elements"][0]["distance"]["value"];
-                lesson.travelDuration = Convert.ToInt32(tempduration / metersToMiles);
-            }
-            else //minutes
-            {
+            //if (teacherPreference.distanceType != RadiusOptions.Miles)
+            //{
+                //double tempduration = (double)distanceInfo["rows"][0]["elements"][0]["distance"]["value"];
+                //lesson.travelDuration = Convert.ToInt32(tempduration / metersToMiles);
+                double tempDistance = (double)distanceInfo["rows"][0]["elements"][0]["distance"]["value"];
+                lesson.travelDistance = Convert.ToInt32(tempDistance / metersToMiles);
+            //}
+            //else //minutes
+            //{
                 double tempMinutes = (int)distanceInfo["rows"][0]["elements"][0]["duration"]["value"]; // throws error?
 
-                lesson.travelDuration = Convert.ToInt32(Math.Floor(tempMinutes / 60));
-            }
+            //lesson.travelDuration = Convert.ToInt32(Math.Floor(tempMinutes / 60));
+            lesson.travelDuration = Convert.ToInt32(Math.Floor((tempMinutes / 60)));
+            //}
 
 
             return lesson;

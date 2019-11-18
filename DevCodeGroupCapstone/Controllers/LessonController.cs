@@ -83,7 +83,7 @@ namespace DevCodeGroupCapstone.Controllers
                 makeup.requiresMakeup = true;
                 makeup.start = DateTime.Now;
                 makeup.end = DateTime.Now;
-               
+                
                // Person student = context.People.Where(p => p.PersonId == makeup.studentId).FirstOrDefault();
                // makeup.studentId = student.PersonId;
                 context.Lessons.Add(makeup);
@@ -143,6 +143,9 @@ namespace DevCodeGroupCapstone.Controllers
                             ViewBag.outOfRange = TravelDurationIsGreaterThanMaxDistance(lesson);
                             ViewBag.lessonLat = lesson.Location.lat;
                             ViewBag.lessonLng = lesson.Location.lat;
+
+                            
+                            
                         }
                         catch (Exception e)
                         {
@@ -151,6 +154,7 @@ namespace DevCodeGroupCapstone.Controllers
                         }
                     }
                 }
+
                 context.Lessons.Add(lesson);
                 context.SaveChanges();
                 return RedirectToAction("StudentIndex", "Person");

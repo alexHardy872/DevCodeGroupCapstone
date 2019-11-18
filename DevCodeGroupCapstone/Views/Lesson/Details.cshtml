@@ -80,7 +80,7 @@
 
         <dd>
             @Html.DisplayFor(model => model.travelDuration)
-            <span id="outOfRange" hidden=@(ViewBag.outOfRange == false) style="color: red; font-weight:bold;">*THIS LESSON IS ONLY AVAILABLE ON-LINE OR IN-STUDIO</span>
+            <span id="outOfRange" hidden=@(ViewBag.outOfRange != false) style="color: red; font-weight:bold;">*THIS LESSON IS ONLY AVAILABLE ON-LINE OR IN-STUDIO</span>
         </dd>
 
     </dl>

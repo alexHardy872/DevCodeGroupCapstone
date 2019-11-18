@@ -43,6 +43,7 @@ namespace DevCodeGroupCapstone.Models
         public string LessonType { get; set; }
 
         public int travelDuration { get; set; }
+        public int travelDistance { get; set; }
 
         public bool requiresMakeup { get; set; }
 
