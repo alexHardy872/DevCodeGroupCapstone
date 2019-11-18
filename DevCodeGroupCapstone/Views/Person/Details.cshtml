@@ -13,7 +13,7 @@
 
         <div class="col-md-6">
 
-            <h4>Lesson Details</h4>
+            <h4>Instructor Details</h4>
             <hr />
             <dl class="dl-horizontal">
                 <dt>
@@ -42,6 +42,11 @@
                 <tr>
                     <td> <button>@Html.ActionLink("REQUEST CUSTOM IN-STUDIO LESSON", "../Lesson/Create", new { teacherId = Model.person.PersonId })</button> </td>
                 </tr>
+                <tr>
+                    <td id="studioPrice"><h4><i>In Studio Price = <strong>$@Model.studioCost</strong> </i></h4></td>
+                    <td id="inHomePrice" style="display: none;"><h4><i>In Your Home Price = <strong>$@Model.inHomeCost</strong></i></h4></td>
+                    <td id="range" value="@Model.outOfRangeNum" style="display: none; color: red;"><i>**You are outside this instructors service area**</i></td>
+                </tr>
 
 
             </table>
@@ -51,6 +56,11 @@
 </div>
 
 <div id="map" style="height: 400px; width: 400px;"></div>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.person.PersonId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
 
 <script>
     var map;
@@ -78,16 +88,16 @@
 
         //add a radius for max range
         var teacherRadius = new google.maps.Circle({
-          strokeColor: '#FF0000',
-          strokeOpacity: 0.8,
-          strokeWeight: 2,
-          fillColor: '#FF0000',
-          fillOpacity: 0.35,
-          map: map,
-          center: pinLocation,
-          radius: @ViewBag.radius
-        });
-     }
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35,
+            map: map,
+            center: pinLocation,
+            radius: @ViewBag.radius
+         });
+    }
 </script>
 
 @{ 
@@ -100,10 +110,7 @@
 
 </script>
 
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.person.PersonId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
 
 
 
@@ -113,7 +120,21 @@
 
         (function ($) {
 
+            showPrices();
 
+          
+
+            function showPrices() {
+                if ($("#range").value == 1) {
+                    $("#inHomePrice ").hide();
+                    $("#range").show();
+                    console.log("value");
+                }
+                else {
+                    $("#inHomePrice ").show();
+                    console.log("good");
+                }
+            }
 
 
 

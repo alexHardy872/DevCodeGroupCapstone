@@ -24,6 +24,15 @@ namespace DevCodeGroupCapstone.Service_Classes
             var teacherPreference = context.Preferences.Where(p => p.teacherId == teacher.PersonId).SingleOrDefault();
             var tempLessonLocation = context.Locations.Where(l => l.LocationId == lesson.LocationId).SingleOrDefault();
 
+            if (tempLessonLocation == null)
+            {
+                Person student = context.People
+                    .Include("Location")
+                    .Where(s => s.PersonId == lesson.studentId).FirstOrDefault();
+
+                tempLessonLocation = student.Location;
+            }
+
             double[] teacherLatLng = new double[2];
             teacherLatLng[0] = double.Parse(teacher.Location.lat);
             teacherLatLng[1] = double.Parse(teacher.Location.lng);
@@ -36,19 +45,37 @@ namespace DevCodeGroupCapstone.Service_Classes
 
             JObject distanceInfo = JObject.Parse(response);
 
-            //if (teacherPreference.distanceType != RadiusOptions.Miles)
-            //{
-            //    double tempDuration = (double)distanceInfo["rows"][0]["elements"][0]["distance"]["value"];
-            //   lesson.travelDuration = Convert.ToInt32(tempDuration / metersToMiles);
-            //}
-            //else //minutes
-            //{
+            if (teacherPreference.distanceType != RadiusOptions.Miles)
+            {
+                double tempduration = (double)distanceInfo["rows"][0]["elements"][0]["distance"]["value"];
+                lesson.travelDuration = Convert.ToInt32(tempduration / metersToMiles);
+            }
+            else //minutes
+            {
                 double tempMinutes = (int)distanceInfo["rows"][0]["elements"][0]["duration"]["value"]; // throws error?
                 lesson.travelDuration = Convert.ToInt32(Math.Floor(tempMinutes / 60));
-            //}
+            }
 
 
             return lesson;
+        }
+
+        public static async Task<int> GetTravelInfo(Person student, Person teacher)
+        {
+            Lesson lesson = new Lesson();
+            lesson.studentId = student.PersonId;
+            lesson.teacherId = teacher.PersonId;
+
+            lesson = await GetTravelInfo(lesson);
+
+            if (lesson.travelDuration > 0)
+            {
+                return lesson.travelDuration;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

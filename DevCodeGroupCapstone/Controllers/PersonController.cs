@@ -127,11 +127,32 @@ namespace DevCodeGroupCapstone.Controllers
         }
 
         // GET: Person/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
             PersonAndLocationViewModel personLocationDetails = new PersonAndLocationViewModel();
             personLocationDetails.person = context.People.Include("Location").Where(p => p.PersonId == id).Single();
             personLocationDetails.location = context.Locations.Where(l => l.LocationId == personLocationDetails.person.LocationId).Single();
+
+            TeacherPreference tpreffer = context.Preferences.Where(pref => pref.teacherId == id).FirstOrDefault();
+
+            int range = tpreffer.maxDistance;
+            RadiusOptions type = tpreffer.distanceType;
+            decimal increment = tpreffer.incrementalCost;
+
+            decimal inHomeCost;
+
+           
+                string userId = User.Identity.GetUserId();
+                Person student = context.People.Where(peop => peop.ApplicationId == userId).FirstOrDefault();
+                int tempDistance = await Service_Classes.DistanceMatrix.GetTravelInfo(student, personLocationDetails.person);
+                inHomeCost = tpreffer.PerHourRate + (tpreffer.incrementalCost * tempDistance);
+
+
+            personLocationDetails.outOfRange = tempDistance > tpreffer.maxDistance ? true : false;
+            personLocationDetails.outOfRangeNum = personLocationDetails.outOfRange ? 1 : 0;
+            personLocationDetails.inHomeCost = inHomeCost;
+            personLocationDetails.studioCost = tpreffer.PerHourRate;
+
 
             var tempTeacher = context.Preferences.Where(p => p.teacherId == personLocationDetails.person.PersonId).SingleOrDefault();//tlc
 
@@ -142,7 +163,7 @@ namespace DevCodeGroupCapstone.Controllers
                     double teacherPreferenceRadius = tempTeacher.maxDistance;//tlc
                     ViewBag.radius = teacherPreferenceRadius * Service_Classes.DistanceMatrix.metersToMiles;//tlc
                 }
-                else if (tempTeacher.distanceType == RadiusOptions.Miles)
+                else if (tempTeacher.distanceType == RadiusOptions.Minutes)
                 {
                     ViewBag.radius = tempTeacher.maxDistance;
                 }

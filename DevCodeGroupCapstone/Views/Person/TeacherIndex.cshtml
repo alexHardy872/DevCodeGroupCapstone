@@ -13,7 +13,7 @@
    
 
 
-        <div class="container">
+        @*<div class="container">*@
 
 
             <div class="optionsContainer">
@@ -179,8 +179,8 @@
             </div>
 
 
-            <div id="calendar"></div>
-        </div>
+            <div id="calendar" style="display: none;"></div>
+        @*</div>*@
     </div>
 
 <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/core/main.min.css">
@@ -220,18 +220,16 @@
 
 
             $.ajax({
-<<<<<<< HEAD
+
                 url: 'https://localhost:44326/api/ScheduleApi?generateForView=teacherSchedule&teacherIdInt=@Model.currentUser.PersonId&studentIdInt=@Model.currentUser.PersonId',
-=======
-                url: 'https://localhost:44326/api/ScheduleApi?generateForView=teacherSchedule&teacherIdInt=1&studentIdInt=2',
->>>>>>> 60d3047eae437a1eb6e5fab32d3a3d47e3949a2a
+
                 type: 'GET',
                 success: function (result) {
 
                     var calendar = new FullCalendar.Calendar(calendarEl, {
                         plugins: ['interaction', 'dayGrid', 'timeGrid'],
                         defaultView: 'timeGridWeek',
-                        defaultDate: '2019-11-12',
+                        defaultDate: '2019-11-18',
                         header: {
                             left: 'prev,next today',
                             center: 'title',

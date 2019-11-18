@@ -15,7 +15,13 @@ namespace DevCodeGroupCapstone.Models.View_Models
         public List<TeacherAvail> avails { get; set; }
 
 
+        public bool outOfRange { get; set; }
 
+        public int outOfRangeNum { get; set; }
+
+        public decimal inHomeCost { get; set; }
+
+        public decimal studioCost { get; set; }
 
 
 

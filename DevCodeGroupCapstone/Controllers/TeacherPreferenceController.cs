@@ -123,7 +123,7 @@ namespace DevCodeGroupCapstone.Controllers
 
 
                 context.SaveChanges();
-                return RedirectToAction("TeacherIndex", "Person");
+                return RedirectToAction("Edit", "TeacherPreference");
             }
             catch
             {
