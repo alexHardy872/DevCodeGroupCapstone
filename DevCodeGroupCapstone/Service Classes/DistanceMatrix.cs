@@ -43,7 +43,7 @@ namespace DevCodeGroupCapstone.Service_Classes
             //}
             //else //minutes
             //{
-                double tempMinutes = (int)distanceInfo["rows"][0]["elements"][0]["duration"]["value"]; // throws error?
+                double tempMinutes = (int)distanceInfo["rows"][0]["elements"][0]["duration"]["value"];
                 lesson.travelDuration = Convert.ToInt32(Math.Floor(tempMinutes / 60));
             //}
 

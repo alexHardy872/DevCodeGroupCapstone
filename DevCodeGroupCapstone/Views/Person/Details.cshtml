@@ -42,13 +42,174 @@
                 <tr>
                     <td> <button>@Html.ActionLink("REQUEST CUSTOM IN-STUDIO LESSON", "../Lesson/Create", new { teacherId = Model.person.PersonId })</button> </td>
                 </tr>
-
-
             </table>
+            <h3 id="in-studio-price">In-Studio Lessons</h3>
+            <div id="availability-list-in-studio"></div>
+            <h3 id="online-price">Online Lessons</h3>
+            <div id="availability-list-online"></div>
+            <h3 id="in-home-price">In-Home Lessons</h3>
+            <div id="availability-list-in-home"></div>
         </div>
 
     </div>
 </div>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" type="text/javascript"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript"></script>
+<script src="//unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        (function ($) {
+
+            var inStudioListData = [];
+            var inHomeListData = [];
+            var onlineListData = [];
+
+            // todo: update this Ajax call to make it dynamic per stundent
+            axios.get('https://localhost:44326/api/ScheduleApi?generateForView=lessonOptions&teacherIdInt=@Model.person.PersonId&studentIdInt=@Model.studentId')
+                .then(function (response) {
+                    inStudioListData = response.data;
+                    onlineListData = response.data;
+                    console.log(inStudioListData);
+        
+                    inStudioListData.forEach(function (item) {
+                        $('#availability-list-in-studio')
+                            .append('<div id=\"in-studio' + item.sortId + '\">' + moment(item.officialStart).format("dddd, MMMM Do YYYY, h:mm:ss a") + ' to ' + moment(item.officialEnd).format("h:mm:ss a") + '</div>')
+                            .on("click", '#in-studio' + item.sortId, function () {
+
+                                console.log("Yep.");
+
+                                var start = new moment(start);
+                                var end = new moment(end);
+                                var duration = moment.duration(start.diff(end));
+                                var durationAsMinutes = duration.as('minutes');
+
+
+                                axios.post('https://localhost:44326/api/ScheduleApi', {
+                                    travelDuration: durationAsMinutes,
+                                    start: item.officialStart,
+                                    end: item.officialEnd,
+                                    Price: item.price,
+                                    cost: item.price,
+                                    teacherApproval: false,
+                                    LocationId: @Model.person.LocationId,
+                                    studentId: @Model.studentId,
+                                    teacherId: @Model.person.PersonId,
+                                    Length: item.preferences.defaultLessonLength,
+                                    LessonType: "In-Studio",
+                                    subject: "@Model.person.subjects"
+                                }).then(function () {
+                                    alert("Lesson booked.");
+                                });
+
+                            });
+
+
+                    });
+
+                    inStudioListData.forEach(function (item) {
+                        $('#availability-list-online')
+                            .append('<div id=\"online' + item.sortId + '\">' + moment(item.officialStart).format("dddd, MMMM Do YYYY, h:mm:ss a") + ' to ' + moment(item.officialEnd).format("h:mm:ss a") + '</div>')
+                            .on("click", '#online' + item.sortId, function () {
+
+                                console.log("Yep.");
+
+                                var start = new moment(start);
+                                var end = new moment(end);
+                                var duration = moment.duration(start.diff(end));
+                                var durationAsMinutes = duration.as('minutes');
+
+
+                                axios.post('https://localhost:44326/api/ScheduleApi', {
+                                    travelDuration: durationAsMinutes,
+                                    start: item.officialStart,
+                                    end: item.officialEnd,
+                                    Price: item.price,
+                                    cost: item.price,
+                                    teacherApproval: false,
+                                    LocationId: @Model.person.LocationId,
+                                    studentId: @Model.studentId,
+                                    teacherId: @Model.person.PersonId,
+                                    Length: item.preferences.defaultLessonLength,
+                                    LessonType: "Online",
+                                    subject: "@Model.person.subjects"
+                                }).then(function () {
+                                    alert("Lesson booked.");
+                                });
+
+                            });
+
+
+                    });
+
+
+                    $('#in-studio-price')
+                        .append(' - $' + response.data[0].price);
+
+                    $('#online-price')
+                        .append(' - $' + response.data[0].price);
+
+
+
+                });
+
+
+             axios.get('https://localhost:44326/api/ScheduleApi?generateForView=inHomeLessonOptions&teacherIdInt=@Model.person.PersonId&studentIdInt=@Model.studentId')
+                .then(function (response) {
+                    inHomeListData = response.data;
+                    console.log(inHomeListData);
+        
+                    inHomeListData.forEach(function (item) {
+                        $('#availability-list-in-home')
+                            .append('<div id=\"in-home' + item.sortId + '\">' + moment(item.officialStart).format("dddd, MMMM Do YYYY, h:mm:ss a") + ' to ' + moment(item.officialEnd).format("h:mm:ss a") + '</div>')
+                            .on("click", '#in-home' + item.sortId, function () {
+
+                                console.log("Yep.");
+
+                                var start = new moment(start);
+                                var end = new moment(end);
+                                var duration = moment.duration(start.diff(end));
+                                var durationAsMinutes = duration.as('minutes');
+
+
+                                axios.post('https://localhost:44326/api/ScheduleApi', {
+                                    travelDuration: durationAsMinutes,
+                                    start: item.officialStart,
+                                    end: item.officialEnd,
+                                    Price: item.price,
+                                    cost: item.price,
+                                    teacherApproval: false,
+                                    LocationId: @Model.studentLocationId,
+                                    studentId: @Model.studentId,
+                                    teacherId: @Model.person.PersonId,
+                                    Length: item.preferences.defaultLessonLength,
+                                    LessonType: "In-Home",
+                                    subject: "@Model.person.subjects"
+                                }).then(function () {
+                                    alert("Lesson booked.");
+                                });
+
+                            });
+
+
+                    });
+
+                    $('#in-home-price')
+                            .append(' - $' + response.data[0].price);
+                });
+
+
+        })(jQuery);
+
+    });
+       
+
+</script>
+
 
 <div id="map" style="height: 400px; width: 400px;"></div>
 
@@ -90,7 +251,7 @@
      }
 </script>
 
-@{ 
+@{
     var ApiUrlStr = DevCodeGroupCapstone.Private.ApiKey.googleMapsApiUrl;
     var ApiKeyStr = DevCodeGroupCapstone.Private.ApiKey.googleMapsApiKey;
     var ApiKeyCbk = DevCodeGroupCapstone.Private.ApiKey.googleMapsCallback;
@@ -107,15 +268,12 @@
 
 
 
-<script> // GENERATE AVAILABILITIES FOR TEACHER???
+@*<script>
+ // GENERATE AVAILABILITIES FOR TEACHER???
     document.addEventListener('DOMContentLoaded', function () {
 
 
         (function ($) {
-
-
-
-
 
              $.ajax({
                 url: 'https://localhost:44326/api/ScheduleApi?generateForView=lessonOptions&teacherIdInt=@Model.person.PersonId',
@@ -124,9 +282,9 @@
                     console.log("success");
                     console.log(result);
                     $("#teacherAvailability").append(result);
-                    
 
-                    
+
+
                 },
                 error: function (jqXhr, textStatus, errorThrown) {
                     console.log(errorThrown);
@@ -134,7 +292,7 @@
             });
 
 
-    })(jQuery);
+    })(jQuery);*@
 
-    });
-</script>
+    @*});
+</script>*@

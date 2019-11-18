@@ -129,11 +129,27 @@ namespace DevCodeGroupCapstone.Controllers
         // GET: Person/Details/5
         public ActionResult Details(int id)
         {
+            string head = User.Identity.GetUserId();
+
+            Person student = context.People
+                .Where(per => per.ApplicationId == head)
+                .FirstOrDefault()
+                ;
+
+
             PersonAndLocationViewModel personLocationDetails = new PersonAndLocationViewModel();
-            personLocationDetails.person = context.People.Include("Location").Where(p => p.PersonId == id).Single();
+            personLocationDetails.person = context.People
+                .Include("Location")
+                .Where(p => p.PersonId == id)
+                .Single();
             personLocationDetails.location = context.Locations.Where(l => l.LocationId == personLocationDetails.person.LocationId).Single();
 
-            var tempTeacher = context.Preferences.Where(p => p.teacherId == personLocationDetails.person.PersonId).SingleOrDefault();//tlc
+            personLocationDetails.studentId = student.PersonId;
+            personLocationDetails.studentLocationId = student.LocationId;
+
+            var tempTeacher = context.Preferences
+                .Where(p => p.teacherId == personLocationDetails.person.PersonId)
+                .SingleOrDefault();//tlc
 
             if (tempTeacher != null)
             {
@@ -146,7 +162,9 @@ namespace DevCodeGroupCapstone.Controllers
                 {
                     ViewBag.radius = tempTeacher.maxDistance;
                 }
-            }           
+            }
+
+            
 
             return View(personLocationDetails);
         }

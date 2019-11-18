@@ -19,6 +19,25 @@ namespace DevCodeGroupCapstone.Controllers
             context = ApplicationDbContext.Create();
         }
 
+        [HttpPost]
+        public async Task<IHttpActionResult> Post([FromBody]Lesson value)
+        {
+            try
+            {
+                context.Lessons.Add(value);
+                var lesson = await context.SaveChangesAsync();
+                return Ok(value);
+
+            }
+            catch (Exception e)
+            {
+
+                return InternalServerError(e);
+            }
+
+        }
+
+
         [HttpGet]
         public async Task<IHttpActionResult> Index(string generateForView, int teacherIdInt, int studentIdInt)
         {
@@ -104,11 +123,11 @@ namespace DevCodeGroupCapstone.Controllers
             {
                 List<Event> eventList = await GenerateTeacherCalendarView(teacherIdInt);
 
-                eventList = eventList
-                    .Where(evnt => evnt.groupId == "Availability")
+                List<Event> finalEventList = eventList
+                    .Where(evt => evt.groupId == "Availability")
                     .ToList();
 
-                return Ok(eventList);
+                return Ok(finalEventList);
             }
             catch (Exception e)
             {
