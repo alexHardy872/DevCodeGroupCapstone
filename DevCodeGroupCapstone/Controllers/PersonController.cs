@@ -144,6 +144,8 @@ namespace DevCodeGroupCapstone.Controllers
                 .Single();
             personLocationDetails.location = context.Locations.Where(l => l.LocationId == personLocationDetails.person.LocationId).Single();
 
+            personLocationDetails.studentLocationId = student.LocationId;
+
             TeacherPreference tpreffer = context.Preferences.Where(pref => pref.teacherId == id).FirstOrDefault();
 
             int range = tpreffer.maxDistance;

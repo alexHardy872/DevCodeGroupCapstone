@@ -36,38 +36,20 @@
                 </dd>
             </dl>
         </div>
-        <h1>@Model.person.firstName @Model.person.lastName's Availabilities</h1>
-        <table id="timeslotsTable">
-            <tr>
-                <td> <button>@Html.ActionLink("REQUEST CUSTOM IN-STUDIO LESSON", "../Lesson/Create", new { teacherId = Model.person.PersonId })</button> </td>
-            </tr>
-            <tr>
-                <td id="studioPrice"><h4><i>In Studio Price = <strong>$@Model.studioCost</strong> </i></h4></td>
-
-                @if (Model.outOfRange == false)
-                {
-                    <td id="inHomePrice" style="display: none;"><h4><i>In Your Home Price = <strong>$@Model.inHomeCost</strong></i></h4></td>
-
-                }
-
-                @if (Model.outOfRange == true)
-                {
-
-                    <td id="range" style="display: none; color: red;"></td>
-                    <i>You are outside this instructors service area!</i></td>
-                }
-
-            </tr>
-
-
-        </table>
-        <h3 id="in-studio-price">In-Studio Lessons</h3>
-        <div id="availability-list-in-studio"></div>
-        <h3 id="online-price">Online Lessons</h3>
-        <div id="availability-list-online"></div>
-        <h3 id="in-home-price">In-Home Lessons</h3>
-        <div id="availability-list-in-home"></div>
-    </div>
+        <div class="col-md-6" id="teacherAvailability">
+            <h1>@Model.person.firstName @Model.person.lastName's Availabilities</h1>
+            <table id="timeslotsTable">
+                <tr>
+                    <td> <button>@Html.ActionLink("REQUEST CUSTOM IN-STUDIO LESSON", "../Lesson/Create", new { teacherId = Model.person.PersonId })</button> </td>
+                </tr>
+            </table>
+            <h3 id="in-studio-price">In-Studio Lessons</h3>
+            <div id="availability-list-in-studio"></div>
+            <h3 id="online-price">Online Lessons</h3>
+            <div id="availability-list-online"></div>
+            <h3 id="in-home-price">In-Home Lessons</h3>
+            <div id="availability-list-in-home"></div>
+        </div>
 
     </div>
 </div>
@@ -264,7 +246,7 @@
           fillOpacity: 0.35,
           map: map,
           center: pinLocation,
-          radius: @ViewBag.radius
+          radius: 5 // @*@ViewBag.radius*@
         });
      }
 </script>
@@ -285,32 +267,3 @@
 </p>
 
 
-
-@*<script>
-    // GENERATE AVAILABILITIES FOR TEACHER???
-       document.addEventListener('DOMContentLoaded', function () {
-
-
-           (function ($) {
-
-                $.ajax({
-                   url: 'https://localhost:44326/api/ScheduleApi?generateForView=lessonOptions&teacherIdInt=@Model.person.PersonId',
-                   type: 'GET',
-                   success: function (result) {
-                       console.log("success");
-                       console.log(result);
-                       $("#teacherAvailability").append(result);
-
-
-
-                   },
-                   error: function (jqXhr, textStatus, errorThrown) {
-                       console.log(errorThrown);
-                   }
-               });
-
-
-       })(jQuery);*@
-
-@*});
-    </script>*@
