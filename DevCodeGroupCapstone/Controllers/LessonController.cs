@@ -153,7 +153,9 @@ namespace DevCodeGroupCapstone.Controllers
                 }
                 context.Lessons.Add(lesson);
                 context.SaveChanges();
-                return RedirectToAction("StudentIndex", "Person");
+
+                return RedirectToAction("AlertRequest", "SMS", new { id = lesson.LessonId });
+                //return RedirectToAction("StudentIndex", "Person");
             }
             catch (Exception e)
             {
