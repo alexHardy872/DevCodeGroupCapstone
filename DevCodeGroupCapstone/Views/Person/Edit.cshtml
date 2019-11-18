@@ -49,16 +49,18 @@
         </div>
     </div>
 
-  
+
 
 
     @Html.HiddenFor(x => x.ApplicationId)
+
     @Html.HiddenFor(x => x.LocationId)
 
 
 
     <span> (If you offer lessons in your studio/home this is the address that will be used) </span>
 
+   
     <div class="form-group">
         @Html.LabelFor(model => model.Location.address1, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
