@@ -147,6 +147,7 @@ namespace DevCodeGroupCapstone.Controllers
             personLocationDetails.location = context.Locations.Where(l => l.LocationId == personLocationDetails.person.LocationId).Single();
 
             personLocationDetails.studentLocationId = student.LocationId;
+            personLocationDetails.studentId = student.PersonId;
 
             TeacherPreference tpreffer = context.Preferences.Where(pref => pref.teacherId == id).FirstOrDefault();
 
