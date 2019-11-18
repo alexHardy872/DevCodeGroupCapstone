@@ -160,14 +160,14 @@ namespace DevCodeGroupCapstone.Controllers
             //string userId = User.Identity.GetUserId();
             //Person studentA = context.People.Where(peop => peop.ApplicationId == userId).FirstOrDefault();
             //int tempDistance = await Service_Classes.DistanceMatrix.GetTravelInfo(studentA, personLocationDetails.person);
-            int tempDuration = await Service_Classes.DistanceMatrix.GetTravelInfo(student, personLocationDetails.person);
-            inHomeCost = tpreffer.PerHourRate + (tpreffer.incrementalCost * tempDuration);
+            ////int tempDuration = await Service_Classes.DistanceMatrix.GetTravelInfo(student, personLocationDetails.person);
+            ////inHomeCost = tpreffer.PerHourRate + (tpreffer.incrementalCost * tempDuration);
 
 
-            personLocationDetails.outOfRange = tempDuration > tpreffer.maxDistance ? true : false;
-            personLocationDetails.outOfRangeNum = personLocationDetails.outOfRange ? 1 : 0;
-            personLocationDetails.inHomeCost = inHomeCost;
-            personLocationDetails.studioCost = tpreffer.PerHourRate;
+            ////personLocationDetails.outOfRange = tempDuration > tpreffer.maxDistance ? true : false;
+            ////personLocationDetails.outOfRangeNum = personLocationDetails.outOfRange ? 1 : 0;
+            ////personLocationDetails.inHomeCost = inHomeCost;
+            ////personLocationDetails.studioCost = tpreffer.PerHourRate;
 
 
             var tempTeacher = context.Preferences.Where(p => p.teacherId == personLocationDetails.person.PersonId).SingleOrDefault();//tlc
@@ -175,36 +175,38 @@ namespace DevCodeGroupCapstone.Controllers
             //this is the teacher's preferences
             var teacherPreferences = context.Preferences.Where(p => p.teacherId == personLocationDetails.person.PersonId).SingleOrDefault();//tlc
 
-            //if (teacherPreferences != null)
-            //{
-            //    if (teacherPreferences.distanceType == RadiusOptions.Miles)
-            //    {
-            //        //string userId = User.Identity.GetUserId();
+            if (teacherPreferences != null)
+            {
+                if (teacherPreferences.distanceType == RadiusOptions.Miles)
+                {
+                    string userId = User.Identity.GetUserId();
 
-            //        double teacherPreferenceRadius = teacherPreferences.maxDistance;//tlc
-            //        ViewBag.radius = teacherPreferenceRadius * Service_Classes.DistanceMatrix.metersToMiles;//tlc
+                    double teacherPreferenceRadius = teacherPreferences.maxDistance;//tlc
+                    ViewBag.radius = teacherPreferenceRadius * Service_Classes.DistanceMatrix.metersToMiles;//tlc
 
-            //        var tempStudent = context.People.Include("Location").Where(p => p.ApplicationId == userId).SingleOrDefault();
-                    
-            //        if (tempStudent.PersonId != teacherPreferences.teacherId)
-            //        {
-            //            Lesson tempLesson = new Lesson();
-            //            tempLesson.Teacher = context.People.Where(t=>t.PersonId == teacherPreferences.teacherId).SingleOrDefault();
-            //            tempLesson.Student = tempStudent;
-            //            tempLesson = await Service_Classes.DistanceMatrix.GetTravelInfo(tempLesson);
+                    var tempStudent = context.People.Include("Location").Where(p => p.ApplicationId == userId).SingleOrDefault();
 
-            //            //ViewBag.lessonPrice =                         
-            //            ViewBag.outOfRange = teacherPreferences.maxDistance > tempLesson.travelDuration;
-            //        }
-                    
-            //    }
-            //    else if (tempTeacher.distanceType == RadiusOptions.Minutes)
-            //    {
-            //        ViewBag.radius = teacherPreferences.maxDistance;
-            //    }
-            //}
+                    if (tempStudent.PersonId != teacherPreferences.teacherId)
+                    {
+                        Lesson tempLesson = new Lesson();
+                        tempLesson.Teacher = context.People.Where(t => t.PersonId == teacherPreferences.teacherId).SingleOrDefault();
+                        tempLesson.Student = tempStudent;
+                        tempLesson.Location = tempStudent.Location;
+                        tempLesson.LocationId = tempStudent.LocationId;
+                        tempLesson = await Service_Classes.DistanceMatrix.GetTravelInfo(tempLesson);
 
-            
+                        //ViewBag.lessonPrice =                         
+                        ViewBag.outOfRange = teacherPreferences.maxDistance > tempLesson.travelDuration;
+                    }
+
+                }
+                else if (tempTeacher.distanceType == RadiusOptions.Minutes)
+                {
+                    ViewBag.radius = teacherPreferences.maxDistance;
+                }
+            }
+
+
 
             return View(personLocationDetails);
         }

@@ -34,8 +34,10 @@ namespace DevCodeGroupCapstone.Service_Classes
             }
 
             double[] teacherLatLng = new double[2];
-            teacherLatLng[0] = double.Parse(teacher.Location.lat);
-            teacherLatLng[1] = double.Parse(teacher.Location.lng);
+            //teacherLatLng[0] = double.Parse(teacher.Location.lat);
+            //teacherLatLng[1] = double.Parse(teacher.Location.lng);
+            teacherLatLng[0] = double.Parse(lesson.Teacher.Location.lat);
+            teacherLatLng[1] = double.Parse(lesson.Teacher.Location.lng);
 
             double[] lessonLocationLatLng = new double[2];
             lessonLocationLatLng[0] = double.Parse(tempLessonLocation.lat);
