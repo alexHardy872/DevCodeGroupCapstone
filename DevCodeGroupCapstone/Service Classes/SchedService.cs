@@ -52,6 +52,7 @@ namespace DevCodeGroupCapstone.Service_Classes
 
         public static decimal CreatePrice(decimal perHourRate, DateTime start, DateTime end)
         {
+
             TimeSpan timeSpan = end - start;
             Double totalMinutes = timeSpan.TotalMinutes;
             Decimal costPerMinute = perHourRate / 60;

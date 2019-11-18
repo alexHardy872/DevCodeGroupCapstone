@@ -43,8 +43,9 @@ namespace DevCodeGroupCapstone.Service_Classes
 
             var response = await client.GetStringAsync(requestUrl + teacherLatLng[0] + "," + teacherLatLng[1] + destinationsString + lessonLocationLatLng[0] + "," + lessonLocationLatLng[1] + authenticationString);
 
-            JObject distanceInfo = JObject.Parse(response);
 
+            JObject distanceInfo = JObject.Parse(response);
+            // this MIGHT have to go 
             if (teacherPreference.distanceType != RadiusOptions.Miles)
             {
                 double tempduration = (double)distanceInfo["rows"][0]["elements"][0]["distance"]["value"];
@@ -53,6 +54,7 @@ namespace DevCodeGroupCapstone.Service_Classes
             else //minutes
             {
                 double tempMinutes = (int)distanceInfo["rows"][0]["elements"][0]["duration"]["value"]; // throws error?
+
                 lesson.travelDuration = Convert.ToInt32(Math.Floor(tempMinutes / 60));
             }
 

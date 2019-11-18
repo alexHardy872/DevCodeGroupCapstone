@@ -10,9 +10,9 @@ namespace DevCodeGroupCapstone.Models.View_Models
 
         public List<Lesson> lessons { get; set; }
 
-
-
         public List<TeacherAvail> avails { get; set; }
+
+        public int studentId { get; set; }
 
 
         public bool outOfRange { get; set; }
@@ -22,6 +22,9 @@ namespace DevCodeGroupCapstone.Models.View_Models
         public decimal inHomeCost { get; set; }
 
         public decimal studioCost { get; set; }
+
+
+        public int? studentLocationId { get; set; }
 
 
 

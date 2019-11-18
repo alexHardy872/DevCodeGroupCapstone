@@ -5,6 +5,8 @@ namespace DevCodeGroupCapstone.Models
 {
     public class Event : IComparable<Event>
     {
+        public Guid sortId { get; set; }
+
         public DateTime start { get; set; }
 
         public DateTime end { get; set; }
@@ -37,6 +39,7 @@ namespace DevCodeGroupCapstone.Models
 
         public Event(TeacherPreference preferences, DateTime availabilityStart, DateTime availabilityEnd, int travelDuration = 0)
         {
+            this.sortId = Guid.NewGuid();
             this.preferences = preferences;
             this.backgroundColor = "#dbd4d3";
             this.textColor = "#000000";
@@ -45,7 +48,7 @@ namespace DevCodeGroupCapstone.Models
             this.start = availabilityStart;
             this.end = availabilityEnd;
             this.officialStart = availabilityStart + SchedService.ConvertIntToTimeSpan(travelDuration);
-            this.officialEnd = availabilityEnd - -SchedService.ConvertIntToTimeSpan(travelDuration);
+            this.officialEnd = availabilityEnd - SchedService.ConvertIntToTimeSpan(travelDuration);
             this.price = SchedService.CreatePrice(preferences.PerHourRate, this.start, this.end);
         }
 

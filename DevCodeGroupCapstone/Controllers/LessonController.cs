@@ -141,6 +141,8 @@ namespace DevCodeGroupCapstone.Controllers
                         try
                         {
                             ViewBag.outOfRange = TravelDurationIsGreaterThanMaxDistance(lesson);
+                            ViewBag.lessonLat = lesson.Location.lat;
+                            ViewBag.lessonLng = lesson.Location.lat;
                         }
                         catch (Exception e)
                         {
