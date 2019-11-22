@@ -26,52 +26,52 @@ Find this project's Trello board at: [https://trello.com/b/vK6u8aOV/weteachtoday
 
 - [X] (10 points): Use asynchronous actions for all I/O calls made in my application, with a specific emphasis on all API actions.
 
-- [ ] Complete all the instructor-approved features during the project approval phase, so that I can ensure the project is as good as it can be. (90 points)
+- [X] Complete all the instructor-approved features during the project approval phase, so that I can ensure the project is as good as it can be. (90 points)
 
-- [ ] Present to instructors and students. (20 points)
+- [X] Present to instructors and students. (20 points)
 
 
 ## User Stories
 
 ### Theme: Sign Up & Dashboard
 
-- [ ] (5 points) As a teacher or a potential student I can sign-up/sign-in for the service with Google OAuth or another means, easiest for the developers, such as email.
+- [X] (5 points) As a teacher or a potential student I can sign-up/sign-in for the service with Google OAuth or another means, easiest for the developers, such as email.
 
-- [ ] (5 points) As a student, before I finish sign-up, I will be quoted prices for in-home, online, and in-studio lessons, and in-home lessons are quoted based on my distance from the studio or the time it takes for the teacher to reach my home. 🔥
+- [X] (5 points) As a student, before I finish sign-up, I will be quoted prices for in-home, online, and in-studio lessons, and in-home lessons are quoted based on my distance from the studio or the time it takes for the teacher to reach my home. 🔥
 
-- [ ] (5 points) As a student, I will get immediate feedback that I have to do in-studio or online lessons if my location is outside the teacher’s service area. 🔥
+- [X] (5 points) As a student, I will get immediate feedback that I have to do in-studio or online lessons if my location is outside the teacher’s service area. 🔥
 
-- [ ] (7.5 points) As a teacher, I can set my service area by radius (in miles) or by the time it takes to reach a home from my studio. 🔥
+- [X] (7.5 points) As a teacher, I can set my service area by radius (in miles) or by the time it takes to reach a home from my studio. 🔥
 
-- [ ] (7.5 points) As a teacher, I will see representation on a map of my service area. 
+- [X] (7.5 points) As a teacher, I will see representation on a map of my service area. 
 
-- [ ] (2.5 points) As a teacher, I want to see a list of time slots for a particular day.
+- [X] (2.5 points) As a teacher, I want to see a list of time slots for a particular day.
 
-- [ ] (2.5 points) As a student, I want to view a list of a teacher’s available time slots for each lesson location option (in-home, online, in studio, etc).
+- [X] (2.5 points) As a student, I want to view a list of a teacher’s available time slots for each lesson location option (in-home, online, in studio, etc).
 
-- [ ] (5 points) As a teacher, I can choose whether to give lessons in-home, online, and/or at my studio, and, in the case of in-home lessons, choose different prices for each based on student distance or time on the road.
+- [X] (5 points) As a teacher, I can choose whether to give lessons in-home, online, and/or at my studio, and, in the case of in-home lessons, choose different prices for each based on student distance or time on the road.
 
-- [ ] (7.5 points) As a teacher, upon reviewing a student’s details I want to view the location, distance and estimated drive time to a student if they chose in-home lesson.
+- [X] (7.5 points) As a teacher, upon reviewing a student’s details I want to view the location, distance and estimated drive time to a student if they chose in-home lesson.
 
-- [ ] (2.5 points) As a teacher, I can specify the length of lessons and the base price for each lesson length.
+- [X] (2.5 points) As a teacher, I can specify the length of lessons and the base price for each lesson length.
 
-- [ ] (5 points) As a teacher, I can have the lesson dates and times for in-studio or online lessons automatically presented to a student during sign-up that are in close time proximity to other scheduled lessons in the quantity I choose.
+- [X] (5 points) As a teacher, I can have the lesson dates and times for in-studio or online lessons automatically presented to a student during sign-up that are in close time proximity to other scheduled lessons in the quantity I choose.
 
-- [ ] (5 points) As a teacher I want the option to view my schedule for a day, for a week, and for a month.
+- [X] (5 points) As a teacher I want the option to view my schedule for a day, for a week, and for a month.
 
 ### Theme: Rescheduling
 
-- [ ] (5 points) As a teacher, I can choose the parameters of a cancellation concerning refunds and makeup lessons. (i.e. if a student cancels ____ hours before the lesson, they will get a makeup lesson or a refund) 🔥
+- [X] (5 points) As a teacher, I can choose the parameters of a cancellation concerning refunds and makeup lessons. (i.e. if a student cancels ____ hours before the lesson, they will get a makeup lesson or a refund) 🔥
 
-- [ ] (5 points) As a student, if I cancel a lesson ___ hours or more ahead of time (set by the teacher), I am added to a list of students that can schedule a makeup lesson. 🔥
+- [X] (5 points) As a student, if I cancel a lesson ___ hours or more ahead of time (set by the teacher), I am added to a list of students that can schedule a makeup lesson. 🔥
 
-- [ ] (7.5 points) As a student, if I am on a list of makeup lesson students, I will receive a notification to fill an open slot on a first-come-first-serve basis. 🔥
+- [X] (7.5 points) As a student, if I am on a list of makeup lesson students, I will receive a notification to fill an open slot on a first-come-first-serve basis. 🔥
 
-- [ ] (7.5 points) As a teacher want to be able to set my availability AND the details of my booked lessons on a calendar, with students able to see my availability but NOT my lesson details.
+- [X] (7.5 points) As a teacher want to be able to set my availability AND the details of my booked lessons on a calendar, with students able to see my availability but NOT my lesson details.
 
-- [ ] (7.5 points) As a student, I want to be emailed or texted if a lesson is canceled by a teacher, and that student gets added to a makeup lesson list.
+- [X] (7.5 points) As a student, I want to be emailed or texted if a lesson is canceled by a teacher, and that student gets added to a makeup lesson list.
 
-- [ ] (5 points) As a teacher I want to be emailed or texted if a student cancels an appointment. 
+- [X] (5 points) As a teacher I want to be emailed or texted if a student cancels an appointment. 
 
 
 
